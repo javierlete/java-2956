@@ -5,9 +5,9 @@ import java.time.Period;
 
 public class Persona {
 	// VARIABLES DE INSTANCIA
-	private Long id;
-	private String nombre;
-	private LocalDate fechaNacimiento;
+	protected Long id;
+	protected String nombre;
+	protected LocalDate fechaNacimiento;
 
 	// CONSTRUCTORES
 	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
