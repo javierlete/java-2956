@@ -1,10 +1,11 @@
 package pojos;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Trabajador extends Persona {
-	private String dni;
+public abstract class Trabajador extends Persona {
+	protected String dni;
 
 	public Trabajador(Long id, String nombre, LocalDate fechaNacimiento, String dni) {
 		super(id, nombre, fechaNacimiento);
@@ -39,6 +40,8 @@ public class Trabajador extends Persona {
 
 		this.dni = dni;
 	}
+	
+	public abstract BigDecimal getSueldoMensual();
 
 	@Override
 	public int hashCode() {

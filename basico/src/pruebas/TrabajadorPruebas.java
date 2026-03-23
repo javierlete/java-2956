@@ -1,14 +1,17 @@
 package pruebas;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import pojos.Local;
 import pojos.Persona;
 import pojos.Trabajador;
+import pojos.TrabajadorIndefinido;
+import pojos.TrabajadorPorHoras;
 
 public class TrabajadorPruebas {
 	public static void main(String[] args) {
-		Trabajador trabajador = new Trabajador("Javier", LocalDate.of(2008, 3, 18), "12345678A");
+		Trabajador trabajador = new TrabajadorIndefinido(null, "Javier", LocalDate.of(2008, 3, 18), "12345678A", new BigDecimal(12345), 14);
 
 		System.out.println(trabajador);
 //		System.out.println(trabajador.getDni());
@@ -43,7 +46,7 @@ public class TrabajadorPruebas {
 		local.entrar(pepe);
 		local.entrar(new Persona("Juan"));
 		local.entrar(new Persona("Pedro"));
-		local.entrar(new Trabajador(null, "María", LocalDate.now().minusYears(20), "12345678A"));
+		local.entrar(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A", new BigDecimal(30), 80));
 
 		System.out.println("DESPUÉS DE ENTRADA");
 
@@ -54,12 +57,13 @@ public class TrabajadorPruebas {
 				// Trabajador t = (Trabajador) p;
 
 				System.out.println(t.getAnyos());
+				System.out.println(t.getSueldoMensual());
 			}
 		}
 
 		local.salir(pepe);
 		local.salir(new Persona("Juan"));
-		local.salir(new Trabajador(null, "María", LocalDate.now().minusYears(20), "12345678A"));
+		local.salir(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A", new BigDecimal(30), 80));
 
 		System.out.println("DESPUÉS DE SALIDA");
 
