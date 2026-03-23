@@ -2,6 +2,7 @@ package pojos;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 
 public class Persona {
 	// VARIABLES DE INSTANCIA
@@ -77,6 +78,25 @@ public class Persona {
 		}
 
 		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
+	}
+
+	// HASHCODE Y EQUALS
+	@Override
+	public int hashCode() {
+		return Objects.hash(fechaNacimiento, id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Persona other = (Persona) obj;
+		return Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre);
 	}
 
 	// TOSTRING

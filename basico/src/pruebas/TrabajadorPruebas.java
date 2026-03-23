@@ -2,29 +2,81 @@ package pruebas;
 
 import java.time.LocalDate;
 
+import pojos.Local;
 import pojos.Persona;
 import pojos.Trabajador;
 
 public class TrabajadorPruebas {
 	public static void main(String[] args) {
 		Trabajador trabajador = new Trabajador("Javier", LocalDate.of(2008, 3, 18), "12345678A");
-		
+
 		System.out.println(trabajador);
 //		System.out.println(trabajador.getDni());
-		
+
 		trabajador.setId(1L);
 		trabajador.setNombre("Javier");
 		trabajador.setFechaNacimiento(LocalDate.of(2000, 1, 2));
-		
+
 		System.out.println(trabajador);
 //		System.out.println(trabajador.getDni());
-		
+
 		Persona persona = trabajador;
-		
+
 //		System.out.println(persona.getDni());
-		
+
 		Trabajador trabajador2 = (Trabajador) persona;
-		
+
 		System.out.println(trabajador2.getDni());
+
+		Object o = trabajador2;
+
+		System.out.println(o);
+
+		Local local = new Local("Bilbao", trabajador);
+
+		local.entrar(trabajador);
+
+		System.out.println(local);
+
+		Persona pepe = new Persona("Pepe");
+
+		local.entrar(pepe);
+		local.entrar(new Persona("Juan"));
+		local.entrar(new Persona("Pedro"));
+		local.entrar(new Trabajador(null, "María", LocalDate.now().minusYears(20), "12345678A"));
+
+		System.out.println("DESPUÉS DE ENTRADA");
+
+		for (Persona p : local.getPersonas()) {
+			System.out.println(p);
+			
+			if (p instanceof Trabajador t) {
+				// Trabajador t = (Trabajador) p;
+
+				System.out.println(t.getAnyos());
+			}
+		}
+
+		local.salir(pepe);
+		local.salir(new Persona("Juan"));
+		local.salir(new Trabajador(null, "María", LocalDate.now().minusYears(20), "12345678A"));
+
+		System.out.println("DESPUÉS DE SALIDA");
+
+		for (Persona p : local.getPersonas()) {
+			System.out.println(p);
+		}
+
+		if (new Persona("María") == new Persona("María")) {
+			System.out.println("Son el mismo");
+		} else {
+			System.out.println("Son dos objetos separados");
+		}
+
+		if (new Persona("María").equals(new Persona("María"))) {
+			System.out.println("Son iguales");
+		} else {
+			System.out.println("Son diferentes");
+		}
 	}
 }

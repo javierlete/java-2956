@@ -1,6 +1,7 @@
 package pojos;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Trabajador extends Persona {
 	private String dni;
@@ -37,6 +38,28 @@ public class Trabajador extends Persona {
 		}
 
 		this.dni = dni;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(dni);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Trabajador other = (Trabajador) obj;
+		return Objects.equals(dni, other.dni);
 	}
 
 	@Override

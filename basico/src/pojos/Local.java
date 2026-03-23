@@ -70,6 +70,14 @@ public class Local {
 
 		personas.add(persona);
 	}
+	
+	public void salir(Persona persona) {
+		if (persona == null) {
+			throw new RuntimeException("Debe ser una persona");
+		}
+		
+		personas.remove(persona);
+	}
 
 	// TOSTRING
 	@Override
