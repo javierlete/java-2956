@@ -17,13 +17,7 @@ public class DaoPersonaArrayList implements DaoPersona {
 
 	@Override
 	public Persona obtenerPorId(Long id) {
-		for (Persona p : personas) {
-			if (p.getId() == id) {
-				return p;
-			}
-		}
-
-		return null;
+		return personas.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
 	}
 
 	@Override
@@ -50,23 +44,11 @@ public class DaoPersonaArrayList implements DaoPersona {
 
 	@Override
 	public void borrar(Long id) {
-		for (int i = 0; i < personas.size(); i++) {
-			if (personas.get(i).getId() == id) {
-				personas.remove(i);
-			}
-		}
+		personas.stream().filter(p -> p.getId() == id).findFirst().ifPresent(p -> personas.remove(p));
 	}
 
 	@Override
 	public Iterable<Persona> buscarPorNombre(String nombre) {
-		ArrayList<Persona> resultados = new ArrayList<>();
-
-		for (Persona p : personas) {
-			if (p.getNombre().contains(nombre)) {
-				resultados.add(p);
-			}
-		}
-		
-		return resultados;
+		return personas.stream().filter(p -> p.getNombre().contains(nombre)).toList();
 	}
 }

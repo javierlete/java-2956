@@ -2,6 +2,7 @@ package pruebas;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import pojos.Local;
 import pojos.Persona;
@@ -9,9 +10,12 @@ import pojos.Trabajador;
 import pojos.TrabajadorIndefinido;
 import pojos.TrabajadorPorHoras;
 
+import static bibliotecas.Consola.*;
+
 public class TrabajadorPruebas {
 	public static void main(String[] args) {
-		Trabajador trabajador = new TrabajadorIndefinido(null, "Javier", LocalDate.of(2008, 3, 18), "12345678A", new BigDecimal(12345), 14);
+		Trabajador trabajador = new TrabajadorIndefinido(null, "Javier", LocalDate.of(2008, 3, 18), "12345678A",
+				new BigDecimal(12345), 14);
 
 		System.out.println(trabajador);
 //		System.out.println(trabajador.getDni());
@@ -44,15 +48,26 @@ public class TrabajadorPruebas {
 		Persona pepe = new Persona("Pepe");
 
 		local.entrar(pepe);
-		local.entrar(new Persona("Juan"));
-		local.entrar(new Persona("Pedro"));
-		local.entrar(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A", new BigDecimal(30), 80));
+		local.entrar(new Persona(null, "Juan", LocalDate.now().minusYears(18)));
+		local.entrar(new Persona(null, "Pedro", LocalDate.now().minusYears(42)));
+		local.entrar(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A",
+				new BigDecimal(30), 80));
+
+		List<Persona> personasConEdad = local.getPersonas().stream().filter(p -> p.getFechaNacimiento() != null)
+				.toList();
+
+		int numero = personasConEdad.size();
+
+		double media = personasConEdad.stream().mapToDouble(Persona::getAnyos).reduce(0.0,
+				(totalAcumulado, edad) -> totalAcumulado + edad) / numero;
+
+		p("MEDIA: " + media);
 
 		System.out.println("DESPUÉS DE ENTRADA");
 
 		for (Persona p : local.getPersonas()) {
 			System.out.println(p);
-			
+
 			if (p instanceof Trabajador t) {
 				// Trabajador t = (Trabajador) p;
 
@@ -63,7 +78,8 @@ public class TrabajadorPruebas {
 
 		local.salir(pepe);
 		local.salir(new Persona("Juan"));
-		local.salir(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A", new BigDecimal(30), 80));
+		local.salir(new TrabajadorPorHoras(null, "María", LocalDate.now().minusYears(20), "12345678A",
+				new BigDecimal(30), 80));
 
 		System.out.println("DESPUÉS DE SALIDA");
 
