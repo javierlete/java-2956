@@ -3,13 +3,14 @@ package pruebas;
 import java.util.Iterator;
 
 import accesodatos.DaoPersona;
-import accesodatos.DaoPersonaMap;
-import bibliotecas.Fabrica;
+import bibliotecas.fabrica.Fabrica;
 import pojos.Persona;
 
 public class DaoPruebas {
 	public static void main(String[] args) {
-		DaoPersona dao = (DaoPersona) Fabrica.getObjeto("dao.map");
+		DaoPersona dao = (DaoPersona) Fabrica.getObjeto("dao.persona");
+		
+		System.out.println(dao.getClass().getName());
 		
 		dao.insertar(new Persona("Pepe"));
 		dao.insertar(new Persona("Juan"));
