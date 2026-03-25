@@ -1,14 +1,15 @@
 package accesodatos;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import pojos.Persona;
 
-public class DaoPersonaArrayList implements DaoPersona {
+public class DaoPersonaList implements DaoPersona {
 
 	private Long ultimoId = 0L;
 
-	private ArrayList<Persona> personas = new ArrayList<>();
+	private List<Persona> personas = new LinkedList<>();
 
 	@Override
 	public Iterable<Persona> obtenerTodos() {
