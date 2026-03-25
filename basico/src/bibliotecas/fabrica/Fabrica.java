@@ -1,9 +1,8 @@
 package bibliotecas.fabrica;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
-
-import accesodatos.DaoPersonaList;
-import accesodatos.DaoPersonaMap;
 
 public class Fabrica {
 	private static final Properties PROPS = new Properties();
@@ -17,10 +16,19 @@ public class Fabrica {
 	}
 	
 	public static Object getObjeto(String nombre) {
-		return switch(PROPS.getProperty(nombre)) { 
-			case "dao.list"-> new DaoPersonaList();
-			case "dao.map" -> new DaoPersonaMap();
-			default -> throw new IllegalArgumentException();
-		};
+		try {
+			Object objeto = null;
+			
+			String nombreClase = PROPS.getProperty(nombre);
+			
+			Class<?> clase = Class.forName(nombreClase);
+			Constructor<?> constructor = clase.getConstructor();
+			objeto = constructor.newInstance();
+			
+			return objeto;
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
+				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			throw new FabricaException("No se ha podido crear el objeto " + nombre, e);
+		}
 	}
 }
