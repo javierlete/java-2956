@@ -3,12 +3,12 @@ package pruebas;
 import java.util.Iterator;
 
 import accesodatos.DaoPersona;
-import accesodatos.DaoPersonaArrayList;
+import accesodatos.DaoPersonaMap;
 import pojos.Persona;
 
 public class DaoPruebas {
 	public static void main(String[] args) {
-		DaoPersona dao = new DaoPersonaArrayList();
+		DaoPersona dao = new DaoPersonaMap();
 		
 		dao.insertar(new Persona("Pepe"));
 		dao.insertar(new Persona("Juan"));
