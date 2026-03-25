@@ -4,11 +4,12 @@ import java.util.Iterator;
 
 import accesodatos.DaoPersona;
 import accesodatos.DaoPersonaMap;
+import bibliotecas.Fabrica;
 import pojos.Persona;
 
 public class DaoPruebas {
 	public static void main(String[] args) {
-		DaoPersona dao = new DaoPersonaMap();
+		DaoPersona dao = (DaoPersona) Fabrica.getObjeto("dao.map");
 		
 		dao.insertar(new Persona("Pepe"));
 		dao.insertar(new Persona("Juan"));
