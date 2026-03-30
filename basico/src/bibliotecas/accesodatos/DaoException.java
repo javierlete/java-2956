@@ -1,4 +1,4 @@
-package accesodatos;
+package bibliotecas.accesodatos;
 
 public class DaoException extends RuntimeException {
 
