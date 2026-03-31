@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Properties;
 import java.util.function.Function;
 
@@ -45,7 +45,7 @@ public class DaoJdbcImpl implements DaoJdbc {
 
 	@Override
 	public <T> Iterable<T> ejecutarSql(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args) {
-		Collection<T> objetos = new HashSet<>();
+		Collection<T> objetos = new ArrayList<>();
 
 		try (Connection con = DriverManager.getConnection(url, user, pass);
 				PreparedStatement pst = con.prepareStatement(sql);) {
