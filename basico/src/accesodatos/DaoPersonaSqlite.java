@@ -3,6 +3,7 @@ package accesodatos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import bibliotecas.accesodatos.DaoException;
 import bibliotecas.accesodatos.DaoJdbc;
@@ -26,16 +27,13 @@ public class DaoPersonaSqlite implements DaoPersona {
 	@Override
 	public Persona insertar(Persona persona) {
 		return DAO.ejecutarSqlUno("INSERT INTO personas (nombre, fecha_nacimiento) VALUES (?,?)",
-				null, persona, persona.getNombre(),
-				persona.getFechaNacimiento() != null ? java.sql.Date.valueOf(persona.getFechaNacimiento()) : null);
+				null, persona, personaAFila(persona));
 	}
 
 	@Override
 	public Persona modificar(Persona persona) {
 		return DAO.ejecutarSqlUno("UPDATE personas SET nombre=?, fecha_nacimiento=? WHERE id=?",
-				null, persona, persona.getNombre(),
-				persona.getFechaNacimiento() != null ? java.sql.Date.valueOf(persona.getFechaNacimiento()) : null,
-				persona.getId());
+				null, persona, personaAFila(persona));
 	}
 
 	@Override
@@ -61,6 +59,19 @@ public class DaoPersonaSqlite implements DaoPersona {
 		} catch (SQLException e) {
 			throw new DaoException("Error en el mapeado de persona", e);
 		}
+	}
+	
+	private static Object[] personaAFila(Persona persona) {
+		ArrayList<Object> campos = new ArrayList<>();
+
+		campos.add(persona.getNombre());
+		campos.add(persona.getFechaNacimiento() != null ? java.sql.Date.valueOf(persona.getFechaNacimiento()) : null);
+
+		if (persona.getId() != null) {
+			campos.add(persona.getId());
+		}
+
+		return campos.toArray();
 	}
 
 }
