@@ -8,18 +8,30 @@ import java.util.ArrayList;
 import bibliotecas.accesodatos.DaoException;
 import bibliotecas.accesodatos.DaoGenericoJdbc;
 import pojos.Persona;
+import pojos.Rol;
 
 public class DaoPersonaSqliteGenerico extends DaoGenericoJdbc<Persona> implements DaoPersona {
 
 	public DaoPersonaSqliteGenerico() {
-		super("personas", new String[] { "nombre", "fecha_nacimiento" }, DaoPersonaSqliteGenerico::filaAPersona,
-				DaoPersonaSqliteGenerico::personaAFila);
+		super("personas", new String[] { "nombre", "fecha_nacimiento", "id_rol" },
+				DaoPersonaSqliteGenerico::filaAPersona, DaoPersonaSqliteGenerico::personaAFila);
 	}
 
 	@Override
 	public Iterable<Persona> buscarPorNombre(String nombreParcial) {
-		return dao.ejecutarSql("SELECT * FROM personas WHERE nombre LIKE ?", DaoPersonaSqliteGenerico::filaAPersona, null,
-				nombreParcial);
+		return dao.ejecutarSql("SELECT * FROM personas WHERE nombre LIKE ?", DaoPersonaSqliteGenerico::filaAPersona,
+				null, nombreParcial);
+	}
+
+	@Override
+	public Iterable<Persona> obtenerTodosConRol() {
+		return dao.ejecutarSql(
+				"""
+						SELECT p.id p_id, p.nombre p_nombre, p.fecha_nacimiento p_fecha_nacimiento, r.id r_id, r.nombre r_nombre, r.descripcion r_descripcion
+						FROM personas p
+						LEFT JOIN roles r ON p.id_rol = r.id;
+						""",
+				DaoPersonaSqliteGenerico::filaAPersonaConRol, null);
 	}
 
 	private static Persona filaAPersona(ResultSet rs) {
@@ -36,12 +48,37 @@ public class DaoPersonaSqliteGenerico extends DaoGenericoJdbc<Persona> implement
 		}
 	}
 
+	private static Persona filaAPersonaConRol(ResultSet rs) {
+		try {
+			Long id = rs.getLong("p_id");
+			String nombre = rs.getString("p_nombre");
+			java.sql.Date fechaNacimientoDate = rs.getDate("p_fecha_nacimiento");
+			LocalDate fechaNacimiento = fechaNacimientoDate != null ? fechaNacimientoDate.toLocalDate() : null;
+
+			Long rolId = rs.getLong("r_id");
+
+			Rol rol = null;
+
+			if (rolId != null && rolId != 0) {
+				String rolNombre = rs.getString("r_nombre");
+				String rolDescripcion = rs.getString("r_descripcion");
+
+				rol = new Rol(rolId, rolNombre, rolDescripcion);
+			}
+
+			return new Persona(id, nombre, fechaNacimiento, rol);
+		} catch (SQLException e) {
+			throw new DaoException("Error en el mapeado de persona", e);
+		}
+	}
+
 	private static Object[] personaAFila(Persona persona) {
 		ArrayList<Object> campos = new ArrayList<>();
 
 		campos.add(persona.getNombre());
 		campos.add(persona.getFechaNacimiento() != null ? java.sql.Date.valueOf(persona.getFechaNacimiento()) : null);
-
+		campos.add(persona.getRol().getId());
+		
 		if (persona.getId() != null) {
 			campos.add(persona.getId());
 		}
