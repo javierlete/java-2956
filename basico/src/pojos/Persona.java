@@ -9,12 +9,19 @@ public class Persona {
 	protected Long id;
 	protected String nombre;
 	protected LocalDate fechaNacimiento;
+	
+	private Rol rol;
 
 	// CONSTRUCTORES
-	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
+	public Persona(Long id, String nombre, LocalDate fechaNacimiento, Rol rol) {
 		setId(id);
 		setNombre(nombre);
 		setFechaNacimiento(fechaNacimiento);
+		setRol(rol);
+	}
+	
+	public Persona(Long id, String nombre, LocalDate fechaNacimiento) {
+		this(id, nombre, fechaNacimiento, null);
 	}
 
 	public Persona(String nombre, LocalDate fechaNacimiento) {
@@ -71,6 +78,14 @@ public class Persona {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
+
 	// MÉTODO DE INSTANCIA
 	public int getAnyos() {
 		if (fechaNacimiento == null) {
@@ -80,10 +95,9 @@ public class Persona {
 		return Period.between(fechaNacimiento, LocalDate.now()).getYears();
 	}
 
-	// HASHCODE Y EQUALS
 	@Override
 	public int hashCode() {
-		return Objects.hash(fechaNacimiento, id, nombre);
+		return Objects.hash(fechaNacimiento, id, nombre, rol);
 	}
 
 	@Override
@@ -96,13 +110,13 @@ public class Persona {
 			return false;
 		Persona other = (Persona) obj;
 		return Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(id, other.id)
-				&& Objects.equals(nombre, other.nombre);
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(rol, other.rol);
 	}
 
-	// TOSTRING
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + "]";
+		return String.format("Persona [id=%s, nombre=%s, fechaNacimiento=%s, rol=%s]", id, nombre, fechaNacimiento,
+				rol);
 	}
 
 }
