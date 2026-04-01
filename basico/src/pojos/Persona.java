@@ -25,15 +25,15 @@ public class Persona {
 	}
 
 	public Persona(String nombre, LocalDate fechaNacimiento) {
-		this(null, nombre, fechaNacimiento);
+		this(null, nombre, fechaNacimiento, null);
 	}
 
 	public Persona(String nombre) {
-		this(null, nombre, null);
+		this(null, nombre, null, null);
 	}
 
 	public Persona() {
-		this(null, "ANÓNIMO", null);
+		this(null, "ANÓNIMO", null, null);
 	}
 
 	// Constructor de copia

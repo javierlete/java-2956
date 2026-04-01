@@ -77,8 +77,8 @@ public class DaoPersonaSqliteGenerico extends DaoGenericoJdbc<Persona> implement
 
 		campos.add(persona.getNombre());
 		campos.add(persona.getFechaNacimiento() != null ? java.sql.Date.valueOf(persona.getFechaNacimiento()) : null);
-		campos.add(persona.getRol().getId());
-		
+		campos.add(persona.getRol() != null ? persona.getRol().getId() : null);
+
 		if (persona.getId() != null) {
 			campos.add(persona.getId());
 		}
