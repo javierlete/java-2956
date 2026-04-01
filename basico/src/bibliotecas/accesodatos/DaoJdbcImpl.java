@@ -62,8 +62,12 @@ public class DaoJdbcImpl implements DaoJdbc {
 					return objetos;
 				}
 			} else {
-				pst.executeUpdate();
+				int numero = pst.executeUpdate();
 
+				if(numero == 0) {
+					throw new DaoException("No se ha encontrado el registro a modificar/borrar");
+				}
+				
 				objetos.add(objeto);
 
 				return objetos;

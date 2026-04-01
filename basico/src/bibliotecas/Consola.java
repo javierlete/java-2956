@@ -5,6 +5,9 @@ import java.util.Scanner;
 import java.util.function.Function;
 
 public class Consola {
+	public static final boolean NO_REQUERIDO = false;
+	public static final boolean REQUERIDO = true;
+
 	private static final Scanner SC = new Scanner(System.in);
 
 	private Consola() {
@@ -27,18 +30,43 @@ public class Consola {
 	}
 
 	public static String leerString(String mensaje) {
-		p(mensaje + ": ");
-		return SC.nextLine();
+		return leerString(mensaje, NO_REQUERIDO);
 	}
-	
+
+	public static String leerString(String mensaje, boolean requerido) {
+		String texto;
+
+		do {
+			p(mensaje + (requerido ? " (OBLIGATORIO)" : "") + ": ");
+			texto = SC.nextLine();
+
+			if (!requerido && texto.isBlank()) {
+				return null;
+			}
+
+		} while (requerido && texto.isBlank());
+
+		return texto;
+	}
+
 	public static <T> T leer(String mensaje, Function<String, T> funcion) {
+		return leer(mensaje, funcion, REQUERIDO);
+	}
+
+	public static <T> T leer(String mensaje, Function<String, T> funcion, boolean requerido) {
 		boolean hayError = true;
 
 		T resultado = null;
 
 		do {
 			try {
-				resultado = funcion.apply(leerString(mensaje));
+				String texto = leerString(mensaje, requerido);
+
+				if (texto == null) {
+					return null;
+				}
+
+				resultado = funcion.apply(texto);
 				hayError = false;
 			} catch (Exception e) {
 				pl("No se ha podido convertir");
@@ -48,19 +76,35 @@ public class Consola {
 		return resultado;
 	}
 
-	public static int leerInt(String mensaje) {
-		return leer(mensaje, Integer::parseInt);
+	public static Integer leerInt(String mensaje) {
+		return leerInt(mensaje, REQUERIDO);
 	}
 
-	public static long leerLong(String mensaje) {
-		return leer(mensaje, Long::parseLong);
+	public static Integer leerInt(String mensaje, boolean requerido) {
+		return leer(mensaje, Integer::parseInt, requerido);
 	}
-	
-	public static double leerDouble(String mensaje) {
-		return leer(mensaje, Double::parseDouble);
+
+	public static Long leerLong(String mensaje) {
+		return leerLong(mensaje, REQUERIDO);
 	}
-	
+
+	public static Long leerLong(String mensaje, boolean requerido) {
+		return leer(mensaje, Long::parseLong, requerido);
+	}
+
+	public static Double leerDouble(String mensaje) {
+		return leerDouble(mensaje, REQUERIDO);
+	}
+
+	public static Double leerDouble(String mensaje, boolean requerido) {
+		return leer(mensaje, Double::parseDouble, requerido);
+	}
+
 	public static LocalDate leerLocalDate(String mensaje) {
-		return leer(mensaje, LocalDate::parse);
+		return leerLocalDate(mensaje, REQUERIDO);
+	}
+
+	public static LocalDate leerLocalDate(String mensaje, boolean requerido) {
+		return leer(mensaje, LocalDate::parse, requerido);
 	}
 }
