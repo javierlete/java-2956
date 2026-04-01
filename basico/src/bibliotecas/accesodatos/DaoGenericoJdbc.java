@@ -36,7 +36,7 @@ public class DaoGenericoJdbc<T> implements Dao<T> {
 
 	@Override
 	public T insertar(T objeto) {
-		return dao.ejecutarSqlUno("INSERT INTO " + tabla + " (" + String.join(",", campos) + ") VALUES (?,?)", null,
+		return dao.ejecutarSqlUno("INSERT INTO " + tabla + " (" + String.join(",", campos) + ") VALUES ("+ String.join(",", java.util.Collections.nCopies(campos.length, "?")) + ")", null,
 				objeto, mapeadorObjetoACampos.apply(objeto));
 	}
 
