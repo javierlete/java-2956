@@ -8,6 +8,15 @@
 
 body {
 	font-family: sans-serif;
+	
+	margin: 0;
+}
+
+body > header, body > footer {
+	padding: var(--margen);
+	
+	background-color: black;
+	color: white;
 }
 
 li {

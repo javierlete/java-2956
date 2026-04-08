@@ -19,15 +19,7 @@ if (nombre != null) {
 	dao.insertar(new Persona(nombre));
 }
 %>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Personas</title>
-<link rel="stylesheet" href="css/index.css">
-<script defer src="js/index.js"></script>
-</head>
-<body>
+<%@ include file="/WEB-INF/includes/cabecera.jsp" %>
 
 	<form action="index.jsp" method="post">
 		<input name="nombre" placeholder="Nombre">
@@ -47,5 +39,4 @@ if (nombre != null) {
 		%>
 	</ul>
 
-</body>
-</html>
+<%@ include file="/WEB-INF/includes/pie.jsp" %>
