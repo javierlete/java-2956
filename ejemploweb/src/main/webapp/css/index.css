@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+:root {
+	--borde: 1px solid darkgray;
+	--redondeo: 0.5rem;
+	--margen: 0.5rem;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+li {
+	list-style: none;
+	width: 100%;
+	text-align: center;
+	
+	& a {
+		display: inline-block;
+		text-decoration: none;
+		
+		font-weight: bold;
+		
+		border: var(--borde);
+		border-radius: var(--redondeo);
+		
+		background-color: lightgray;
+		
+		padding: calc(var(--redondeo)/2) var(--redondeo);
+		margin: calc(var(--margen)/2) 0;
+	}
+}
+
+input, button {
+	border: var(--borde);
+	border-radius: var(--redondeo);
+	
+	padding: calc(var(--redondeo)/2) var(--redondeo);
+		margin: calc(var(--margen)/2) 0;
+}

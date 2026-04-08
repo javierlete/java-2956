@@ -20,10 +20,12 @@ if (nombre != null) {
 }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Personas</title>
+<link rel="stylesheet" href="css/index.css">
+<script defer src="js/index.js"></script>
 </head>
 <body>
 
@@ -37,8 +39,9 @@ if (nombre != null) {
 		<%
 		for (Persona p : dao.obtenerTodos()) {
 		%>
-		<li><%=p.getNombre()%> <a href="index.jsp?borrar=<%=p.getId()%>">X</a>
-		</li>
+		<li><%=p.getNombre()%> <a
+			onclick="return estasSeguro('<%=p.getNombre()%>')"
+			href="index.jsp?borrar=<%=p.getId()%>">X</a></li>
 		<%
 		}
 		%>
