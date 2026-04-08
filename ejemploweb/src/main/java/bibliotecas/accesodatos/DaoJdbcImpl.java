@@ -17,6 +17,7 @@ public class DaoJdbcImpl implements DaoJdbc {
 	private final String url;
 	private final String user;
 	private final String pass;
+	private final String driver;
 	
 	public DaoJdbcImpl() {
 		Properties props = new Properties();
@@ -27,6 +28,9 @@ public class DaoJdbcImpl implements DaoJdbc {
 			this.url = props.getProperty("url");
 			this.user = props.getProperty("user");
 			this.pass = props.getProperty("pass");
+			this.driver = props.getProperty("driver");
+			
+			Class.forName(this.driver);
 		} catch (Exception e) {
 			throw new FabricaException("No se ha podido cargar la configuración", e);
 		}
