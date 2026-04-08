@@ -7,6 +7,17 @@
 	pageEncoding="UTF-8"%>
 <%
 DaoPersona dao = (DaoPersona) Fabrica.getObjeto("dao.persona");
+
+String nombre = request.getParameter("nombre");
+String borrar = request.getParameter("borrar");
+
+if (borrar != null) {
+	dao.borrar(Long.parseLong(borrar));
+}
+
+if (nombre != null) {
+	dao.insertar(new Persona(nombre));
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -16,12 +27,17 @@ DaoPersona dao = (DaoPersona) Fabrica.getObjeto("dao.persona");
 </head>
 <body>
 
+	<form action="index.jsp" method="post">
+		<input name="nombre" placeholder="Nombre">
+
+		<button>Guardar</button>
+	</form>
+
 	<ul>
 		<%
 		for (Persona p : dao.obtenerTodos()) {
 		%>
-		<li>
-			<%=p.getNombre()%>
+		<li><%=p.getNombre()%> <a href="index.jsp?borrar=<%=p.getId()%>">X</a>
 		</li>
 		<%
 		}
