@@ -4,7 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/includes/cabecera.jsp"%>
 
-<form action="index.jsp" method="post">
+<form action="insertar" method="post">
 	<input name="nombre" placeholder="Nombre">
 
 	<button>Guardar</button>
