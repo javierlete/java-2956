@@ -19,7 +19,7 @@
 	%>
 	<li><%=p.getNombre()%> <a
 		onclick="return estasSeguro('<%=p.getNombre()%>')"
-		href="index.jsp?borrar=<%=p.getId()%>">X</a></li>
+		href="borrar?id=<%=p.getId()%>">X</a></li>
 	<%
 	}
 	%>
