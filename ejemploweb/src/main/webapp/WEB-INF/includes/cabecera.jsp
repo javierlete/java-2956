@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Personas</title>
-<base href="/ejemploweb/">
+<base href="${pageContext.request.contextPath}/">
 <link rel="stylesheet" href="css/index.css">
 <script defer src="js/index.js"></script>
 </head>

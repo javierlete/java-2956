@@ -77,6 +77,6 @@ public class AdminFormularioServlet extends HttpServlet {
 
 		// 5. Empaquetar información para la siguiente vista
 		// 6. Saltar a la siguiente vista
-		response.sendRedirect("/ejemploweb/admin/listado");
+		response.sendRedirect(request.getContextPath() + "/admin/listado");
 	}
 }
