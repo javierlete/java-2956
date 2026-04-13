@@ -23,7 +23,7 @@
 
 			<div>
 				<label for="rol">Rol</label> <select id="rol" name="rol">
-					<option>Selecciona un rol</option>
+					<option value="">Selecciona un rol</option>
 
 					<c:forEach items="${roles}" var="r">
 						<option value="${r.id}"

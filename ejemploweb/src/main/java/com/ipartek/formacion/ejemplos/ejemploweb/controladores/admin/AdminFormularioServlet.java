@@ -60,8 +60,8 @@ public class AdminFormularioServlet extends HttpServlet {
 
 		// 2. Convertir la información
 		Long id = sId.isBlank() ? null : Long.parseLong(sId);
-		LocalDate fechaNacimiento = LocalDate.parse(sFechaNacimiento);
-		Long rolId = Long.parseLong(sRolId);
+		LocalDate fechaNacimiento = sFechaNacimiento.isBlank() ? null : LocalDate.parse(sFechaNacimiento);
+		Long rolId = sRolId.isBlank() ? null : Long.parseLong(sRolId);
 
 		// 3. Empaquetar en objetos
 		Persona persona = new Persona(id, nombre, fechaNacimiento, new Rol(rolId, null, null));
