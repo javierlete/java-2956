@@ -19,6 +19,22 @@ body > header, body > footer {
 	color: white;
 }
 
+table {
+	border-collapse: collapse;
+	width: 100%;
+	
+	& thead, & tfoot {
+		background-color: gray;
+	}
+	
+	& td, & th {
+		text-align: left;
+		
+		border: 1px solid darkgray;
+		padding: var(--margen);
+	}
+}
+
 li {
 	list-style: none;
 	width: 100%;
@@ -40,10 +56,38 @@ li {
 	}
 }
 
-input, button {
+form {
+	padding: var(--margen);
+	
+	& div {
+		display: flex;
+		align-items: baseline;
+	}
+}
+
+label {
+	width: 10rem;
+}
+
+
+fieldset, input, button, select {
+	flex-grow: 1;
+
 	border: var(--borde);
 	border-radius: var(--redondeo);
 	
 	padding: calc(var(--redondeo)/2) var(--redondeo);
 		margin: calc(var(--margen)/2) 0;
+}
+
+button {
+	margin-left: 10rem;
+}
+
+a {
+	text-decoration: none;
+	
+	&:hover {
+		text-decoration: underline;
+	}
 }
