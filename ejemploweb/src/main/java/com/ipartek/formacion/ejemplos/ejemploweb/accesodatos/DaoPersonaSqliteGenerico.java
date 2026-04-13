@@ -12,6 +12,11 @@ import bibliotecas.accesodatos.DaoException;
 import bibliotecas.accesodatos.DaoGenericoJdbc;
 
 public class DaoPersonaSqliteGenerico extends DaoGenericoJdbc<Persona> implements DaoPersona {
+	private static final String SQL_PERSONAS_ROLES = """
+			SELECT p.id p_id, p.nombre p_nombre, p.fecha_nacimiento p_fecha_nacimiento, r.id r_id, r.nombre r_nombre, r.descripcion r_descripcion
+			FROM personas p
+			LEFT JOIN roles r ON p.id_rol = r.id
+			""";
 
 	public DaoPersonaSqliteGenerico() {
 		super("personas", new String[] { "nombre", "fecha_nacimiento", "id_rol" },
@@ -26,13 +31,12 @@ public class DaoPersonaSqliteGenerico extends DaoGenericoJdbc<Persona> implement
 
 	@Override
 	public Iterable<Persona> obtenerTodosConRol() {
-		return dao.ejecutarSql(
-				"""
-						SELECT p.id p_id, p.nombre p_nombre, p.fecha_nacimiento p_fecha_nacimiento, r.id r_id, r.nombre r_nombre, r.descripcion r_descripcion
-						FROM personas p
-						LEFT JOIN roles r ON p.id_rol = r.id;
-						""",
-				DaoPersonaSqliteGenerico::filaAPersonaConRol, null);
+		return dao.ejecutarSql(SQL_PERSONAS_ROLES, DaoPersonaSqliteGenerico::filaAPersonaConRol, null);
+	}
+
+	@Override
+	public Persona obtenerPorIdConRol(Long id) {
+		return dao.ejecutarSqlUno(SQL_PERSONAS_ROLES + " WHERE p.id=?", DaoPersonaSqliteGenerico::filaAPersonaConRol, null, id);
 	}
 
 	private static Persona filaAPersona(ResultSet rs) {

@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Personas</title>
+<base href="/ejemploweb/">
 <link rel="stylesheet" href="css/index.css">
 <script defer src="js/index.js"></script>
 </head>

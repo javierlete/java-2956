@@ -10,4 +10,7 @@ public interface DaoPersona extends Dao<Persona> {
 	default Iterable<Persona> obtenerTodosConRol() {
 		throw new DaoException("NO IMPLEMENTADO");
 	}
+	default Persona obtenerPorIdConRol(Long id) {
+		throw new DaoException("NO IMPLEMENTADO");
+	}
 }
