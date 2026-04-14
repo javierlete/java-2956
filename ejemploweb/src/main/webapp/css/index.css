@@ -61,6 +61,7 @@ form {
 	
 	& div {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: baseline;
 	}
 }
@@ -90,4 +91,8 @@ a {
 	&:hover {
 		text-decoration: underline;
 	}
+}
+
+.error {
+	color: red;
 }

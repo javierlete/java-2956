@@ -67,6 +67,15 @@ public class AdminFormularioServlet extends HttpServlet {
 		Persona persona = new Persona(id, nombre, fechaNacimiento, new Rol(rolId, null, null));
 
 		// 4. Llamar a la lógica de negocio
+		if (persona.tieneErrores()) {
+			// 5. Empaquetar información para la siguiente vista
+			// 6. Saltar a la siguiente vista
+			request.setAttribute("persona", persona);
+			request.getRequestDispatcher("/WEB-INF/vistas/admin/formulario.jsp").forward(request, response);
+			
+			return;
+		}
+
 		DaoPersona daoPersona = (DaoPersona) Fabrica.getObjeto("dao.persona");
 
 		if (id == null) {

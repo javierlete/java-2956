@@ -2,6 +2,8 @@ package com.ipartek.formacion.ejemplos.ejemploweb.modelos;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Persona {
@@ -11,6 +13,8 @@ public class Persona {
 	protected LocalDate fechaNacimiento;
 	
 	private Rol rol;
+	
+	private Map<String, String> errores = new HashMap<>();
 
 	// CONSTRUCTORES
 	public Persona(Long id, String nombre, LocalDate fechaNacimiento, Rol rol) {
@@ -48,7 +52,7 @@ public class Persona {
 
 	public void setId(Long id) {
 		if (id != null && id < 0L) {
-			throw new RuntimeException("No se admite un valor de id negativo");
+			errores.put("id", "No se admite un valor de id negativo");
 		}
 
 		this.id = id;
@@ -60,7 +64,7 @@ public class Persona {
 
 	public void setNombre(String nombre) {
 		if (nombre == null || nombre.isBlank()) {
-			throw new RuntimeException("No se admiten valores vacíos");
+			errores.put("nombre", "No se admiten valores vacíos");
 		}
 
 		this.nombre = nombre.trim();
@@ -72,7 +76,7 @@ public class Persona {
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		if (fechaNacimiento != null && fechaNacimiento.isAfter(LocalDate.now())) {
-			throw new RuntimeException("No puedes nacer en el futuro");
+			errores.put("fechaNacimiento", "No puedes nacer en el futuro");
 		}
 
 		this.fechaNacimiento = fechaNacimiento;
@@ -86,7 +90,15 @@ public class Persona {
 		this.rol = rol;
 	}
 
+	public Map<String, String> getErrores() {
+		return errores;
+	}
+
 	// MÉTODO DE INSTANCIA
+	public boolean tieneErrores() {
+		return errores.size() > 0;
+	}
+	
 	public int getAnyos() {
 		if (fechaNacimiento == null) {
 			throw new RuntimeException("No sé la fecha de nacimiento");

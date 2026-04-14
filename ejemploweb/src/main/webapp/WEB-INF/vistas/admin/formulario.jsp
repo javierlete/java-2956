@@ -12,6 +12,7 @@
 			<div>
 				<label for="nombre">Nombre</label> <input id="nombre" name="nombre"
 					type="text" placeholder="Nombre" value="${persona.nombre}">
+				<p class="error">${persona.errores.nombre}</p>
 			</div>
 
 			<div>
@@ -19,6 +20,7 @@
 					id="fecha-nacimiento" name="fecha-nacimiento" type="date"
 					placeholder="Fecha de nacimiento"
 					value="${persona.fechaNacimiento}">
+				<p class="error">${persona.errores.fechaNacimiento}</p>
 			</div>
 
 			<div>
