@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
@@ -40,7 +41,7 @@ public class ControladorFrontalServlet extends HttpServlet {
 		session.getAttributeNames().asIterator()
 				.forEachRemaining(clave -> sesion.put(clave, session.getAttribute(clave)));
 
-		Datos datos = new Datos(metodo, entrada, salida, sesion);
+		Datos datos = new Datos(metodo, entrada, salida, sesion, new AtomicReference<Boolean>(false));
 
 		String rutaSalida = ejecutarMetodoControlador(rutaEntrada, datos);
 
@@ -56,8 +57,12 @@ public class ControladorFrontalServlet extends HttpServlet {
 			return;
 		}
 
-		salida.forEach((clave, valor) -> request.setAttribute(clave, valor));
-		sesion.forEach((clave, valor) -> session.setAttribute(clave, valor));
+		if (datos.cerrarSesion().get().booleanValue()) {
+			session.invalidate();
+		} else {
+			salida.forEach((clave, valor) -> request.setAttribute(clave, valor));
+			sesion.forEach((clave, valor) -> session.setAttribute(clave, valor));
+		}
 
 		if (rutaSalida.startsWith("redirect:")) {
 			response.sendRedirect(request.getContextPath() + "/cf" + rutaSalida.replace("redirect:", ""));
@@ -100,6 +105,6 @@ public class ControladorFrontalServlet extends HttpServlet {
 	}
 
 	public record Datos(String metodo, Map<String, String[]> entrada, Map<String, Object> salida,
-			Map<String, Object> sesion) {
+			Map<String, Object> sesion, AtomicReference<Boolean> cerrarSesion) {
 	}
 }

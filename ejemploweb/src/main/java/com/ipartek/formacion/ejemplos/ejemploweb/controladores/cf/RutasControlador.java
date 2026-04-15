@@ -40,6 +40,13 @@ public class RutasControlador {
 		
 		return "login";
 	}
+	
+	@Ruta("/logout")
+	public static String logout(Datos datos) {
+		datos.cerrarSesion().set(true);
+		
+		return "redirect:/login";
+	}
 
 	@Ruta("/admin/listado")
 	public static String listado(Datos datos) {
