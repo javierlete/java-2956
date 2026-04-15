@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/cf/*")
 public class ControladorFrontalServlet extends HttpServlet {
@@ -22,6 +23,8 @@ public class ControladorFrontalServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+
 		String metodo = request.getMethod();
 		String rutaEntrada = request.getPathInfo();
 
@@ -32,23 +35,29 @@ public class ControladorFrontalServlet extends HttpServlet {
 		Map<String, String[]> entrada = request.getParameterMap();
 
 		Map<String, Object> salida = new HashMap<>();
+		Map<String, Object> sesion = new HashMap<>();
 
-		Datos datos = new Datos(metodo, entrada, salida);
+		session.getAttributeNames().asIterator()
+				.forEachRemaining(clave -> sesion.put(clave, session.getAttribute(clave)));
+
+		Datos datos = new Datos(metodo, entrada, salida, sesion);
 
 		String rutaSalida = ejecutarMetodoControlador(rutaEntrada, datos);
 
-		if(rutaSalida == null) {
+		if (rutaSalida == null) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			
+
 			response.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html");
-			
-			response.getWriter().append("<h1>Esta no es la página que estás buscando (con gesto Jedi)</h1> " + rutaEntrada);
-			
+
+			response.getWriter()
+					.append("<h1>Esta no es la página que estás buscando (con gesto Jedi)</h1> " + rutaEntrada);
+
 			return;
 		}
-		
+
 		salida.forEach((clave, valor) -> request.setAttribute(clave, valor));
+		sesion.forEach((clave, valor) -> session.setAttribute(clave, valor));
 
 		if (rutaSalida.startsWith("redirect:")) {
 			response.sendRedirect(request.getContextPath() + "/cf" + rutaSalida.replace("redirect:", ""));
@@ -61,12 +70,11 @@ public class ControladorFrontalServlet extends HttpServlet {
 	private String ejecutarMetodoControlador(String rutaEntrada, Datos datos) {
 		try (ScanResult scanResult = new ClassGraph().enableAllInfo().scan()) {
 
-			ClassInfoList clasesConRuta =
-					scanResult.getClassesWithMethodAnnotation(Ruta.class.getName());
-			
+			ClassInfoList clasesConRuta = scanResult.getClassesWithMethodAnnotation(Ruta.class.getName());
+
 			for (ClassInfo classInfo : clasesConRuta) {
 				System.out.println(classInfo);
-				
+
 				Class<?> clazz = classInfo.loadClass();
 
 				for (Method m : clazz.getDeclaredMethods()) {
@@ -91,6 +99,7 @@ public class ControladorFrontalServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public record Datos(String metodo, Map<String, String[]> entrada, Map<String, Object> salida) {
+	public record Datos(String metodo, Map<String, String[]> entrada, Map<String, Object> salida,
+			Map<String, Object> sesion) {
 	}
 }

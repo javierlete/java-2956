@@ -22,6 +22,24 @@ public class RutasControlador {
 
 		return "index";
 	}
+	
+	@Ruta("/login")
+	public static String login(Datos datos) {
+		if(datos.metodo().equals("POST")) {
+			String email = datos.entrada().get("email")[0];
+			String password = datos.entrada().get("password")[0];
+			
+			if("javier@email.net".equals(email) && "javier".equals(password)) {
+				datos.sesion().put("email", email);
+				
+				return "redirect:/";
+			}
+
+			return "redirect:/login";
+		}
+		
+		return "login";
+	}
 
 	@Ruta("/admin/listado")
 	public static String listado(Datos datos) {

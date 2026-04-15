@@ -15,5 +15,5 @@
 <body>
 
 	<header>
-		<h1>Administración de personas</h1>
+		<h1>Administración de personas <span>Usuario: ${email}</span></h1>
 	</header>
