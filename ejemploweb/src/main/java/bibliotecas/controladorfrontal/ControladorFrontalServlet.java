@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.ejemploweb.controladores;
+package bibliotecas.controladorfrontal;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ipartek.formacion.ejemplos.ejemploweb.controladores.cf.RutasController.*;
+import static com.ipartek.formacion.ejemplos.ejemploweb.controladores.cf.RutasControlador.*;
 
 @WebServlet("/cf/*")
 public class ControladorFrontalServlet extends HttpServlet {

@@ -4,13 +4,13 @@ import java.time.LocalDate;
 
 import com.ipartek.formacion.ejemplos.ejemploweb.accesodatos.DaoPersona;
 import com.ipartek.formacion.ejemplos.ejemploweb.accesodatos.DaoRol;
-import com.ipartek.formacion.ejemplos.ejemploweb.controladores.ControladorFrontalServlet.Datos;
+import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
 import com.ipartek.formacion.ejemplos.ejemploweb.modelos.Persona;
 import com.ipartek.formacion.ejemplos.ejemploweb.modelos.Rol;
 
 import bibliotecas.fabrica.Fabrica;
 
-public class RutasController {
+public class RutasControlador {
 	private static final DaoPersona DAO_PERSONA = (DaoPersona) Fabrica.getObjeto("dao.persona");
 	private static final DaoRol DAO_ROL = (DaoRol) Fabrica.getObjeto("dao.rol");
 
