@@ -5,6 +5,12 @@ import java.util.function.Function;
 
 import bibliotecas.fabrica.Fabrica;
 
+/**
+ * Clase para la generación de un CRUD automático
+ * Necesita configurar en <code>fabrica.properties</code> la propiedad <code>dao.jdbc</code> para especificar la implementación deseada
+ * Por defecto podemos usar <code>dao.jdbc=bibliotecas.accesodatos.DaoJdbcImpl</code>
+ * @param <T> Tipo de datos para el CRUD específico
+ */
 public class DaoGenericoJdbc<T> implements Dao<T> {
 
 	protected final DaoJdbc dao = (DaoJdbc) Fabrica.getObjeto("dao.jdbc");
@@ -15,6 +21,13 @@ public class DaoGenericoJdbc<T> implements Dao<T> {
 	private Function<ResultSet, T> mapeadorFilaAObjeto;
 	private Function<T, Object[]> mapeadorObjetoACampos;
 
+	/**
+	 * Se deben pasar estos datos para poder construir automáticamente un CRUD
+	 * @param tabla Nombre de la tabla que almacena la información del objeto
+	 * @param campos Nombre de todos los campos de la tabla ordenados <strong>sin el id</strong>
+	 * @param mapeadorFilaAObjeto Función que recibe un ResultSet y devuelve un objeto
+	 * @param mapeadorObjetoACampos Función que recibe un objeto y devuelve un array de objetos con o sin id dependiendo de si se va a utilizar para un INSERT o para un UPDATE
+	 */
 	public DaoGenericoJdbc(String tabla, String[] campos, Function<ResultSet, T> mapeadorFilaAObjeto,
 			Function<T, Object[]> mapeadorObjetoACampos) {
 		super();
