@@ -7,7 +7,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Personas</title>
+<title>Tienda Jakarta</title>
 <base href="${pageContext.request.contextPath}/cf/">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
 <script defer src="${pageContext.request.contextPath}/js/index.js"></script>
@@ -15,5 +15,5 @@
 <body>
 
 	<header>
-		<h1>Administración de personas <span>Usuario: ${email}</span></h1>
+		<h1>Tienda Jakarta <span>Usuario: ${email}</span></h1>
 	</header>
