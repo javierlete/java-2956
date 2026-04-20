@@ -11,6 +11,9 @@
 					<div class="card-body">
 						<h5 class="card-title">${p.nombre}</h5>
 						<p class="card-text">${p.descripcion}</p>
+						<p class="card-text">
+							<a class="stretched-link d-block w-100 btn btn-primary" href="producto?id=${p.id}">Ver detalle</a>
+						</p>
 					</div>
 					<div class="card-footer text-end">
 						<small class="text-body-secondary"><fmt:formatNumber type="currency"

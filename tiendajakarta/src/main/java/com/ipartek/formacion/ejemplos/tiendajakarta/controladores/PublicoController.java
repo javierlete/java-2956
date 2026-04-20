@@ -18,6 +18,12 @@ public class PublicoController {
 	
 	@Ruta("/producto")
 	public static String detalleProducto(Datos datos) {
+		String sId = datos.entrada().get("id")[0];
+		
+		Long id = Long.parseLong(sId);
+		
+		datos.salida().put("producto", DAO.obtenerPorId(id));
+		
 		return "producto";
 	}
 }
