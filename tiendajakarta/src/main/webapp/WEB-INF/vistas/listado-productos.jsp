@@ -12,12 +12,13 @@
 						<h5 class="card-title">${p.nombre}</h5>
 						<p class="card-text">${p.descripcion}</p>
 						<p class="card-text">
-							<a class="stretched-link d-block w-100 btn btn-primary" href="producto?id=${p.id}">Ver detalle</a>
+							<a class="stretched-link d-block w-100 btn btn-primary"
+								href="producto?id=${p.id}"><i class="bi bi-search"></i></a>
 						</p>
 					</div>
 					<div class="card-footer text-end">
-						<small class="text-body-secondary"><fmt:formatNumber type="currency"
-					value="${p.precio}" /></small>
+						<small class="text-body-secondary"><fmt:formatNumber
+								type="currency" value="${p.precio}" /></small>
 					</div>
 				</div>
 			</div>

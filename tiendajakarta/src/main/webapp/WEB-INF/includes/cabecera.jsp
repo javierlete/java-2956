@@ -10,12 +10,14 @@
 <title>Tienda Jakarta</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base href="${pageContext.request.contextPath}/cf/">
+<link href="../imgs/shop.svg" rel="icon">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 <body>
 
 	<header class="text-center p-2 text-bg-dark mb-5">
 		<h1>
-			Tienda Jakarta <span>Usuario: ${email}</span>
+			<i class="bi bi-shop"></i> Tienda Jakarta <span><i class="bi bi-person"></i>: ${email}</span>
 		</h1>
 	</header>
