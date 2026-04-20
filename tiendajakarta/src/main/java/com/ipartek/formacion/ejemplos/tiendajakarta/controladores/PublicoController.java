@@ -15,4 +15,9 @@ public class PublicoController {
 		
 		return "listado-productos";
 	}
+	
+	@Ruta("/producto")
+	public static String detalleProducto(Datos datos) {
+		return "producto";
+	}
 }
