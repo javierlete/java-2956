@@ -31,12 +31,19 @@
 					<li class="nav-item"><a class="nav-link" href="">Principal</a></li>
 				</ul>
 				<ul class="navbar-nav mb-2 mb-sm-0">
-					<li class="nav-item"><a class="nav-link" href="login"><i
-							class="bi bi-person"></i> ${usuario.nombre}</a></li>
-					<li class="nav-item"><a class="nav-link" href="login">Iniciar
-							sesión</a></li>
+					<c:choose>
+						<c:when test="${usuario != null}">
+							<li class="navbar-text"><i class="bi bi-person"></i>
+								${usuario.nombre}</li>
+							<li class="nav-item"><a class="nav-link" href="logout"><i
+									class="bi bi-box-arrow-right"></i></a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="login"><i
+									class="bi bi-box-arrow-in-right"></i></a></li>
+						</c:otherwise>
+					</c:choose>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	

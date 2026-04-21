@@ -63,4 +63,11 @@ public class PublicoController {
 		}
 
 	}
+	
+	@Ruta("/logout")
+	public static String logout(Datos datos) {
+		datos.cerrarSesion().set(true);
+		
+		return "redirect:/";
+	}
 }
