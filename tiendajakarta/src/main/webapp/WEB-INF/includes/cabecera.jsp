@@ -16,9 +16,27 @@
 <link href="../css/estilos.css" rel="stylesheet">
 </head>
 <body>
-
-	<header class="text-center p-2 text-bg-dark mb-5">
-		<h1>
-			<i class="bi bi-shop"></i> Tienda Jakarta <span><i class="bi bi-person"></i>: ${usuario.nombre}</span>
-		</h1>
-	</header>
+	<nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href=""><i class="bi bi-shop"></i> Tienda
+				Jakarta</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
+					<li class="nav-item"><a class="nav-link" href="">Principal</a></li>
+				</ul>
+				<ul class="navbar-nav mb-2 mb-sm-0">
+					<li class="nav-item"><a class="nav-link" href="login"><i
+							class="bi bi-person"></i> ${usuario.nombre}</a></li>
+					<li class="nav-item"><a class="nav-link" href="login">Iniciar
+							sesión</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	
