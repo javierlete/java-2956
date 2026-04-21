@@ -19,6 +19,6 @@
 
 	<header class="text-center p-2 text-bg-dark mb-5">
 		<h1>
-			<i class="bi bi-shop"></i> Tienda Jakarta <span><i class="bi bi-person"></i>: ${email}</span>
+			<i class="bi bi-shop"></i> Tienda Jakarta <span><i class="bi bi-person"></i>: ${usuario.nombre}</span>
 		</h1>
 	</header>
