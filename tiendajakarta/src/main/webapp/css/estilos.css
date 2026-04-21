@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+@media (min-width: 768px) {
+	.rounded-md-start {
+		border-radius: var(--bs-border-radius-sm) 0 0 var(--bs-border-radius-sm) !important;
+	}
+}

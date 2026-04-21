@@ -13,6 +13,7 @@
 <link href="../imgs/shop.svg" rel="icon">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/bootstrap-icons.min.css" rel="stylesheet">
+<link href="../css/estilos.css" rel="stylesheet">
 </head>
 <body>
 
