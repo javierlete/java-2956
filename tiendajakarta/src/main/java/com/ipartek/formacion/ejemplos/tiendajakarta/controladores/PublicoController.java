@@ -1,6 +1,9 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
+import java.util.Optional;
+
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
+import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoUsuario;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario;
 
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
@@ -8,11 +11,12 @@ import bibliotecas.controladorfrontal.Ruta;
 import bibliotecas.fabrica.Fabrica;
 
 public class PublicoController {
-	private static final DaoProducto DAO = (DaoProducto) Fabrica.getObjeto("dao.producto");
+	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.getObjeto("dao.producto");
+	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.getObjeto("dao.usuario");
 
 	@Ruta("/")
 	public static String listadoProductos(Datos datos) {
-		datos.salida().put("productos", DAO.obtenerTodos());
+		datos.salida().put("productos", DAO_PRODUCTO.obtenerTodos());
 
 		return "listado-productos";
 	}
@@ -23,7 +27,7 @@ public class PublicoController {
 
 		Long id = Long.parseLong(sId);
 
-		datos.salida().put("producto", DAO.obtenerPorId(id));
+		datos.salida().put("producto", DAO_PRODUCTO.obtenerPorId(id));
 
 		return "producto";
 	}
@@ -40,15 +44,15 @@ public class PublicoController {
 
 		// 2. Convertir la información
 		// 3. Empaquetar en objetos
-		Usuario usuario = new Usuario(null, null, email, password);
+		Usuario usuario = new Usuario(null, null, email, password, null);
 
 		// 4. Llamar a la lógica de negocio
-		if ("javier@email.net".equals(usuario.getEmail()) && "javier".equals(usuario.getPassword())) {
+		Optional<Usuario> usuarioLoginOptional = DAO_USUARIO.obtenerPorEmailConRol(email);
+		
+		if (usuarioLoginOptional.isPresent() && usuarioLoginOptional.get().getPassword().equals(usuario.getPassword())) {
 			// 5. Empaquetar información para la siguiente vista
-			// TODO hacer que esto no sea un simulacro
-			usuario.setNombre("Javier");
 			
-			datos.sesion().put("usuario", usuario);
+			datos.sesion().put("usuario", usuarioLoginOptional.get());
 			
 			// 6. Saltar a la siguiente vista
 			System.out.println("Usuario logueado");

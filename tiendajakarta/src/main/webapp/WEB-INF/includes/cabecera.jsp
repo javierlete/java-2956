@@ -34,7 +34,7 @@
 					<c:choose>
 						<c:when test="${usuario != null}">
 							<li class="navbar-text"><i class="bi bi-person"></i>
-								${usuario.nombre}</li>
+								${usuario.nombre} (${usuario.rol.nombre})</li>
 							<li class="nav-item"><a class="nav-link" href="logout"><i
 									class="bi bi-box-arrow-right"></i></a></li>
 						</c:when>
