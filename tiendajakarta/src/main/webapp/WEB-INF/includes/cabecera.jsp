@@ -35,6 +35,9 @@
 						<c:when test="${usuario != null}">
 							<li class="navbar-text"><i class="bi bi-person"></i>
 								${usuario.nombre} (${usuario.rol.nombre})</li>
+							<c:if test="${usuario.rol.nombre == 'ADMINISTRADOR'}">
+								<li class="nav-item"><a class="nav-link" href="admin/productos">Administración</a></li>
+							</c:if>
 							<li class="nav-item"><a class="nav-link" href="logout"><i
 									class="bi bi-box-arrow-right"></i></a></li>
 						</c:when>
