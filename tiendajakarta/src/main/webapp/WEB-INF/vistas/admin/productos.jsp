@@ -15,42 +15,27 @@
 		</thead>
 
 		<tbody>
-			<tr>
-				<th class="text-end">1</th>
-				<td>Portátil</td>
-				<td class="text-end">1.234,56 €</td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="#">
-						<i class="bi bi-pencil-fill"></i>
-					</a>
-					<a class="btn btn-sm btn-danger" href="admin/productos">
-						<i class="bi bi-trash-fill"></i>
-					</a>
-				</td>
-			</tr>
-			<tr>
-				<th class="text-end">2</th>
-				<td>Monitor</td>
-				<td class="text-end">123,56 €</td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="admin/producto">
-						<i class="bi bi-pencil-fill"></i>
-					</a>
-					<a class="btn btn-sm btn-danger" href="admin/productos">
-						<i class="bi bi-trash-fill"></i>
-					</a>
-				</td>
-			</tr>
+			<c:forEach items="${productos}" var="p">
+				<tr>
+					<th class="text-end">${p.id}</th>
+					<td>${p.nombre}</td>
+					<td class="text-end"><fmt:formatNumber
+								type="currency" value="${p.precio}" /></td>
+					<td><a class="btn btn-sm btn-primary" href="admin/producto?id=${p.id}"> <i
+							class="bi bi-pencil-fill"></i>
+					</a> <a class="btn btn-sm btn-danger" href="admin/productos"> <i
+							class="bi bi-trash-fill"></i>
+					</a></td>
+				</tr>
+			</c:forEach>
 		</tbody>
-		
+
 		<tfoot class="table-secondary">
 			<tr>
 				<td colspan="3"></td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="admin/producto">
+				<td><a class="btn btn-sm btn-primary" href="admin/producto">
 						<i class="bi bi-plus-lg"></i>
-					</a>
-				</td>
+				</a></td>
 			</tr>
 		</tfoot>
 	</table>

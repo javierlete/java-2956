@@ -4,23 +4,25 @@
 
 <main class="container">
 
-	<form action="admin/productos">
+	<form action="admin/producto" method="post">
+		<input type="hidden" name="id" value="${producto.id}">
+		
 		<div class="row mb-3">
 			<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
 			<div class="col-sm">
-				<input type="text" class="form-control" id="nombre">
+				<input type="text" class="form-control" id="nombre" name="nombre" value="${producto.nombre}">
 			</div>
 		</div>
 		<div class="row mb-3">
 			<label for="precio" class="col-sm-2 col-form-label">Precio</label>
 			<div class="col-sm">
-				<input type="number" step=".01" class="form-control" id="precio">
+				<input type="number" step=".01" class="form-control" id="precio" name="precio" value="${producto.precio}">
 			</div>
 		</div>
 		<div class="row mb-3">
 			<label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
 			<div class="col-sm">
-				<textarea rows="5" class="form-control" id="descripcion"></textarea>
+				<textarea rows="5" class="form-control" id="descripcion" name="descripcion">${producto.descripcion}</textarea>
 			</div>
 		</div>
 
