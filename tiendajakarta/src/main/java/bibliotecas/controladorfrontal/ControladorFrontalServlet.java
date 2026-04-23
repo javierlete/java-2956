@@ -1,6 +1,7 @@
 package bibliotecas.controladorfrontal;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,12 +12,15 @@ import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
 import io.github.classgraph.ScanResult;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
+@MultipartConfig
 @WebServlet("/cf/*")
 public class ControladorFrontalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,15 +37,39 @@ public class ControladorFrontalServlet extends HttpServlet {
 			rutaEntrada = "/";
 		}
 
-		Map<String, String[]> entrada = request.getParameterMap();
-
+		Map<String, String[]> entrada = new HashMap<>(); 
 		Map<String, Object> salida = new HashMap<>();
 		Map<String, Object> sesion = new HashMap<>();
+		Map<String, InputStream> ficheros = new HashMap<>();
+		AtomicReference<Boolean> cerrarSesion = new AtomicReference<Boolean>(false);
+		String rutaRaiz = getServletContext().getRealPath("/");
+		
+		request.getParameterMap().entrySet().stream().forEach(par -> entrada.put(par.getKey(), par.getValue()));
+
+		boolean esMultipart = request.getContentType() != null
+				&& request.getContentType().toLowerCase().startsWith("multipart/");
+
+		if (esMultipart) {
+			for (Part part : request.getParts()) {
+
+				String nombreCampo = part.getName();
+				String nombreFichero = part.getSubmittedFileName();
+
+				if (nombreFichero != null && !nombreFichero.isEmpty()) {
+					// 🔹 Es un archivo
+					System.out.println("Archivo subido: " + nombreFichero);
+
+					entrada.put(nombreCampo, new String[] { nombreFichero });
+
+					ficheros.put(nombreCampo, part.getInputStream());
+				}
+			}
+		}
 
 		session.getAttributeNames().asIterator()
 				.forEachRemaining(clave -> sesion.put(clave, session.getAttribute(clave)));
 
-		Datos datos = new Datos(metodo, entrada, salida, sesion, new AtomicReference<Boolean>(false));
+		Datos datos = new Datos(metodo, entrada, salida, sesion, cerrarSesion, ficheros, rutaRaiz);
 
 		String rutaSalida = ejecutarMetodoControlador(rutaEntrada, datos);
 
@@ -105,6 +133,6 @@ public class ControladorFrontalServlet extends HttpServlet {
 	}
 
 	public record Datos(String metodo, Map<String, String[]> entrada, Map<String, Object> salida,
-			Map<String, Object> sesion, AtomicReference<Boolean> cerrarSesion) {
+			Map<String, Object> sesion, AtomicReference<Boolean> cerrarSesion, Map<String, InputStream> ficheros, String rutaRaiz) {
 	}
 }

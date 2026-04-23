@@ -4,7 +4,7 @@
 
 <main class="container">
 
-	<form action="admin/producto" method="post">
+	<form action="admin/producto" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="${producto.id}">
 		
 		<div class="row mb-3">
@@ -23,6 +23,12 @@
 			<label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
 			<div class="col-sm">
 				<textarea rows="5" class="form-control" id="descripcion" name="descripcion">${producto.descripcion}</textarea>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<label for="imagen" class="col-sm-2 col-form-label">Imagen</label>
+			<div class="col-sm">
+				<input type="file" class="form-control" id="imagen" name="imagen" value="${producto.precio}" accept=".jpg,.jpeg,image/jpeg">
 			</div>
 		</div>
 
