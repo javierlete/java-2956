@@ -64,5 +64,16 @@ public class AdministradorController {
 
 		return "redirect:/admin/productos";
 	}
+	
+	@Ruta("/admin/producto-borrar")
+	public static String borrar(Datos datos) {
+		String sId = datos.entrada().get("id")[0];
+		
+		Long id = Long.parseLong(sId);
+		
+		DAO.borrar(id);
+		
+		return "redirect:/admin/productos";
+	}
 
 }

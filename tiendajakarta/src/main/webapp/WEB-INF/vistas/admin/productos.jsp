@@ -23,7 +23,7 @@
 								type="currency" value="${p.precio}" /></td>
 					<td><a class="btn btn-sm btn-primary" href="admin/producto?id=${p.id}"> <i
 							class="bi bi-pencil-fill"></i>
-					</a> <a class="btn btn-sm btn-danger" href="admin/productos"> <i
+					</a> <a class="btn btn-sm btn-danger" href="admin/producto-borrar?id=${p.id}"> <i
 							class="bi bi-trash-fill"></i>
 					</a></td>
 				</tr>
