@@ -29,7 +29,7 @@ public class DaoProductoSqlite extends DaoGenericoJdbc<Producto> implements DaoP
 		if (p.getId() == null) {
 			return new Object[] { p.getNombre(), p.getDescripcion(), p.getPrecio() };
 		} else {
-			return new Object[] { p.getId(), p.getNombre(), p.getDescripcion(), p.getPrecio() };
+			return new Object[] { p.getNombre(), p.getDescripcion(), p.getPrecio(), p.getId() };
 		}
 	}
 }

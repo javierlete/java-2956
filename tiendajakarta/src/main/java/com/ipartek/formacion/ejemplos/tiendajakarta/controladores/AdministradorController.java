@@ -1,20 +1,20 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Producto;
 
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
 import bibliotecas.controladorfrontal.Ruta;
+import bibliotecas.fabrica.Fabrica;
 
 public class AdministradorController {
+	private final static DaoProducto DAO = (DaoProducto) Fabrica.getObjeto("dao.producto");
+	
 	@Ruta("/admin/productos")
 	public static String listadoProductos(Datos datos) {
-		datos.salida().put("productos",
-				List.of(new Producto(1L, "Portátil", "El más chulo", new BigDecimal("1234.56")),
-						new Producto(2L, "Monitor", "El más guay", new BigDecimal("123.56")),
-						new Producto(3L, "Ratón", "El más mini", new BigDecimal("12.56"))));
+		datos.salida().put("productos", DAO.obtenerTodos());
 
 		return "admin/productos";
 	}
@@ -37,7 +37,7 @@ public class AdministradorController {
 		if (sId != null) {
 			Long id = Long.parseLong(sId);
 
-			datos.salida().put("producto", new Producto(id, "Nombre " + id, "Descripción " + id, new BigDecimal(id)));
+			datos.salida().put("producto", DAO.obtenerPorId(id));
 		}
 
 		return "admin/producto";
@@ -54,13 +54,13 @@ public class AdministradorController {
 
 		Producto producto = new Producto(id, nombre, descripcion, precio);
 
-		if(producto.getId() == null) {
-			System.out.println("INSERTAR");
-		} else {
-			System.out.println("MODIFICAR");
-		}
-		
 		System.out.println(producto);
+
+		if(producto.getId() == null) {
+			DAO.insertar(producto);
+		} else {
+			DAO.modificar(producto);
+		}
 
 		return "redirect:/admin/productos";
 	}
