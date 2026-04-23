@@ -8,4 +8,9 @@ public class AdministradorController {
 	public static String listadoProductos(Datos datos) {
 		return "admin/productos";
 	}
+
+	@Ruta("/admin/producto")
+	public static String formularioProducto(Datos datos) {
+		return "admin/producto";
+	}
 }

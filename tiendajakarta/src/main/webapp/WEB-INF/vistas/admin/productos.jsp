@@ -1,7 +1,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/includes/cabecera.jsp" %>
+<%@ include file="/WEB-INF/includes/cabecera.jsp"%>
 
-<main>Listado de productos</main>
+<main class="container">
 
-<%@ include file="/WEB-INF/includes/pie.jsp" %>
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="table-secondary">
+			<tr>
+				<th class="text-end">Id</th>
+				<th>Nombre</th>
+				<th class="text-end">Precio</th>
+				<th>OPCIONES</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<th class="text-end">1</th>
+				<td>Portátil</td>
+				<td class="text-end">1.234,56 €</td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="#">
+						<i class="bi bi-pencil-fill"></i>
+					</a>
+					<a class="btn btn-sm btn-danger" href="admin/productos">
+						<i class="bi bi-trash-fill"></i>
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<th class="text-end">2</th>
+				<td>Monitor</td>
+				<td class="text-end">123,56 €</td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="admin/producto">
+						<i class="bi bi-pencil-fill"></i>
+					</a>
+					<a class="btn btn-sm btn-danger" href="admin/productos">
+						<i class="bi bi-trash-fill"></i>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		
+		<tfoot class="table-secondary">
+			<tr>
+				<td colspan="3"></td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="admin/producto">
+						<i class="bi bi-plus-lg"></i>
+					</a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+</main>
+
+<%@ include file="/WEB-INF/includes/pie.jsp"%>
