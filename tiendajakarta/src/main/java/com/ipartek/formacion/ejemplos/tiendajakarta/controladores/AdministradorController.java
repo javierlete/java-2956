@@ -61,10 +61,12 @@ public class AdministradorController {
 		System.out.println(producto);
 
 		if (producto.getId() == null) {
-			DAO.insertar(producto);
+			producto = DAO.insertar(producto);
 		} else {
-			DAO.modificar(producto);
+			producto = DAO.modificar(producto);
 		}
+
+		System.out.println(producto);
 
 		if (imagen != null) {
 			System.out.println("IMAGEN ======> " + imagen);
