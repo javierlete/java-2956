@@ -3,6 +3,7 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jl" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
