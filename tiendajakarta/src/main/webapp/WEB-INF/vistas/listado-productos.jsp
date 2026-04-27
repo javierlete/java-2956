@@ -7,7 +7,9 @@
 		<c:forEach items="${productos}" var="p">
 			<div class="col">
 				<div class="card h-100">
-					<img src="../imgs/${p.id}.jpg" class="card-img-top" alt="...">
+					<jsp:useBean id="ahora" class="java.util.Date" />
+					<img src="../imgs/${p.id}.jpg?v=${ahora.time}"
+						class="card-img-top" alt="...">
 					<div class="card-body">
 						<h5 class="card-title">${p.nombre}</h5>
 						<p class="card-text">${p.descripcion}</p>
