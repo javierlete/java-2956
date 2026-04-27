@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
@@ -18,26 +19,26 @@ public class DaoJdbcImpl implements DaoJdbc {
 	private final String user;
 	private final String pass;
 	private final String driver;
-	
+
 	public DaoJdbcImpl() {
 		Properties props = new Properties();
-		
+
 		try {
 			props.load(Fabrica.class.getClassLoader().getResourceAsStream("accesodatos.properties"));
-			
+
 			this.url = props.getProperty("url");
 			this.user = props.getProperty("user");
 			this.pass = props.getProperty("pass");
 			this.driver = props.getProperty("driver");
-			
+
 			Class.forName(this.driver);
 		} catch (Exception e) {
 			throw new FabricaException("No se ha podido cargar la configuración", e);
 		}
 	}
-	
+
 	@Override
-	public <T> T ejecutarSqlUno(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args) {
+	public <T extends Identificable> T ejecutarSqlUno(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args) {
 		Iterable<T> objetos = ejecutarSql(sql, mapeador, objeto, args);
 
 		if (objetos.iterator().hasNext()) {
@@ -48,11 +49,11 @@ public class DaoJdbcImpl implements DaoJdbc {
 	}
 
 	@Override
-	public <T> Iterable<T> ejecutarSql(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args) {
+	public <T extends Identificable> Iterable<T> ejecutarSql(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args) {
 		Collection<T> objetos = new ArrayList<>();
 
 		try (Connection con = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pst = con.prepareStatement(sql);) {
+				PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			for (int i = 0; i < args.length; i++) {
 				pst.setObject(i + 1, args[i]);
 			}
@@ -68,10 +69,17 @@ public class DaoJdbcImpl implements DaoJdbc {
 			} else {
 				int numero = pst.executeUpdate();
 
-				if(numero == 0) {
+				try (ResultSet rs = pst.getGeneratedKeys()) {
+					if (rs.next()) {
+						long idGenerado = rs.getLong(1);
+						objeto.setId(idGenerado);
+					}
+				}
+
+				if (numero == 0) {
 					throw new DaoException("No se ha encontrado el registro a modificar/borrar");
 				}
-				
+
 				objetos.add(objeto);
 
 				return objetos;

@@ -11,7 +11,7 @@ import bibliotecas.fabrica.Fabrica;
  * Por defecto podemos usar <code>dao.jdbc=bibliotecas.accesodatos.DaoJdbcImpl</code>
  * @param <T> Tipo de datos para el CRUD específico
  */
-public class DaoGenericoJdbc<T> implements Dao<T> {
+public class DaoGenericoJdbc<T extends Identificable> implements Dao<T> {
 
 	protected final DaoJdbc dao = (DaoJdbc) Fabrica.getObjeto("dao.jdbc");
 

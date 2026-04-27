@@ -14,7 +14,7 @@ public interface DaoJdbc {
 	 * @param args		Argumentos ordenados de la sentencia que se va a ejecutar
 	 * @return 			Objeto de tipo T o null
 	 */
-	<T> T ejecutarSqlUno(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args);
+	<T extends Identificable> T ejecutarSqlUno(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args);
 
 	/**
 	 * Ejecuta una sentencia SQL y devuelve los registros mapeados a objetos
@@ -25,6 +25,6 @@ public interface DaoJdbc {
 	 * @param args		Argumentos ordenados de la sentencia que se va a ejecutar
 	 * @return 			Iterable de objetos del tipo T. En el caso de que no haya ninguna fila, no valdrá null, sino que será un Iterable de 0 elementos
 	 */
-	<T> Iterable<T> ejecutarSql(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args);
+	<T extends Identificable> Iterable<T> ejecutarSql(String sql, Function<ResultSet, T> mapeador, T objeto, Object... args);
 
 }

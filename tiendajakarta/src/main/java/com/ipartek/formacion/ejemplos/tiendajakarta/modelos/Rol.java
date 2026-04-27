@@ -2,7 +2,9 @@ package com.ipartek.formacion.ejemplos.tiendajakarta.modelos;
 
 import java.util.Objects;
 
-public class Rol {
+import bibliotecas.accesodatos.Identificable;
+
+public class Rol implements Identificable {
 	private Long id;
 	private String nombre;
 	private String descripcion;
