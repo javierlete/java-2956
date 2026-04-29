@@ -44,7 +44,7 @@ public class PublicoController {
 
 		// 2. Convertir la información
 		// 3. Empaquetar en objetos
-		Usuario usuario = new Usuario(null, null, email, password, null);
+		Usuario usuario = Usuario.builder().email(email).password(password).build();
 
 		// 4. Llamar a la lógica de negocio
 		Optional<Usuario> usuarioLoginOptional = DAO_USUARIO.obtenerPorEmailConRol(email);
