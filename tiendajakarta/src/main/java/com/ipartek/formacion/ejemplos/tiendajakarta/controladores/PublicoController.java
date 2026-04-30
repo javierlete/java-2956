@@ -1,7 +1,6 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
 import java.util.Optional;
-import java.util.logging.Logger;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoUsuario;
@@ -10,10 +9,10 @@ import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario;
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
 import bibliotecas.controladorfrontal.Ruta;
 import bibliotecas.fabrica.Fabrica;
+import lombok.extern.java.Log;
 
+@Log
 public class PublicoController {
-	private final static Logger log = Logger.getLogger(PublicoController.class.getName());
-	
 	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.getObjeto("dao.producto");
 	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.getObjeto("dao.usuario");
 

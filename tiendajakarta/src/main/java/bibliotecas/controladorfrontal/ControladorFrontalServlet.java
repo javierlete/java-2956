@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Logger;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
@@ -20,12 +19,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
+import lombok.extern.java.Log;
+
+@Log
 
 @MultipartConfig
 @WebServlet("/cf/*")
 public class ControladorFrontalServlet extends HttpServlet {
-	private static final Logger log = Logger.getLogger(ControladorFrontalServlet.class.getName());
-	
 	private static final long serialVersionUID = 1L;
 
 	@Override

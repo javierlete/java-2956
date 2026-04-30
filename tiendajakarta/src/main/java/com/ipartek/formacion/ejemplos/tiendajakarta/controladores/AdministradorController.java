@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Producto;
@@ -13,10 +12,10 @@ import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Producto;
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
 import bibliotecas.controladorfrontal.Ruta;
 import bibliotecas.fabrica.Fabrica;
+import lombok.extern.java.Log;
 
+@Log
 public class AdministradorController {
-	private final static Logger log = Logger.getLogger(AdministradorController.class.getName());
-	
 	private final static DaoProducto DAO = (DaoProducto) Fabrica.getObjeto("dao.producto");
 
 	@Ruta("/admin/productos")
