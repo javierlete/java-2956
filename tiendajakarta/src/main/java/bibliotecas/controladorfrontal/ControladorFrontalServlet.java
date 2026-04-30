@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Logger;
 
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
@@ -23,6 +24,8 @@ import jakarta.servlet.http.Part;
 @MultipartConfig
 @WebServlet("/cf/*")
 public class ControladorFrontalServlet extends HttpServlet {
+	private static final Logger log = Logger.getLogger(ControladorFrontalServlet.class.getName());
+	
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -106,7 +109,7 @@ public class ControladorFrontalServlet extends HttpServlet {
 			ClassInfoList clasesConRuta = scanResult.getClassesWithMethodAnnotation(Ruta.class.getName());
 
 			for (ClassInfo classInfo : clasesConRuta) {
-				System.out.println(classInfo);
+				log.fine(classInfo.toString());
 
 				Class<?> clazz = classInfo.loadClass();
 

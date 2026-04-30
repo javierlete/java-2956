@@ -1,6 +1,7 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoUsuario;
@@ -11,6 +12,8 @@ import bibliotecas.controladorfrontal.Ruta;
 import bibliotecas.fabrica.Fabrica;
 
 public class PublicoController {
+	private final static Logger log = Logger.getLogger(PublicoController.class.getName());
+	
 	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.getObjeto("dao.producto");
 	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.getObjeto("dao.usuario");
 
@@ -55,13 +58,13 @@ public class PublicoController {
 			datos.sesion().put("usuario", usuarioLoginOptional.get());
 			
 			// 6. Saltar a la siguiente vista
-			System.out.println("Usuario logueado");
+			log.info("Usuario logueado");
 			
 			return "redirect:/";
 		} else {
 			// 5. Empaquetar información para la siguiente vista
 			// 6. Saltar a la siguiente vista
-			System.out.println("Usuario NO logueado");
+			log.info("Usuario NO logueado");
 			
 			return "login";
 		}
