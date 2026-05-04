@@ -1,6 +1,6 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.jpa;
 
-import static com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.jpa.DaoJpa.ejecutarJpa;
+import static bibliotecas.accesodatos.DaoJpa.ejecutarJpa;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoRol;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Rol;;
