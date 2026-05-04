@@ -5,7 +5,9 @@
 
 	<persistence-unit
 		name="com.ipartek.formacion.ejemplos.tiendajakarta.modelos">
+		<class>com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario</class>
 		<class>com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Rol</class>
+		<class>com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Producto</class>
 
 		<properties>
 			<!-- Database connection settings -->
