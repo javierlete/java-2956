@@ -1,10 +1,11 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.jpa;
 
-import java.util.List;
+import java.util.function.Function;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoRol;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Rol;
 
+import bibliotecas.accesodatos.DaoException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -16,70 +17,64 @@ public class DaoRolJpa implements DaoRol {
 
 	@Override
 	public Iterable<Rol> obtenerTodos() {
-		EntityManager em = EMF.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		List<Rol> roles = em.createQuery("from Rol", Rol.class).getResultList();
-
-		t.commit();
-
-		return roles;
+		return ejecutarJpa(em -> em.createQuery("from Rol", Rol.class).getResultList());
 	}
 
 	@Override
 	public Rol obtenerPorId(Long id) {
-		EntityManager em = EMF.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		Rol rol = em.find(Rol.class, id);
-
-		t.commit();
-
-		return rol;
+		return ejecutarJpa(em -> em.find(Rol.class, id));
 	}
 
 	@Override
 	public Rol insertar(Rol rol) {
-		EntityManager em = EMF.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		em.persist(rol);
-
-		t.commit();
-
-		return rol;
+		return ejecutarJpa(em -> {
+			em.persist(rol);
+			return rol;
+		});
 	}
 
 	@Override
 	public Rol modificar(Rol rol) {
-		EntityManager em = EMF.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-
-		t.begin();
-
-		em.merge(rol);
-
-		t.commit();
-
-		return rol;
+		return ejecutarJpa(em -> {
+			em.merge(rol);
+			return rol;
+		});
 	}
 
 	@Override
 	public void borrar(Long id) {
-		EntityManager em = EMF.createEntityManager();
-		EntityTransaction t = em.getTransaction();
-		
-		t.begin();
+		ejecutarJpa(em -> {
+			em.remove(em.find(Rol.class, id));
+			return null;
+		});
+	}
 
-		em.remove(em.find(Rol.class, id));
-		
-		t.commit();
+	public static <T> T ejecutarJpa(Function<EntityManager, T> funcion) {
+		EntityTransaction t = null;
+		EntityManager em = null;
+
+		try {
+			em = EMF.createEntityManager();
+			t = em.getTransaction();
+
+			t.begin();
+
+			T respuesta = funcion.apply(em);
+
+			t.commit();
+
+			return respuesta;
+		} catch (Exception e) {
+			if (t != null) {
+				t.rollback();
+			}
+
+			throw new DaoException("Error en la operación JPA", e);
+		} finally {
+			if (em != null && em.isOpen()) {
+				em.close();
+			}
+		}
 	}
 
 }
