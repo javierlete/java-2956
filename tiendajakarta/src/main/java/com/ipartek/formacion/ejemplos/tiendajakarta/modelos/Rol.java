@@ -43,6 +43,6 @@ public class Rol implements Identificable {
 	
 	@EqualsAndHashCode.Exclude
 	@ToString.Exclude
-	@OneToMany(mappedBy = "rol")
+	@OneToMany(mappedBy = "rol") //, fetch = FetchType.EAGER)
 	private Set<Usuario> usuarios;
 }

@@ -62,5 +62,7 @@ public class DaoRolJpaPruebas {
 		System.out.println("Pepe: " + pepe);
 		
 		System.out.println(daoUsuario.obtenerPorIdRol(2L));
+		
+		// System.out.println(dao.obtenerPorId(2L).getUsuarios());
 	}
 }
