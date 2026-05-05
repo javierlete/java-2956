@@ -45,8 +45,8 @@ public class DaoUsuarioJpa implements DaoUsuario {
 
 	@Override
 	public Optional<Usuario> obtenerPorEmailConRol(String email) {
-		return Optional
-				.ofNullable(ejecutarJpa(em -> em.createQuery("from Usuario u where u.email=:email", Usuario.class)
+		return Optional.ofNullable(
+				ejecutarJpa(em -> em.createQuery("from Usuario u join fetch u.rol where u.email=:email", Usuario.class)
 						.setParameter("email", email).getSingleResultOrNull()));
 	}
 }
