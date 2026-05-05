@@ -1,5 +1,6 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.pruebas;
 
+import java.util.Optional;
 import java.util.Set;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoRol;
@@ -56,5 +57,8 @@ public class DaoRolJpaPruebas {
 			System.out.println(usuario);
 		}
 		
+		Optional<Usuario> pepe = daoUsuario.obtenerPorEmailConRol("pepe@email.net");
+		
+		System.out.println("Pepe: " + pepe);
 	}
 }
