@@ -60,5 +60,7 @@ public class DaoRolJpaPruebas {
 		Optional<Usuario> pepe = daoUsuario.obtenerPorEmailConRol("pepe@email.net");
 		
 		System.out.println("Pepe: " + pepe);
+		
+		System.out.println(daoUsuario.obtenerPorIdRol(2L));
 	}
 }
