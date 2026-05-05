@@ -20,8 +20,8 @@ public class DaoUsuarioSqlite extends DaoGenericoJdbc<Usuario> implements DaoUsu
 
 	private static Usuario filaAObjeto(ResultSet rs) {
 		try {
-			return new Usuario(rs.getLong("id"), rs.getString("nombre"), rs.getString("email"),
-					rs.getString("password"), new Rol(rs.getLong("roles_id"), null, null));
+			return Usuario.builder().id(rs.getLong("id")).nombre(rs.getString("nombre")).email(rs.getString("email"))
+					.password(rs.getString("password")).rol(Rol.builder().id(rs.getLong("roles_id")).build()).build();
 		} catch (SQLException e) {
 			throw new DaoException("No he podido convertir la fila a objeto", e);
 		}
@@ -49,9 +49,11 @@ public class DaoUsuarioSqlite extends DaoGenericoJdbc<Usuario> implements DaoUsu
 
 	private static Usuario filaAObjetoConRol(ResultSet rs) {
 		try {
-			return new Usuario(rs.getLong("u_id"), rs.getString("u_nombre"), rs.getString("u_email"),
-					rs.getString("u_password"),
-					new Rol(rs.getLong("r_id"), rs.getString("r_nombre"), rs.getString("r_descripcion")));
+			return Usuario
+					.builder().id(rs.getLong("u_id")).nombre(rs.getString("u_nombre")).email(rs.getString("u_email"))
+					.password(rs.getString("u_password")).rol(Rol.builder().id(rs.getLong("r_id"))
+							.nombre(rs.getString("r_nombre")).descripcion(rs.getString("r_descripcion")).build())
+					.build();
 		} catch (SQLException e) {
 			throw new DaoException("No he podido convertir la fila a objeto", e);
 		}
