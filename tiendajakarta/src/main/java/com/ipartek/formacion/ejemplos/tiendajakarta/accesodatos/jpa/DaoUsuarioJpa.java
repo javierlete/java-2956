@@ -6,42 +6,14 @@ import java.util.Optional;
 
 import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoUsuario;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Rol;
-import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario;;
+import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario;
 
-public class DaoUsuarioJpa implements DaoUsuario {
+import bibliotecas.accesodatos.DaoGenericoJpa;;
 
-	@Override
-	public Iterable<Usuario> obtenerTodos() {
-		return ejecutarJpa(em -> em.createQuery("from Usuario", Usuario.class).getResultList());
-	}
+public class DaoUsuarioJpa extends DaoGenericoJpa<Usuario> implements DaoUsuario {
 
-	@Override
-	public Usuario obtenerPorId(Long id) {
-		return ejecutarJpa(em -> em.find(Usuario.class, id));
-	}
-
-	@Override
-	public Usuario insertar(Usuario usuario) {
-		return ejecutarJpa(em -> {
-			em.persist(usuario);
-			return usuario;
-		});
-	}
-
-	@Override
-	public Usuario modificar(Usuario usuario) {
-		return ejecutarJpa(em -> {
-			em.merge(usuario);
-			return usuario;
-		});
-	}
-
-	@Override
-	public void borrar(Long id) {
-		ejecutarJpa(em -> {
-			em.remove(em.find(Usuario.class, id));
-			return null;
-		});
+	public DaoUsuarioJpa() {
+		super(Usuario.class);
 	}
 
 	@Override
