@@ -2,23 +2,19 @@ package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
 import java.util.Optional;
 
-import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
-import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoUsuario;
+import com.ipartek.formacion.ejemplos.tiendajakarta.logicanegocio.PublicoNegocio;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Usuario;
 
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
 import bibliotecas.controladorfrontal.Ruta;
 import bibliotecas.fabrica.Fabrica;
-import lombok.extern.java.Log;
 
-@Log
 public class PublicoController {
-	private static final DaoProducto DAO_PRODUCTO = (DaoProducto) Fabrica.getObjeto("dao.producto");
-	private static final DaoUsuario DAO_USUARIO = (DaoUsuario) Fabrica.getObjeto("dao.usuario");
-
+	private static final PublicoNegocio negocio = (PublicoNegocio)Fabrica.getObjeto("negocio.publico");
+	
 	@Ruta("/")
 	public static String listadoProductos(Datos datos) {
-		datos.salida().put("productos", DAO_PRODUCTO.obtenerTodos());
+		datos.salida().put("productos", negocio.listadoProductos());
 
 		return "listado-productos";
 	}
@@ -29,7 +25,7 @@ public class PublicoController {
 
 		Long id = Long.parseLong(sId);
 
-		datos.salida().put("producto", DAO_PRODUCTO.obtenerPorId(id));
+		datos.salida().put("producto", negocio.detalleProducto(id));
 
 		return "producto";
 	}
@@ -49,21 +45,18 @@ public class PublicoController {
 		Usuario usuario = Usuario.builder().email(email).password(password).build();
 
 		// 4. Llamar a la lógica de negocio
-		Optional<Usuario> usuarioLoginOptional = DAO_USUARIO.obtenerPorEmailConRol(email);
+		Optional<Usuario> usuarioLogin = negocio.autenticar(usuario);
 		
-		if (usuarioLoginOptional.isPresent() && usuarioLoginOptional.get().getPassword().equals(usuario.getPassword())) {
+		if (usuarioLogin.isPresent()) {
 			// 5. Empaquetar información para la siguiente vista
 			
-			datos.sesion().put("usuario", usuarioLoginOptional.get());
+			datos.sesion().put("usuario", usuarioLogin.get());
 			
 			// 6. Saltar a la siguiente vista
-			log.info("Usuario logueado");
-			
 			return "redirect:/";
 		} else {
 			// 5. Empaquetar información para la siguiente vista
 			// 6. Saltar a la siguiente vista
-			log.info("Usuario NO logueado");
 			
 			return "login";
 		}

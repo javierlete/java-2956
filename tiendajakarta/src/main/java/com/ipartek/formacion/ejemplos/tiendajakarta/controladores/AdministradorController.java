@@ -1,12 +1,8 @@
 package com.ipartek.formacion.ejemplos.tiendajakarta.controladores;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.logging.Level;
 
-import com.ipartek.formacion.ejemplos.tiendajakarta.accesodatos.DaoProducto;
+import com.ipartek.formacion.ejemplos.tiendajakarta.logicanegocio.AdministradorNegocio;
 import com.ipartek.formacion.ejemplos.tiendajakarta.modelos.Producto;
 
 import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
@@ -16,11 +12,12 @@ import lombok.extern.java.Log;
 
 @Log
 public class AdministradorController {
-	private final static DaoProducto DAO = (DaoProducto) Fabrica.getObjeto("dao.producto");
 
+	private static final AdministradorNegocio negocio = (AdministradorNegocio) Fabrica.getObjeto("negocio.admin");
+	
 	@Ruta("/admin/productos")
 	public static String listadoProductos(Datos datos) {
-		datos.salida().put("productos", DAO.obtenerTodos());
+		datos.salida().put("productos", negocio.listadoProductos());
 
 		return "admin/productos";
 	}
@@ -43,7 +40,7 @@ public class AdministradorController {
 		if (sId != null) {
 			Long id = Long.parseLong(sId);
 
-			datos.salida().put("producto", DAO.obtenerPorId(id));
+			datos.salida().put("producto", negocio.detalleProducto(id));
 		}
 
 		return "admin/producto";
@@ -61,32 +58,16 @@ public class AdministradorController {
 
 		Producto producto = new Producto(id, nombre, descripcion, precio);
 
-		log.info(producto.toString());
-
 		if (producto.getId() == null) {
-			producto = DAO.insertar(producto);
+			producto = negocio.anyadirProducto(producto);
 		} else {
-			producto = DAO.modificar(producto);
+			producto = negocio.modificarProducto(producto);
 		}
-
-		log.info(producto.toString());
 
 		if (imagen != null) {
-			log.info("IMAGEN ======> " + imagen);
-
-			String ruta = datos.rutaRaiz() + "imgs" + File.separator + producto.getId() + ".jpg";
-
-			log.info(ruta);
-			
-			try {
-				datos.ficheros().get("imagen").transferTo(new FileOutputStream(ruta));
-			} catch (IOException e) {
-				log.log(Level.SEVERE, "ERROR AL GUARDAR LA IMAGEN " + ruta, e);
-			}
-		} else {
-			log.info("SIN IMAGEN");
+			negocio.guardarImagenProducto(producto.getId(), datos.rutaRaiz(), datos.ficheros().get("imagen"));
 		}
-
+		
 		return "redirect:/admin/productos";
 	}
 
@@ -96,7 +77,7 @@ public class AdministradorController {
 
 		Long id = Long.parseLong(sId);
 
-		DAO.borrar(id);
+		negocio.borrarProducto(id);
 
 		return "redirect:/admin/productos";
 	}
