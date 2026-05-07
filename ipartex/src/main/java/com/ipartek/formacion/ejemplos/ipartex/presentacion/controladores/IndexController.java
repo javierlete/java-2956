@@ -38,4 +38,15 @@ public class IndexController {
 		
 		return "index";
 	}
+	
+	@Ruta("/enviar")
+	public static String enviar(Datos datos) {
+		var texto = datos.entrada().get("texto")[0];
+		
+		var mensaje = Mensaje.builder().texto(texto).usuario(Usuario.builder().id(1L).build()).build();
+		
+		usuarioNegocio.enviarMensaje(mensaje);
+		
+		return "redirect:/mensajes";
+	}
 }
