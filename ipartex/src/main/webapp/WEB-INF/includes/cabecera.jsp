@@ -3,24 +3,23 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <%@ taglib uri="jakarta.tags.fmt" prefix="fmt"%>
 <%@ taglib uri="http://sargue.net/jsptags/time" prefix="javatime"%>
-<%@ taglib tagdir="/WEB-INF/tags" prefix="jl" %>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="jl"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Tienda Jakarta</title>
+<title>IparteX</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <base href="${pageContext.request.contextPath}/cf/">
-<link href="../imgs/shop.svg" rel="icon">
+<link href="../imgs/chat.svg" rel="icon">
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/bootstrap-icons.min.css" rel="stylesheet">
-<link href="../css/estilos.css" rel="stylesheet">
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href=""><i class="bi bi-shop"></i> Tienda
-				Jakarta</a>
+			<a class="navbar-brand" href=""><i class="bi bi-chat"></i>
+				IparteX</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -35,10 +34,7 @@
 					<c:choose>
 						<c:when test="${usuario != null}">
 							<li class="navbar-text"><i class="bi bi-person"></i>
-								${usuario.nombre} (${usuario.rol.nombre})</li>
-							<c:if test="${usuario.rol.nombre == 'ADMINISTRADOR'}">
-								<li class="nav-item"><a class="nav-link" href="admin/productos">Administración</a></li>
-							</c:if>
+								${usuario.nombre}</li>
 							<li class="nav-item"><a class="nav-link" href="logout"><i
 									class="bi bi-box-arrow-right"></i></a></li>
 						</c:when>
