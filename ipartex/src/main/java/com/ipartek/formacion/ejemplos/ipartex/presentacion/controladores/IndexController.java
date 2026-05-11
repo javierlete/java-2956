@@ -18,40 +18,64 @@ public class IndexController {
 	static {
 		var daoMensaje = (DaoMensaje) Fabrica.getObjeto("dao.mensaje");
 		var daoUsuario = (DaoUsuario) Fabrica.getObjeto("dao.usuario");
-		
+
 		var javier = Usuario.builder().nombre("Javier").email("javier@email.net").password("javier").build();
 		var pepe = Usuario.builder().nombre("Pepe").email("pepe@email.net").password("pepe").build();
-		
+
 		daoUsuario.insertar(javier);
 		daoUsuario.insertar(pepe);
-		
+
 		daoMensaje.insertar(Mensaje.builder().texto("Prueba inicial").usuario(javier).build());
 		daoMensaje.insertar(Mensaje.builder().texto("Claro, como eres el que ha hecho la red").usuario(pepe).build());
 		daoMensaje.insertar(Mensaje.builder().texto("Es mi privilegio").usuario(javier).build());
 	}
-	
+
 	@Ruta("/mensajes")
 	public static String mensajes(Datos datos) {
 		var mensajes = anonimoNegocio.listarMensajes();
-		
+
 		datos.salida().put("mensajes", mensajes);
-		
+
 		return "index";
 	}
-	
+
 	@Ruta("/enviar")
 	public static String enviar(Datos datos) {
 		var texto = datos.entrada().get("texto")[0];
-		
+
 		var mensaje = Mensaje.builder().texto(texto).usuario(Usuario.builder().id(1L).build()).build();
-		
+
 		usuarioNegocio.enviarMensaje(mensaje);
-		
+
 		return "redirect:/mensajes";
 	}
-	
+
 	@Ruta("/login")
 	public static String login(Datos datos) {
-		return "login";
+		if ("GET".equals(datos.metodo())) {
+			return "login";
+		}
+
+		var email = datos.entrada().get("email")[0];
+		var password = datos.entrada().get("password")[0];
+
+		var usuario = Usuario.builder().email(email).password(password).build();
+
+		var usuarioLogin = anonimoNegocio.autenticar(usuario);
+
+		if (usuarioLogin.isPresent()) {
+			datos.sesion().put("usuario", usuarioLogin.get());
+			
+			return "redirect:/mensajes";
+		} else {
+			return "redirect:/login";
+		}
+	}
+	
+	@Ruta("/logout")
+	public static String logout(Datos datos) {
+		datos.cerrarSesion().set(true);
+		
+		return "redirect:/login";
 	}
 }
