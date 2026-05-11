@@ -43,7 +43,9 @@ public class IndexController {
 	public static String enviar(Datos datos) {
 		var texto = datos.entrada().get("texto")[0];
 
-		var mensaje = Mensaje.builder().texto(texto).usuario(Usuario.builder().id(1L).build()).build();
+		var usuario = (Usuario) datos.sesion().get("usuario");
+
+		var mensaje = Mensaje.builder().texto(texto).usuario(usuario).build();
 
 		usuarioNegocio.enviarMensaje(mensaje);
 
@@ -65,17 +67,17 @@ public class IndexController {
 
 		if (usuarioLogin.isPresent()) {
 			datos.sesion().put("usuario", usuarioLogin.get());
-			
+
 			return "redirect:/mensajes";
 		} else {
 			return "redirect:/login";
 		}
 	}
-	
+
 	@Ruta("/logout")
 	public static String logout(Datos datos) {
 		datos.cerrarSesion().set(true);
-		
+
 		return "redirect:/login";
 	}
 }

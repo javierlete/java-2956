@@ -18,10 +18,12 @@
 		</c:forEach>
 	</ul>
 
-	<form action="enviar" method="post">
-		<jl:label-input etiqueta="Mensaje" id="texto" tipo="textarea" />
-		<jl:label-input etiqueta="Enviar" tipo="submit" />
-	</form>
+	<c:if test="${sessionScope.usuario != null}">
+		<form action="enviar" method="post">
+			<jl:label-input etiqueta="Mensaje" id="texto" tipo="textarea" />
+			<jl:label-input etiqueta="Enviar" tipo="submit" />
+		</form>
+	</c:if>
 
 </main>
 
