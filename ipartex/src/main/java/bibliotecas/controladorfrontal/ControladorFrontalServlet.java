@@ -135,6 +135,17 @@ public class ControladorFrontalServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	/**
+	 * Estructura que se envía y recibe desde las servlets
+	 * 
+	 * @param metodo POST o GET
+	 * @param entrada name's recibidos de los formularios o queryString
+	 * @param salida atributos de la request para la pantalla
+	 * @param sesion atributos de sesión
+	 * @param cerrarSesion booleano que dispone de un set para ponerse a true para indicar cierre de sesión
+	 * @param ficheros los ficheros recibidos de input type file por ejemplo
+	 * @param rutaRaiz ruta a partir de la cuál se quiere guardar ficheros
+	 */
 	public record Datos(String metodo, Map<String, String[]> entrada, Map<String, Object> salida,
 			Map<String, Object> sesion, AtomicReference<Boolean> cerrarSesion, Map<String, InputStream> ficheros, String rutaRaiz) {
 	}
