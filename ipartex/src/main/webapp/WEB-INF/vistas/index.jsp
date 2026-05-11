@@ -4,6 +4,13 @@
 
 <main class="container">
 
+	<c:if test="${sessionScope.usuario != null}">
+		<form action="enviar" method="post">
+			<jl:label-input etiqueta="${sessionScope.usuario.nombre}" id="texto" tipo="textarea" />
+			<jl:label-input etiqueta="Enviar" tipo="submit" />
+		</form>
+	</c:if>
+
 	<ul class="list-group list-group mb-4">
 		<c:forEach items="${mensajes}" var="m">
 			<li
@@ -17,13 +24,6 @@
 			</li>
 		</c:forEach>
 	</ul>
-
-	<c:if test="${sessionScope.usuario != null}">
-		<form action="enviar" method="post">
-			<jl:label-input etiqueta="Mensaje" id="texto" tipo="textarea" />
-			<jl:label-input etiqueta="Enviar" tipo="submit" />
-		</form>
-	</c:if>
 
 </main>
 
