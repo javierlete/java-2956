@@ -18,7 +18,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href=""><i class="bi bi-chat"></i>
+			<a class="navbar-brand" href="mensajes"><i class="bi bi-chat"></i>
 				IparteX</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -28,13 +28,13 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
-					<li class="nav-item"><a class="nav-link" href="">Principal</a></li>
+					<li class="nav-item"><a class="nav-link" href="mensajes">Principal</a></li>
 				</ul>
 				<ul class="navbar-nav mb-2 mb-sm-0">
 					<c:choose>
-						<c:when test="${usuario != null}">
+						<c:when test="${sessionScope.usuario != null}">
 							<li class="navbar-text"><i class="bi bi-person"></i>
-								${usuario.nombre}</li>
+								${sessionScope.usuario.nombre}</li>
 							<li class="nav-item"><a class="nav-link" href="logout"><i
 									class="bi bi-box-arrow-right"></i></a></li>
 						</c:when>
