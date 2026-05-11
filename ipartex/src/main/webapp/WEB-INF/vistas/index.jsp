@@ -18,6 +18,7 @@
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">${m.usuario.nombre}</div>
 					${m.texto}
+					<div>123 <a href="mensajes?id=${m.id}"><i class="text-danger bi bi-heart${m.id % 2 == 0 ? ''  : '-fill' }"></i></a></div>
 				</div> <span class="badge text-bg-primary rounded-pill"> <javatime:format
 						value="${m.momento}" style="LM" />
 			</span>
