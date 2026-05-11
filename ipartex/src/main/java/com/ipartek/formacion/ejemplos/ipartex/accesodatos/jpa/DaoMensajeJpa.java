@@ -15,8 +15,9 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 
 	@Override
 	public Iterable<Mensaje> obtenerTodos() {
-		return ejecutarJpa(em -> em.createQuery("from Mensaje m outer join fetch m.meGusta order by m.momento desc", Mensaje.class).getResultList());
+		return ejecutarJpa(
+				em -> em.createQuery("from Mensaje m outer join fetch m.meGusta order by m.momento desc", Mensaje.class)
+						.getResultList());
 	}
-	
-	
+
 }

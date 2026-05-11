@@ -48,4 +48,12 @@ public class Mensaje {
 	@ManyToMany
 	@Builder.Default
 	private Set<Usuario> meGusta = new HashSet<>();
+	
+	public int getNumeroMeGusta() {
+		return meGusta.size();
+	}
+	
+	public boolean leGustaEsteMensaje(Long id) {
+		return meGusta.stream().map(u -> u.getId()).filter(elId -> id == elId).findAny().isPresent();
+	}
 }

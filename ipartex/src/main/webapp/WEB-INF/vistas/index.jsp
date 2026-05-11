@@ -19,9 +19,9 @@
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">${m.usuario.nombre}</div>
 					${m.texto}
-					<div>${m.meGusta.size()}
+					<div>${m.numeroMeGusta}
 						<a href="mensajes?id=${m.id}"><i
-							class="text-danger bi bi-heart${m.meGusta.stream().map(u -> u.id).filter(id -> id == sessionScope.usuario.id).toList().size() == 0 ? ''  : '-fill' }"></i></a>
+							class="text-danger bi bi-heart${m.leGustaEsteMensaje(sessionScope.usuario.id) ? '-fill' : ''}"></i></a>
 					</div>
 				</div> <span class="badge text-bg-primary rounded-pill"> <javatime:format
 						value="${m.momento}" style="LM" />
