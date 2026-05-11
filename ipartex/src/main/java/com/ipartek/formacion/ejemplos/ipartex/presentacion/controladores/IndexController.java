@@ -49,4 +49,9 @@ public class IndexController {
 		
 		return "redirect:/mensajes";
 	}
+	
+	@Ruta("/login")
+	public static String login(Datos datos) {
+		return "login";
+	}
 }
