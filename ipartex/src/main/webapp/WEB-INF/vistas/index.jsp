@@ -6,7 +6,8 @@
 
 	<c:if test="${sessionScope.usuario != null}">
 		<form action="enviar" method="post">
-			<jl:label-input etiqueta="${sessionScope.usuario.nombre}" id="texto" tipo="textarea" />
+			<jl:label-input etiqueta="${sessionScope.usuario.nombre}" id="texto"
+				tipo="textarea" />
 			<jl:label-input etiqueta="Enviar" tipo="submit" />
 		</form>
 	</c:if>
@@ -18,7 +19,10 @@
 				<div class="ms-2 me-auto">
 					<div class="fw-bold">${m.usuario.nombre}</div>
 					${m.texto}
-					<div>123 <a href="mensajes?id=${m.id}"><i class="text-danger bi bi-heart${m.id % 2 == 0 ? ''  : '-fill' }"></i></a></div>
+					<div>${m.meGusta.size()}
+						<a href="mensajes?id=${m.id}"><i
+							class="text-danger bi bi-heart${m.meGusta.stream().map(u -> u.id).filter(id -> id == sessionScope.usuario.id).toList().size() == 0 ? ''  : '-fill' }"></i></a>
+					</div>
 				</div> <span class="badge text-bg-primary rounded-pill"> <javatime:format
 						value="${m.momento}" style="LM" />
 			</span>

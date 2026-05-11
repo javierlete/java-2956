@@ -1,11 +1,14 @@
 package com.ipartek.formacion.ejemplos.ipartex.entidades;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
@@ -42,4 +45,7 @@ public class Mensaje {
 	@ManyToOne
 	private Usuario usuario;
 
+	@ManyToMany
+	@Builder.Default
+	private Set<Usuario> meGusta = new HashSet<>();
 }

@@ -25,9 +25,18 @@ public class IndexController {
 		daoUsuario.insertar(javier);
 		daoUsuario.insertar(pepe);
 
-		daoMensaje.insertar(Mensaje.builder().texto("Prueba inicial").usuario(javier).build());
-		daoMensaje.insertar(Mensaje.builder().texto("Claro, como eres el que ha hecho la red").usuario(pepe).build());
-		daoMensaje.insertar(Mensaje.builder().texto("Es mi privilegio").usuario(javier).build());
+		var mensaje1 = Mensaje.builder().texto("Prueba inicial").usuario(javier).build();
+		var mensaje2 = Mensaje.builder().texto("Claro, como eres el que ha hecho la red").usuario(pepe).build();
+		var mensaje3 = Mensaje.builder().texto("Es mi privilegio").usuario(javier).build();
+
+		mensaje1.getMeGusta().add(pepe);
+		mensaje2.getMeGusta().add(javier);
+		mensaje3.getMeGusta().add(pepe);
+		mensaje3.getMeGusta().add(javier);
+		
+		daoMensaje.insertar(mensaje1);
+		daoMensaje.insertar(mensaje2);
+		daoMensaje.insertar(mensaje3);
 	}
 
 	@Ruta("/mensajes")
