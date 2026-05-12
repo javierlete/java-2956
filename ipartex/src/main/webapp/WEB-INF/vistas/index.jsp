@@ -20,7 +20,7 @@
 					<div class="fw-bold">${m.usuario.nombre}</div>
 					${m.texto}
 					<div>${m.numeroMeGusta}
-						<a href="mensajes?id=${m.id}"><i
+						<a href="${m.leGustaEsteMensaje(sessionScope.usuario.id) ? 'no-' : ''}me-gusta?id=${m.id}"><i
 							class="text-danger bi bi-heart${m.leGustaEsteMensaje(sessionScope.usuario.id) ? '-fill' : ''}"></i></a>
 					</div>
 				</div> <span class="badge text-bg-primary rounded-pill"> <javatime:format

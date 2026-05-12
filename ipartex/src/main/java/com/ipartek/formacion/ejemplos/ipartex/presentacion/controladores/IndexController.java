@@ -33,7 +33,7 @@ public class IndexController {
 		mensaje2.getMeGusta().add(javier);
 		mensaje3.getMeGusta().add(pepe);
 		mensaje3.getMeGusta().add(javier);
-		
+
 		daoMensaje.insertar(mensaje1);
 		daoMensaje.insertar(mensaje2);
 		daoMensaje.insertar(mensaje3);
@@ -88,5 +88,33 @@ public class IndexController {
 		datos.cerrarSesion().set(true);
 
 		return "redirect:/login";
+	}
+
+	@Ruta("/me-gusta")
+	public static String meGusta(Datos datos) {
+		return procesarMeGusta(datos, true);
+	}
+
+	@Ruta("/no-me-gusta")
+	public static String noMeGusta(Datos datos) {
+		return procesarMeGusta(datos, false);
+	}
+
+	private static String procesarMeGusta(Datos datos, boolean meGusta) {
+		var sIdMensaje = datos.entrada().get("id")[0];
+
+		var idMensaje = Long.parseLong(sIdMensaje);
+
+		var usuario = (Usuario) datos.sesion().get("usuario");
+
+		System.out.printf("Usuario: %s, Mensaje: %s\n", usuario.getId(), idMensaje);
+
+		if (meGusta) {
+			System.out.println("ME GUSTA");
+		} else {
+			System.out.println("NO ME GUSTA");
+		}
+
+		return "redirect:/mensajes";
 	}
 }
