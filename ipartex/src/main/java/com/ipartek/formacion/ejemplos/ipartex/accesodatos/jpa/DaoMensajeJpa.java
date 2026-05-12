@@ -20,4 +20,18 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 						.getResultList());
 	}
 
+	@Override
+	public void insertarMeGusta(long idUsuario, long idMensaje) {
+		ejecutarJpa(em -> em
+				.createNativeQuery("INSERT INTO me_gustas (me_gusta_id, mensaje_id) VALUES (:usuario, :mensaje)")
+				.setParameter("usuario", idUsuario).setParameter("mensaje", idMensaje).executeUpdate());
+	}
+
+	@Override
+	public void borrarMeGusta(long idUsuario, long idMensaje) {
+		ejecutarJpa(em -> em
+				.createNativeQuery("DELETE FROM me_gustas WHERE mensaje_id = :mensaje AND me_gusta_id = :usuario")
+				.setParameter("usuario", idUsuario).setParameter("mensaje", idMensaje).executeUpdate());
+	}
+
 }

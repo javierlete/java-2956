@@ -107,12 +107,18 @@ public class IndexController {
 
 		var usuario = (Usuario) datos.sesion().get("usuario");
 
-		System.out.printf("Usuario: %s, Mensaje: %s\n", usuario.getId(), idMensaje);
+		var idUsuario = usuario.getId();
+		
+		System.out.printf("Usuario: %s, Mensaje: %s\n", idUsuario, idMensaje);
 
 		if (meGusta) {
 			System.out.println("ME GUSTA");
+			
+			usuarioNegocio.meGusta(idUsuario, idMensaje);
 		} else {
 			System.out.println("NO ME GUSTA");
+
+			usuarioNegocio.noMeGusta(idUsuario, idMensaje);
 		}
 
 		return "redirect:/mensajes";

@@ -18,4 +18,16 @@ public class UsuarioNegocioImpl implements UsuarioNegocio {
 		return daoMensaje.insertar(mensaje);
 	}
 
+	@Override
+	public void meGusta(long idUsuario, long idMensaje) {
+		log.info("ME GUSTA " + idUsuario + "<3" + idMensaje);
+		daoMensaje.insertarMeGusta(idUsuario, idMensaje);
+	}
+
+	@Override
+	public void noMeGusta(long idUsuario, long idMensaje) {
+		log.info("NO ME GUSTA " + idUsuario + "<3" + idMensaje);
+		daoMensaje.borrarMeGusta(idUsuario, idMensaje);
+	}
+
 }
