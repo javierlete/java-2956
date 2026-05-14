@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>IparteX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="imgs/chat.svg" rel="icon">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="mensajes"><i class="bi bi-chat"></i>
+				IparteX</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
+					<li class="nav-item"><a class="nav-link" href="mensajes">Principal</a></li>
+				</ul>
+				<ul class="navbar-nav mb-2 mb-sm-0">
+					<li class="navbar-text d-none"><i class="bi bi-person"></i>
+						${sessionScope.usuario.nombre}</li>
+					<li class="nav-item d-none"><a class="nav-link" href="logout"><i
+							class="bi bi-box-arrow-right"></i></a></li>
+					<li class="nav-item"><a class="nav-link" href="login"><i
+							class="bi bi-box-arrow-in-right"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<main class="container">
+		<section id="mensajes">
+			<ul id="listado-mensajes" class="list-group list-group mb-4">
+				
+			</ul>
+		</section>
+	</main>
+
+	<footer
+		class="mt-5 p-2 text-bg-dark d-flex justify-content-between align-items-baseline">
+		<p>&copy;2026 Javier Lete</p>
+		<ul class="nav">
+			<li class="nav-item"><a class="nav-link text-light" href="#"><i
+					class="bi bi-facebook"></i></a></li>
+			<li class="nav-item"><a class="nav-link text-light" href="#"><i
+					class="bi bi-twitter-x"></i></a></li>
+			<li class="nav-item"><a class="nav-link text-light" href="#"><i
+					class="bi bi-youtube"></i></a></li>
+			<li class="nav-item"><a class="nav-link text-light" href="#"><i
+					class="bi bi-instagram"></i></a></li>
+			<li class="nav-item"><a class="nav-link text-light" href="#"><i
+					class="bi bi-tiktok"></i></a></li>
+		</ul>
+	</footer>
+	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/ipartex.js"></script>
+</body>
+</html>
