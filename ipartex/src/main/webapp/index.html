@@ -11,7 +11,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="mensajes"><i class="bi bi-chat"></i>
+			<a class="navbar-brand" href="javascript:mensajes()"><i class="bi bi-chat"></i>
 				IparteX</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -21,14 +21,13 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
-					<li class="nav-item"><a class="nav-link" href="mensajes">Principal</a></li>
+					<li class="nav-item"><a class="nav-link" href="javascript:mensajes()">Principal</a></li>
 				</ul>
 				<ul class="navbar-nav mb-2 mb-sm-0">
-					<li class="navbar-text d-none"><i class="bi bi-person"></i>
-						${sessionScope.usuario.nombre}</li>
-					<li class="nav-item d-none"><a class="nav-link" href="logout"><i
+					<li id="menu-usuario" class="navbar-text d-none"><i class="bi bi-person"></i> <span></span></li>
+					<li id="menu-logout" class="nav-item d-none"><a class="nav-link" href="javascript:logout()"><i
 							class="bi bi-box-arrow-right"></i></a></li>
-					<li class="nav-item"><a class="nav-link" href="login"><i
+					<li id="menu-login" class="nav-item"><a class="nav-link" href="javascript:mostrarSeccion('login')"><i
 							class="bi bi-box-arrow-in-right"></i></a></li>
 				</ul>
 			</div>
@@ -37,7 +36,7 @@
 
 	<main class="container">
 		<section id="mensajes">
-			<form>
+			<form class="d-none">
 				<div class="row mb-2">
 					<label for="texto" class="col-sm-2 col-form-label">Mensaje</label>
 					<div class="col-sm">
@@ -54,6 +53,28 @@
 			<ul id="listado-mensajes" class="list-group list-group mb-4">
 
 			</ul>
+		</section>
+
+		<section id="login">
+			<form action="login" method="post">
+				<div class="row mb-2">
+					<label for="email" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm">
+						<input type="email" class="form-control" id="email" name="email">
+					</div>
+				</div>
+				<div class="row mb-2">
+					<label for="password" class="col-sm-2 col-form-label">Contraseña</label>
+					<div class="col-sm">
+						<input type="password" class="form-control" id="password" name="password">
+					</div>
+				</div>
+				<div class="row mb-2">
+					<div class="offset-sm-2 col-sm">
+						<button class="btn btn-primary">Iniciar sesión</button>
+					</div>
+				</div>
+			</form>
 		</section>
 	</main>
 
