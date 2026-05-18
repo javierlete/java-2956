@@ -82,7 +82,7 @@ async function cargarListado() {
 				<div class="fw-bold">${m.usuario.nombre}</div>
 				${m.texto}
 				<div>
-					${m.numeroMeGusta} <a href="#"><i class="text-danger bi bi-heart${relleno}"></i></a>
+					${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
 				</div>
 			</div> 
 			<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
@@ -165,4 +165,24 @@ function mensajes() {
     cargarListado();
 
     mostrarSeccion('mensajes');
+}
+
+async function meGusta(id) {
+	const idUsuario = obtenerUsuario().id;
+	console.log('ME GUSTA', id, idUsuario);
+	
+	const respuesta = await fetch(`${URL_USUARIOS}/me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
+	console.log(respuesta);
+	
+	mensajes();
+}
+
+async function noMeGusta(id) {
+	const idUsuario = obtenerUsuario().id;
+	console.log('NO me gusta', id, idUsuario);
+
+	const respuesta = await fetch(`${URL_USUARIOS}/no-me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
+	console.log(respuesta);
+	
+	mensajes();
 }
