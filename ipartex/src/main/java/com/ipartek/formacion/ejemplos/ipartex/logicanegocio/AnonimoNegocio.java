@@ -9,6 +9,7 @@ import com.ipartek.formacion.ejemplos.ipartex.entidades.Usuario;
 public interface AnonimoNegocio {
 	Iterable<Mensaje> listarMensajes();
 	Iterable<MensajeListadoDto> listarMensajesListado();
+	Iterable<MensajeListadoDto> listarMensajesListado(Long id);
 
 	Optional<Usuario> autenticar(Usuario usuario);
 

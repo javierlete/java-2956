@@ -6,7 +6,6 @@ import com.ipartek.formacion.ejemplos.ipartex.accesodatos.DaoMensaje;
 import com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto;
 import com.ipartek.formacion.ejemplos.ipartex.entidades.Mensaje;
 
-import bibliotecas.accesodatos.DaoException;
 import bibliotecas.accesodatos.DaoGenericoJpa;;
 
 public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje {
@@ -42,7 +41,20 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 
 	@Override
 	public Iterable<MensajeListadoDto> obtenerTodosParaListado(Long idUsuario) {
-		throw new DaoException("NO IMPLEMENTADO");
+		return ejecutarJpa(em -> em.createQuery("""
+				select new com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto(
+				    m.id,
+				    m.texto,
+				    m.momento,
+				    m.usuario.nombre,
+				    max(case when mg.id = :idUsuario then true else false end),
+				    count(mg)
+				)
+				from Mensaje m
+				left join m.meGusta mg
+				group by m.id, m.texto, m.momento, m.usuario.nombre
+				order by m.momento desc
+				""", MensajeListadoDto.class).setParameter("idUsuario", idUsuario).getResultList());
 	}
 
 	@Override

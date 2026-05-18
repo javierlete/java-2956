@@ -61,7 +61,9 @@ async function enviarMensaje(e) {
 async function cargarListado() {
 	const usuario = obtenerUsuario();
 	
-    const respuesta = await fetch(`${URL_MENSAJES}/breves`);
+	const usuarioId = usuario ? '/' + usuario.id : '';
+	
+    const respuesta = await fetch(`${URL_MENSAJES}/breves${usuarioId}`);
     const mensajes = await respuesta.json();
 
     console.log(mensajes);
