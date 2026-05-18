@@ -1,5 +1,6 @@
 package com.ipartek.formacion.ejemplos.ipartex.rest;
 
+import com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto;
 import com.ipartek.formacion.ejemplos.ipartex.entidades.Mensaje;
 import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.AnonimoNegocio;
 import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.UsuarioNegocio;
@@ -17,6 +18,12 @@ public class MensajesRest {
 	@GET
 	public Iterable<Mensaje> get() {
 		return anonimoNegocio.listarMensajes();
+	}
+	
+	@GET
+	@Path("breves")
+	public Iterable<MensajeListadoDto> getBreves() {
+		return anonimoNegocio.listarMensajesListado();
 	}
 	
 	@POST

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.ipartek.formacion.ejemplos.ipartex.accesodatos.DaoMensaje;
 import com.ipartek.formacion.ejemplos.ipartex.accesodatos.DaoUsuario;
+import com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto;
 import com.ipartek.formacion.ejemplos.ipartex.entidades.Mensaje;
 import com.ipartek.formacion.ejemplos.ipartex.entidades.Usuario;
 import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.AnonimoNegocio;
@@ -21,6 +22,13 @@ public class AnonimoNegocioImpl implements AnonimoNegocio {
 		log.info("Listado de mensajes"); 
 		
 		return daoMensaje.obtenerTodos();
+	}
+
+	@Override
+	public Iterable<MensajeListadoDto> listarMensajesListado() {
+		log.info("Listado de mensajes para listado");
+		
+		return daoMensaje.obtenerTodosParaListado();
 	}
 
 	@Override

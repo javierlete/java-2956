@@ -61,7 +61,7 @@ async function enviarMensaje(e) {
 async function cargarListado() {
 	const usuario = obtenerUsuario();
 	
-    const respuesta = await fetch(URL_MENSAJES);
+    const respuesta = await fetch(`${URL_MENSAJES}/breves`);
     const mensajes = await respuesta.json();
 
     console.log(mensajes);
@@ -75,11 +75,11 @@ async function cargarListado() {
 
         li.className = 'list-group-item d-flex justify-content-between align-items-start';
 
-		const relleno = usuario && m.meGusta.find(u => u.id == usuario.id) ? '-fill' : '';
+		const relleno = m.rellenado ? '-fill' : '';
 		
         li.innerHTML = `	
 			<div class="ms-2 me-auto">
-				<div class="fw-bold">${m.usuario.nombre}</div>
+				<div class="fw-bold">${m.usuario}</div>
 				${m.texto}
 				<div>
 					${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
