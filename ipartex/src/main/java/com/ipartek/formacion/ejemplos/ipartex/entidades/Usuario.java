@@ -1,5 +1,7 @@
 package com.ipartek.formacion.ejemplos.ipartex.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +36,7 @@ public class Usuario {
 	@Size(max = 255)
 	private String email;
 	
+	@JsonIgnore
 	@NotBlank
 	@Size(max = 100)
 	private String password;
