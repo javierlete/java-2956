@@ -19,9 +19,7 @@ let formMensaje;
 let formLogin;
 
 window.addEventListener('DOMContentLoaded', async () => {
-    mostrarSeccion('mensajes');
-
-    await cargarListado();
+    mensajes();
 
     formMensaje = document.querySelector('#mensajes form');
     formLogin = document.querySelector('#login form');
@@ -61,6 +59,8 @@ async function enviarMensaje(e) {
 
 
 async function cargarListado() {
+	const usuario = obtenerUsuario();
+	
     const respuesta = await fetch(URL_MENSAJES);
     const mensajes = await respuesta.json();
 
@@ -75,12 +75,14 @@ async function cargarListado() {
 
         li.className = 'list-group-item d-flex justify-content-between align-items-start';
 
+		const relleno = usuario && m.meGusta.find(u => u.id == usuario.id) ? '-fill' : '';
+		
         li.innerHTML = `	
 			<div class="ms-2 me-auto">
 				<div class="fw-bold">${m.usuario.nombre}</div>
 				${m.texto}
 				<div>
-					${m.numeroMeGusta} <a href="#"><i class="text-danger bi bi-heart"></i></a>
+					${m.numeroMeGusta} <a href="#"><i class="text-danger bi bi-heart${relleno}"></i></a>
 				</div>
 			</div> 
 			<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
@@ -122,10 +124,10 @@ async function login(e) {
     console.log(usuario);
 
     guardarUsuario(usuario);
-	
-	formLogin.reset();
-	
-	mostrarSeccion('mensajes');
+
+    formLogin.reset();
+
+    mensajes();
 }
 
 function guardarUsuario(usuario) {
@@ -140,7 +142,7 @@ function guardarUsuario(usuario) {
     document.getElementById('menu-login').classList.add('d-none');
     document.getElementById('menu-logout').classList.remove('d-none');
 
-	formMensaje.classList.remove('d-none');
+    formMensaje.classList.remove('d-none');
 }
 
 function obtenerUsuario() {
@@ -153,14 +155,14 @@ function logout() {
     document.getElementById('menu-usuario').classList.add('d-none');
     document.getElementById('menu-login').classList.remove('d-none');
     document.getElementById('menu-logout').classList.add('d-none');
-	
-	formMensaje.classList.add('d-none');
-	
-	mostrarSeccion('login');
+
+    formMensaje.classList.add('d-none');
+
+    mostrarSeccion('login');
 }
 
 function mensajes() {
-	cargarListado();
-	
-	mostrarSeccion('mensajes');
+    cargarListado();
+
+    mostrarSeccion('mensajes');
 }
