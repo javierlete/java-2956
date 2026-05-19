@@ -66,12 +66,11 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 				    m.momento,
 				    m.usuario.nombre,
 				    false,
-				    count(mg)
+				    (select count(mg) from m.meGusta mg),
+				    (select count(r) from Mensaje r where r.respuestaA = m)
 				)
 				from Mensaje m
-				left join m.meGusta mg
 				where m.respuestaA is null
-				group by m.id, m.texto, m.momento, m.usuario.nombre
 				order by m.momento desc
 				""", MensajeListadoDto.class).getResultList());
 	}

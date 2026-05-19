@@ -28,13 +28,19 @@ public class DatosRelleno {
 		mensaje3.getMeGusta().add(javier);
 		
 		var mensaje4 = Mensaje.builder().texto("Me gusta el mensaje 3").usuario(pepe).build();
+		var mensaje5 = Mensaje.builder().texto("Me gusta el mensaje 4").usuario(javier).build();
+		var mensaje6 = Mensaje.builder().texto("Me gusto a mi mismo").usuario(javier).build();
 
 		daoMensaje.insertar(mensaje1);
 		daoMensaje.insertar(mensaje2);
 		daoMensaje.insertar(mensaje3);
 
 		mensaje4.setRespuestaA(mensaje3);
+		mensaje5.setRespuestaA(mensaje4);
+		mensaje6.setRespuestaA(mensaje3);
 
 		daoMensaje.insertar(mensaje4);
+		daoMensaje.insertar(mensaje5);
+		daoMensaje.insertar(mensaje6);
 	}
 }

@@ -87,6 +87,8 @@ async function cargarListado() {
 			<p>${m.texto}</p>
 			<div>
 				${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
+				
+				${m.numeroRespuestas} <i class="bi bi-chat"></i> 
 			</div>
 		`;
 
