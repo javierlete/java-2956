@@ -75,19 +75,19 @@ async function cargarListado() {
     for (const m of mensajes) {
         const li = document.createElement('li');
 
-        li.className = 'list-group-item d-flex justify-content-between align-items-start';
+        li.className = 'list-group-item ms-2 d-flex flex-column';
 
 		const relleno = m.rellenado ? '-fill' : '';
 		
         li.innerHTML = `	
-			<div class="ms-2 me-auto">
+			<div class="d-flex justify-content-between align-items-baseline">
 				<div class="fw-bold">${m.usuario}</div>
-				${m.texto}
-				<div>
-					${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
-				</div>
-			</div> 
-			<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
+				<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
+			</div>
+			<p>${m.texto}</p>
+			<div>
+				${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
+			</div>
 		`;
 
         listaMensajes.append(li);
