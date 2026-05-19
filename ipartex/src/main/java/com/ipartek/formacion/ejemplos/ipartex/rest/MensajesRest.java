@@ -24,7 +24,7 @@ public class MensajesRest {
 	@GET
 	@Path("breves")
 	public Iterable<MensajeListadoDto> getBreves() {
-		return anonimoNegocio.listarMensajesListado();
+		return anonimoNegocio.listarMensajesRaizListado();
 	}
 
 	@GET

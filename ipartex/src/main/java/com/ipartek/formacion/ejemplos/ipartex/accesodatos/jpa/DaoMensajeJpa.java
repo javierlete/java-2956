@@ -58,6 +58,25 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 	}
 
 	@Override
+	public Iterable<MensajeListadoDto> obtenerRaicesParaListado() {
+		return ejecutarJpa(em -> em.createQuery("""
+				select new com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto(
+				    m.id,
+				    m.texto,
+				    m.momento,
+				    m.usuario.nombre,
+				    false,
+				    count(mg)
+				)
+				from Mensaje m
+				left join m.meGusta mg
+				where m.respuestaA is null
+				group by m.id, m.texto, m.momento, m.usuario.nombre
+				order by m.momento desc
+				""", MensajeListadoDto.class).getResultList());
+	}
+
+	@Override
 	public void insertarMeGusta(long idUsuario, long idMensaje) {
 		ejecutarJpa(em -> em
 				.createNativeQuery("INSERT INTO me_gustas (me_gusta_id, mensaje_id) VALUES (:usuario, :mensaje)")

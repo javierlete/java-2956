@@ -8,6 +8,8 @@ import bibliotecas.accesodatos.Dao;
 public interface DaoMensaje extends Dao<Mensaje> {
 	Iterable<MensajeListadoDto> obtenerTodosParaListado();
 	Iterable<MensajeListadoDto> obtenerTodosParaListado(Long idUsuario);
+	
+	Iterable<MensajeListadoDto> obtenerRaicesParaListado();
 
 	void insertarMeGusta(long idUsuario, long idMensaje);
 

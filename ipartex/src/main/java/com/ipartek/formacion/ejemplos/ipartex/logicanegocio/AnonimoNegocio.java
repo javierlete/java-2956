@@ -10,6 +10,7 @@ public interface AnonimoNegocio {
 	Iterable<Mensaje> listarMensajes();
 	Iterable<MensajeListadoDto> listarMensajesListado();
 	Iterable<MensajeListadoDto> listarMensajesListado(Long id);
+	Iterable<MensajeListadoDto> listarMensajesRaizListado();
 
 	Optional<Usuario> autenticar(Usuario usuario);
 

@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -60,6 +61,16 @@ public class Mensaje {
 		    inverseJoinColumns = @JoinColumn(name = "me_gusta_id")
 		)
 	private Set<Usuario> meGusta = new HashSet<>();
+	
+	@ManyToOne
+	private Mensaje respuestaA;
+
+	@EqualsAndHashCode.Exclude
+	@ToString.Exclude
+	@Builder.Default
+	
+	@OneToMany(mappedBy = "respuestaA")
+	private Set<Mensaje> respuestas = new HashSet<>();
 	
 	public int getNumeroMeGusta() {
 		return meGusta.size();
