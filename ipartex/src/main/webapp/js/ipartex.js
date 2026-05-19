@@ -73,13 +73,22 @@ async function cargarListado() {
     listaMensajes.innerHTML = '';
 
     for (const m of mensajes) {
-        const li = document.createElement('li');
+        const li = crearMensaje(m);
 
-        li.className = 'list-group-item ms-2 d-flex flex-column';
+        listaMensajes.append(li);
+    }
+}
 
-		const relleno = m.rellenado ? '-fill' : '';
-		
-        li.innerHTML = `	
+function crearMensaje(m) {
+    const li = document.createElement('li');
+
+	li.id = 'm' + m.id;
+	
+    li.className = 'list-group-item ms-2 d-flex flex-column';
+
+    const relleno = m.rellenado ? '-fill' : '';
+
+    li.innerHTML = `	
 			<div class="d-flex justify-content-between align-items-baseline">
 				<div class="fw-bold">${m.usuario}</div>
 				<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
@@ -88,12 +97,10 @@ async function cargarListado() {
 			<div>
 				${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
 				
-				${m.numeroRespuestas} <i class="bi bi-chat"></i> 
+				${m.numeroRespuestas} <a href="javascript:respuestas(${m.id})"><i class="bi bi-chat"></i></a> 
 			</div>
 		`;
-
-        listaMensajes.append(li);
-    }
+    return li;
 }
 
 function mostrarSeccion(id) {
@@ -189,4 +196,20 @@ async function noMeGusta(id) {
 	console.log(respuesta);
 	
 	mensajes();
+}
+
+function respuestas(id) {
+	console.log('RESPUESTAS', id);
+	
+	const ul = document.createElement('ul');
+	
+	ul.className = 'list-group list-group my-4';
+	
+	const li1 = crearMensaje({ texto: 'TEXTO', usuario: 'USUARIO', numeroRespuestas: 5, numeroMeGusta: 3, momento: new Date() });
+	const li2 = crearMensaje({ texto: 'TEXTO', usuario: 'USUARIO', numeroRespuestas: 5, numeroMeGusta: 3, momento: new Date() });
+	
+	ul.appendChild(li1);
+	ul.appendChild(li2);
+	
+	document.getElementById('m' + id).appendChild(ul);
 }
