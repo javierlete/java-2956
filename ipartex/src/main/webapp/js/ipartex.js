@@ -59,10 +59,10 @@ async function enviarMensaje(e) {
 
 
 async function cargarListado() {
-	const usuario = obtenerUsuario();
-	
-	const usuarioId = usuario ? '/' + usuario.id : '';
-	
+    const usuario = obtenerUsuario();
+
+    const usuarioId = usuario ? '/' + usuario.id : '';
+
     const respuesta = await fetch(`${URL_MENSAJES}/breves${usuarioId}`);
     const mensajes = await respuesta.json();
 
@@ -82,8 +82,8 @@ async function cargarListado() {
 function crearMensaje(m) {
     const li = document.createElement('li');
 
-	li.id = 'm' + m.id;
-	
+    li.id = 'm' + m.id;
+
     li.className = 'list-group-item ms-2 d-flex flex-column';
 
     const relleno = m.rellenado ? '-fill' : '';
@@ -179,37 +179,52 @@ function mensajes() {
 }
 
 async function meGusta(id) {
-	const idUsuario = obtenerUsuario().id;
-	console.log('ME GUSTA', id, idUsuario);
-	
-	const respuesta = await fetch(`${URL_USUARIOS}/me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
-	console.log(respuesta);
-	
-	mensajes();
+    const idUsuario = obtenerUsuario().id;
+    console.log('ME GUSTA', id, idUsuario);
+
+    const respuesta = await fetch(`${URL_USUARIOS}/me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
+    console.log(respuesta);
+
+    mensajes();
 }
 
 async function noMeGusta(id) {
-	const idUsuario = obtenerUsuario().id;
-	console.log('NO me gusta', id, idUsuario);
+    const idUsuario = obtenerUsuario().id;
+    console.log('NO me gusta', id, idUsuario);
 
-	const respuesta = await fetch(`${URL_USUARIOS}/no-me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
-	console.log(respuesta);
-	
-	mensajes();
+    const respuesta = await fetch(`${URL_USUARIOS}/no-me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
+    console.log(respuesta);
+
+    mensajes();
 }
 
-function respuestas(id) {
-	console.log('RESPUESTAS', id);
-	
-	const ul = document.createElement('ul');
-	
-	ul.className = 'list-group list-group my-4';
-	
-	const li1 = crearMensaje({ texto: 'TEXTO', usuario: 'USUARIO', numeroRespuestas: 5, numeroMeGusta: 3, momento: new Date() });
-	const li2 = crearMensaje({ texto: 'TEXTO', usuario: 'USUARIO', numeroRespuestas: 5, numeroMeGusta: 3, momento: new Date() });
-	
-	ul.appendChild(li1);
-	ul.appendChild(li2);
-	
-	document.getElementById('m' + id).appendChild(ul);
+async function respuestas(id) {
+    console.log('RESPUESTAS', id);
+
+    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}`);
+    const respuestas = await respuesta.json();
+
+    if (!respuestas.length) {
+        return;
+    }
+
+    const mensajePadre = document.getElementById('m' + id);
+    const contenedorHijos = mensajePadre.querySelector('ul');
+
+    if (contenedorHijos) {
+        mensajePadre.removeChild(contenedorHijos);
+		return;
+    }
+
+    const ul = document.createElement('ul');
+
+    ul.className = 'list-group list-group my-4';
+
+    for (const mensaje of respuestas) {
+        const li = crearMensaje(mensaje);
+
+        ul.appendChild(li);
+    }
+
+    mensajePadre.appendChild(ul);
 }

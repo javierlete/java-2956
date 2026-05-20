@@ -46,6 +46,13 @@ public class AnonimoNegocioImpl implements AnonimoNegocio {
 	}
 
 	@Override
+	public Iterable<MensajeListadoDto> listarRespuestas(Long idMensaje) {
+		log.info("Listado de respuestas de " + idMensaje);
+
+		return daoMensaje.obtenerRespuestas(idMensaje);
+	}
+
+	@Override
 	public Optional<Usuario> autenticar(Usuario usuario) {
 		log.info("Intento de autenticación de " + usuario);
 

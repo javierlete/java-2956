@@ -33,6 +33,12 @@ public class MensajesRest {
 		return anonimoNegocio.listarMensajesListado(id);
 	}
 
+	@GET
+	@Path("breves/respuestas/{id}")
+	public Iterable<MensajeListadoDto> getRespuestas(@PathParam("id") Long id) {
+		return anonimoNegocio.listarRespuestas(id);
+	}
+
 	@POST
 	public Mensaje post(Mensaje mensaje) {
 		System.out.println(mensaje);

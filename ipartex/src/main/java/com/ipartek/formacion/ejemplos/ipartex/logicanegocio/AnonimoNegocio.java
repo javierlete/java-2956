@@ -11,6 +11,7 @@ public interface AnonimoNegocio {
 	Iterable<MensajeListadoDto> listarMensajesListado();
 	Iterable<MensajeListadoDto> listarMensajesListado(Long id);
 	Iterable<MensajeListadoDto> listarMensajesRaizListado();
+	Iterable<MensajeListadoDto> listarRespuestas(Long idMensaje);
 
 	Optional<Usuario> autenticar(Usuario usuario);
 
