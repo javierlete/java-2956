@@ -201,16 +201,7 @@ async function noMeGusta(id) {
 async function respuestas(id) {
     console.log('RESPUESTAS', id);
 
-    const usuario = obtenerUsuario();
-
-    let resto = '';
-
-    if (usuario) {
-        resto = '?idUsuario=' + usuario.id;
-    }
-
-    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
-    const respuestas = await respuesta.json();
+    const respuestas = await pedirRespuestas(id);
 
     if (!respuestas.length) {
         return;
@@ -224,6 +215,47 @@ async function respuestas(id) {
         return;
     }
 
+    await cargarRespuestas(id);
+}
+
+async function pedirRespuestas(id) {
+    const usuario = obtenerUsuario();
+
+    let resto = '';
+
+    if (usuario) {
+        resto = '?idUsuario=' + usuario.id;
+    }
+
+    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
+    const respuestas = await respuesta.json();
+
+	return respuestas;
+}
+
+async function cargarRespuestas(id) {
+	const respuestas = await pedirRespuestas(id);
+		
+	const mensajePadre = document.getElementById('m' + id);
+	
+    if (obtenerUsuario()) {
+        const formulario = document.querySelector('#mensajes form').cloneNode(true);
+
+        const input = document.createElement('input');
+
+        input.type = 'hidden';
+        input.name = 'id';
+        input.value = id;
+
+        formulario.appendChild(input);
+
+        formulario.addEventListener('submit', enviarRespuesta);
+
+        mensajePadre.appendChild(formulario);
+    }
+
+	mensajePadre.querySelector('ul')?.remove();
+	
     const ul = document.createElement('ul');
 
     ul.className = 'list-group list-group my-4';
@@ -235,4 +267,42 @@ async function respuestas(id) {
     }
 
     mensajePadre.appendChild(ul);
+}
+
+async function enviarRespuesta(e) {
+    e.preventDefault();
+
+    const form = e.target;
+	
+	const texto = form.texto.value;
+	const id = form['id'].value;
+
+    console.log(texto);
+	console.log(id);
+
+    const mensaje = {
+        texto,
+        usuario: {
+            id: obtenerUsuario().id
+        },
+		respuestaA: {
+			id
+		}
+    }
+
+    form.reset();
+
+    console.log(mensaje);
+
+    const respuesta = await fetch(URL_MENSAJES, {
+        method: 'POST',
+        body: JSON.stringify(mensaje),
+        headers: {
+            'Content-type': 'application/json'
+        }
+    });
+
+    console.log(respuesta);
+
+    respuestas(id);
 }
