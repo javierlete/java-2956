@@ -42,17 +42,17 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 	@Override
 	public Iterable<MensajeListadoDto> obtenerTodosParaListado(Long idUsuario) {
 		return ejecutarJpa(em -> em.createQuery("""
-				select new com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto(
+				select distinct new com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto(
 				    m.id,
 				    m.texto,
 				    m.momento,
 				    m.usuario.nombre,
-				    max(case when mg.id = :idUsuario then true else false end),
-				    count(mg)
+				    (select max(case when mg.id = :idUsuario then true else false end) from m.meGusta mg),
+				    (select count(mg) from m.meGusta mg),
+				    (select count(r) from Mensaje r where r.respuestaA = m)
 				)
 				from Mensaje m
-				left join m.meGusta mg
-				group by m.id, m.texto, m.momento, m.usuario.nombre
+				where m.respuestaA is null
 				order by m.momento desc
 				""", MensajeListadoDto.class).setParameter("idUsuario", idUsuario).getResultList());
 	}
@@ -91,6 +91,25 @@ public class DaoMensajeJpa extends DaoGenericoJpa<Mensaje> implements DaoMensaje
 				where m.respuestaA.id = :idMensaje
 				order by m.momento desc
 				""", MensajeListadoDto.class).setParameter("idMensaje", idMensaje).getResultList());
+	}
+
+	@Override
+	public Iterable<MensajeListadoDto> obtenerRespuestas(Long idMensaje, Long idUsuario) {
+		return ejecutarJpa(em -> em.createQuery("""
+				select new com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto(
+				    m.id,
+				    m.texto,
+				    m.momento,
+				    m.usuario.nombre,
+				    (select max(case when mg.id = :idUsuario then true else false end) from m.meGusta mg),
+				    (select count(mg) from m.meGusta mg),
+				    (select count(r) from Mensaje r where r.respuestaA = m)
+				)
+				from Mensaje m
+				where m.respuestaA.id = :idMensaje
+				order by m.momento desc
+				""", MensajeListadoDto.class).setParameter("idMensaje", idMensaje).setParameter("idUsuario", idUsuario)
+				.getResultList());
 	}
 
 	@Override

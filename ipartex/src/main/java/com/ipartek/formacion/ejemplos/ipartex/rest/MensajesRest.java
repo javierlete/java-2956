@@ -10,6 +10,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.QueryParam;
 
 @Path("/mensajes")
 public class MensajesRest {
@@ -35,8 +36,13 @@ public class MensajesRest {
 
 	@GET
 	@Path("breves/respuestas/{id}")
-	public Iterable<MensajeListadoDto> getRespuestas(@PathParam("id") Long id) {
-		return anonimoNegocio.listarRespuestas(id);
+	public Iterable<MensajeListadoDto> getRespuestas(@PathParam("id") Long id,
+			@QueryParam("idUsuario") Long idUsuario) {
+		if (idUsuario == null) {
+			return anonimoNegocio.listarRespuestas(id);
+		}
+
+		return anonimoNegocio.listarRespuestas(id, idUsuario);
 	}
 
 	@POST

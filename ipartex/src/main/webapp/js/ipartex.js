@@ -201,7 +201,15 @@ async function noMeGusta(id) {
 async function respuestas(id) {
     console.log('RESPUESTAS', id);
 
-    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}`);
+    const usuario = obtenerUsuario();
+
+    let resto = '';
+
+    if (usuario) {
+        resto = '?idUsuario=' + usuario.id;
+    }
+
+    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
     const respuestas = await respuesta.json();
 
     if (!respuestas.length) {
@@ -213,7 +221,7 @@ async function respuestas(id) {
 
     if (contenedorHijos) {
         mensajePadre.removeChild(contenedorHijos);
-		return;
+        return;
     }
 
     const ul = document.createElement('ul');

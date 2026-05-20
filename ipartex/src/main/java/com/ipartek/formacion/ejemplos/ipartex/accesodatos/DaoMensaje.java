@@ -11,6 +11,7 @@ public interface DaoMensaje extends Dao<Mensaje> {
 	
 	Iterable<MensajeListadoDto> obtenerRaicesParaListado();
 	Iterable<MensajeListadoDto> obtenerRespuestas(Long idMensaje);
+	Iterable<MensajeListadoDto> obtenerRespuestas(Long idMensaje, Long idUsuario);
 
 	void insertarMeGusta(long idUsuario, long idMensaje);
 
