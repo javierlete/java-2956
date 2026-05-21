@@ -204,22 +204,30 @@ async function respuestas(id) {
 
     const respuestas = await pedirRespuestas(id);
 
-	const usuario = obtenerUsuario();
-	
+    const usuario = obtenerUsuario();
+
     if (!respuestas.length && !usuario) {
         return;
     }
 
+    if (borrarBloqueRespuestas(id)) {
+        return;
+    }
+
+    await cargarBloqueRespuestas(id);
+}
+
+function borrarBloqueRespuestas(id) {
     const mensajePadre = document.getElementById('m' + id);
     const contenedorHijos = mensajePadre.querySelector('ul');
 
     if (contenedorHijos) {
         mensajePadre.querySelector('form')?.remove();
         mensajePadre.removeChild(contenedorHijos);
-        return;
+        return true;
     }
 
-    await cargarRespuestas(id);
+    return false;
 }
 
 async function pedirRespuestas(id) {
@@ -237,28 +245,20 @@ async function pedirRespuestas(id) {
     return respuestas;
 }
 
-async function cargarRespuestas(id) {
-    const respuestas = await pedirRespuestas(id);
+async function cargarBloqueRespuestas(id) {
+    if (obtenerUsuario()) {
+        crearFormulario(id);
+    }
 
+    cargarRespuestas(id);
+}
+
+async function cargarRespuestas(id) {
     const mensajePadre = document.getElementById('m' + id);
 
-	mensajePadre.querySelector('.numero-respuestas').innerText = respuestas.length;
-	
-    if (obtenerUsuario()) {
-        const formulario = document.querySelector('#mensajes form').cloneNode(true);
+    const respuestas = await pedirRespuestas(id);
 
-        const input = document.createElement('input');
-
-        input.type = 'hidden';
-        input.name = 'id';
-        input.value = id;
-
-        formulario.appendChild(input);
-
-        formulario.addEventListener('submit', enviarRespuesta);
-
-        mensajePadre.appendChild(formulario);
-    }
+    mensajePadre.querySelector('.numero-respuestas').innerText = respuestas.length;
 
     mensajePadre.querySelector('ul')?.remove();
 
@@ -273,6 +273,23 @@ async function cargarRespuestas(id) {
     }
 
     mensajePadre.appendChild(ul);
+}
+
+function crearFormulario(id) {
+    const mensajePadre = document.getElementById('m' + id);
+    const formulario = document.querySelector('#mensajes form').cloneNode(true);
+
+    const input = document.createElement('input');
+
+    input.type = 'hidden';
+    input.name = 'id';
+    input.value = id;
+
+    formulario.appendChild(input);
+
+    formulario.addEventListener('submit', enviarRespuesta);
+
+    mensajePadre.appendChild(formulario);
 }
 
 async function enviarRespuesta(e) {
@@ -310,6 +327,5 @@ async function enviarRespuesta(e) {
 
     console.log(respuesta);
 
-    await respuestas(id);
-    await respuestas(id);
+    cargarRespuestas(id);
 }
