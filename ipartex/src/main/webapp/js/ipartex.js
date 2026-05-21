@@ -1,14 +1,5 @@
 'use strict';
 
-const FORMATO_FECHA = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-};
-
 const URL_BASE = 'http://localhost:8080/ipartex/api/v1'
 const URL_MENSAJES = `${URL_BASE}/mensajes`;
 const URL_USUARIOS = `${URL_BASE}/usuarios`;
@@ -92,7 +83,7 @@ function crearMensaje(m) {
     li.innerHTML = `	
 			<div class="d-flex justify-content-between align-items-baseline">
 				<div class="fw-bold">${m.usuario}</div>
-				<span class="badge text-bg-primary rounded-pill">${new Date(m.momento).toLocaleString("es-ES", FORMATO_FECHA)}</span>
+				<span class="badge text-bg-primary rounded-pill"><jl-fecha valor="${m.momento}"/></span>
 			</div>
 			<p>${m.texto}</p>
 			<div>
