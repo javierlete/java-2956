@@ -19,13 +19,14 @@ let formMensaje;
 let formLogin;
 
 window.addEventListener('DOMContentLoaded', async () => {
-    mensajes();
-
     formMensaje = document.querySelector('#mensajes form');
     formLogin = document.querySelector('#login form');
 
     formMensaje.addEventListener('submit', enviarMensaje);
     formLogin.addEventListener('submit', login);
+
+    guardarUsuario(obtenerUsuario());
+    mensajes();
 });
 
 async function enviarMensaje(e) {
@@ -211,7 +212,7 @@ async function respuestas(id) {
     const contenedorHijos = mensajePadre.querySelector('ul');
 
     if (contenedorHijos) {
-		mensajePadre.querySelector('form')?.remove();
+        mensajePadre.querySelector('form')?.remove();
         mensajePadre.removeChild(contenedorHijos);
         return;
     }
@@ -231,14 +232,14 @@ async function pedirRespuestas(id) {
     const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
     const respuestas = await respuesta.json();
 
-	return respuestas;
+    return respuestas;
 }
 
 async function cargarRespuestas(id) {
-	const respuestas = await pedirRespuestas(id);
-		
-	const mensajePadre = document.getElementById('m' + id);
-	
+    const respuestas = await pedirRespuestas(id);
+
+    const mensajePadre = document.getElementById('m' + id);
+
     if (obtenerUsuario()) {
         const formulario = document.querySelector('#mensajes form').cloneNode(true);
 
@@ -255,8 +256,8 @@ async function cargarRespuestas(id) {
         mensajePadre.appendChild(formulario);
     }
 
-	mensajePadre.querySelector('ul')?.remove();
-	
+    mensajePadre.querySelector('ul')?.remove();
+
     const ul = document.createElement('ul');
 
     ul.className = 'list-group list-group my-4';
@@ -274,21 +275,21 @@ async function enviarRespuesta(e) {
     e.preventDefault();
 
     const form = e.target;
-	
-	const texto = form.texto.value;
-	const id = form['id'].value;
+
+    const texto = form.texto.value;
+    const id = form['id'].value;
 
     console.log(texto);
-	console.log(id);
+    console.log(id);
 
     const mensaje = {
         texto,
         usuario: {
             id: obtenerUsuario().id
         },
-		respuestaA: {
-			id
-		}
+        respuestaA: {
+            id
+        }
     }
 
     form.reset();
