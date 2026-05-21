@@ -211,6 +211,7 @@ async function respuestas(id) {
     const contenedorHijos = mensajePadre.querySelector('ul');
 
     if (contenedorHijos) {
+		mensajePadre.querySelector('form')?.remove();
         mensajePadre.removeChild(contenedorHijos);
         return;
     }
