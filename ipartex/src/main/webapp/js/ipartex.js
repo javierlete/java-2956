@@ -96,9 +96,9 @@ function crearMensaje(m) {
 			</div>
 			<p>${m.texto}</p>
 			<div>
-				${m.numeroMeGusta} <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
+				<span class="numero-me-gusta">${m.numeroMeGusta}</span> <a href="javascript:${relleno ? 'noMeGusta' : 'meGusta'}(${m.id})"><i class="text-danger bi bi-heart${relleno}"></i></a>
 				
-				${m.numeroRespuestas} <a href="javascript:respuestas(${m.id})"><i class="bi bi-chat"></i></a> 
+				<span class="numero-respuestas">${m.numeroRespuestas}</span> <a href="javascript:respuestas(${m.id})"><i class="bi bi-chat"></i></a> 
 			</div>
 		`;
     return li;
@@ -242,6 +242,8 @@ async function cargarRespuestas(id) {
 
     const mensajePadre = document.getElementById('m' + id);
 
+	mensajePadre.querySelector('.numero-respuestas').innerText = respuestas.length;
+	
     if (obtenerUsuario()) {
         const formulario = document.querySelector('#mensajes form').cloneNode(true);
 
@@ -308,5 +310,6 @@ async function enviarRespuesta(e) {
 
     console.log(respuesta);
 
-    respuestas(id);
+    await respuestas(id);
+    await respuestas(id);
 }
