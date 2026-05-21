@@ -204,7 +204,9 @@ async function respuestas(id) {
 
     const respuestas = await pedirRespuestas(id);
 
-    if (!respuestas.length) {
+	const usuario = obtenerUsuario();
+	
+    if (!respuestas.length && !usuario) {
         return;
     }
 
