@@ -1,86 +1,66 @@
 'use strict';
 
-const URL_BASE = 'http://localhost:8080/ipartex/api/v1'
-const URL_MENSAJES = `${URL_BASE}/mensajes`;
-const URL_USUARIOS = `${URL_BASE}/usuarios`;
+var URL_BASE = 'http://localhost:8080/ipartex/api/v1'
+var URL_MENSAJES = `${URL_BASE}/mensajes`;
+var URL_USUARIOS = `${URL_BASE}/usuarios`;
 
-const ALMACEN = sessionStorage;
+var ALMACEN = sessionStorage;
 
-let formMensaje;
-let formLogin;
-
-window.addEventListener('DOMContentLoaded', async () => {
-    formMensaje = document.querySelector('#mensajes form');
-    formLogin = document.querySelector('#login form');
-
-    formMensaje.addEventListener('submit', enviarMensaje);
-    formLogin.addEventListener('submit', login);
+$(function() {
+    $('#mensajes form').on('submit', enviarMensaje);
+    $('#login form').on('submit', login);
 
     guardarUsuario(obtenerUsuario());
     mensajes();
 });
 
-async function enviarMensaje(e) {
+function enviarMensaje(e) {
     e.preventDefault();
 
-    console.log(formMensaje.texto.value);
+    console.log($('#texto').val());
 
-    const mensaje = {
-        "texto": formMensaje.texto.value,
+    var mensaje = {
+        "texto": $('#texto').val(),
         "usuario": {
             "id": obtenerUsuario().id
         }
     }
 
-    formMensaje.reset();
+    $('#mensajes form')[0].reset();
 
     console.log(mensaje);
 
-    const respuesta = await fetch(URL_MENSAJES, {
+    $.ajax(URL_MENSAJES, {
         method: 'POST',
-        body: JSON.stringify(mensaje),
-        headers: {
-            'Content-type': 'application/json'
-        }
+        data: JSON.stringify(mensaje),
+        contentType: 'application/json'
+    }).done(function(respuesta) {
+        console.log(respuesta);
+        cargarListado();
     });
-
-    console.log(respuesta);
-
-    await cargarListado();
 }
 
 
-async function cargarListado() {
-    const usuario = obtenerUsuario();
+function cargarListado() {
+    var usuario = obtenerUsuario();
 
-    const usuarioId = usuario ? '/' + usuario.id : '';
+    var usuarioId = usuario ? '/' + usuario.id : '';
 
-    const respuesta = await fetch(`${URL_MENSAJES}/breves${usuarioId}`);
-    const mensajes = await respuesta.json();
+    $.getJSON(`${URL_MENSAJES}/breves${usuarioId}`).done(function(mensajes) {
+        console.log(mensajes);
 
-    console.log(mensajes);
+        $('#listado-mensajes').empty();
 
-    const listaMensajes = document.getElementById('listado-mensajes');
-
-    listaMensajes.innerHTML = '';
-
-    for (const m of mensajes) {
-        const li = crearMensaje(m);
-
-        listaMensajes.append(li);
-    }
+        $.each(mensajes, function() {
+            $('#listado-mensajes').append(crearMensaje(this));
+        });
+    });
 }
 
 function crearMensaje(m) {
-    const li = document.createElement('li');
+    var relleno = m.rellenado ? '-fill' : '';
 
-    li.id = 'm' + m.id;
-
-    li.className = 'list-group-item ms-2 d-flex flex-column';
-
-    const relleno = m.rellenado ? '-fill' : '';
-
-    li.innerHTML = `	
+    return $(`<li id="m${m.id}" class="list-group-item ms-2 d-flex flex-column">`).html(`	
 			<div class="d-flex justify-content-between align-items-baseline">
 				<div class="fw-bold">${m.usuario}</div>
 				<span class="badge text-bg-primary rounded-pill"><jl-fecha valor="${m.momento}"/></span>
@@ -91,61 +71,39 @@ function crearMensaje(m) {
 				
 				<span class="numero-respuestas">${m.numeroRespuestas}</span> <a href="javascript:respuestas(${m.id})"><i class="bi bi-chat"></i></a> 
 			</div>
-		`;
-    return li;
+		`);
 }
 
 function mostrarSeccion(id) {
-    const secciones = document.querySelectorAll('main>section');
+    $('main>section').hide();
 
-    for (const seccion of secciones) {
-        seccion.style.display = 'none';
-    }
-
-    const seccion = document.querySelector('main>section#' + id);
-
-    seccion.style.display = null;
+    $('main>section#' + id).show();
 }
 
-async function login(e) {
+function login(e) {
     e.preventDefault();
 
-    const email = formLogin.email.value;
-    const password = formLogin.password.value;
-
-    const respuesta = await fetch(`${URL_USUARIOS}/autenticacion?email=${email}&password=${password}`);
-
-    console.log(respuesta);
-
-    if (!respuesta.ok) {
+    $.getJSON(`${URL_USUARIOS}/autenticacion?email=${$('#email').val()}&password=${$('#password').val()}`).done(function(usuario) {
+        console.log(usuario);
+        guardarUsuario(usuario);
+        $('#login form')[0].reset();
+        mensajes();
+    }).fail(function() {
         alert('Usuario o contraseña incorrectos');
-        return;
-    }
-
-    const usuario = await respuesta.json();
-
-    console.log(usuario);
-
-    guardarUsuario(usuario);
-
-    formLogin.reset();
-
-    mensajes();
+    });
 }
 
 function guardarUsuario(usuario) {
     ALMACEN.setItem('usuario', JSON.stringify(usuario));
 
-    const li = document.getElementById('menu-usuario');
+	console.log(usuario);
+	
+    $('#menu-usuario').removeClass('d-none').find('span').html(usuario ? usuario.nombre : '');
 
-    li.querySelector('span').innerHTML = usuario.nombre;
+    $('#menu-login').addClass('d-none');
+    $('#menu-logout').removeClass('d-none');
 
-    li.classList.remove('d-none');
-
-    document.getElementById('menu-login').classList.add('d-none');
-    document.getElementById('menu-logout').classList.remove('d-none');
-
-    formMensaje.classList.remove('d-none');
+    $('#mensajes form').removeClass('d-none');
 }
 
 function obtenerUsuario() {
@@ -155,11 +113,11 @@ function obtenerUsuario() {
 function logout() {
     ALMACEN.removeItem('usuario');
 
-    document.getElementById('menu-usuario').classList.add('d-none');
-    document.getElementById('menu-login').classList.remove('d-none');
-    document.getElementById('menu-logout').classList.add('d-none');
+    $('#menu-usuario').addClass('d-none');
+    $('#menu-login').removeClass('d-none');
+    $('#menu-logout').addClass('d-none');
 
-    formMensaje.classList.add('d-none');
+    $('#mensajes form').addClass('d-none');
 
     mostrarSeccion('login');
 }
@@ -170,73 +128,68 @@ function mensajes() {
     mostrarSeccion('mensajes');
 }
 
-async function meGusta(id) {
-    const idUsuario = obtenerUsuario().id;
+function meGusta(id) {
+    var idUsuario = obtenerUsuario().id;
     console.log('ME GUSTA', id, idUsuario);
 
-    const respuesta = await fetch(`${URL_USUARIOS}/me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
-    console.log(respuesta);
-
-    mensajes();
+    $.getJSON(`${URL_USUARIOS}/me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`).done(function(respuesta) {
+        console.log(respuesta);
+        mensajes();
+    });
 }
 
-async function noMeGusta(id) {
+function noMeGusta(id) {
     const idUsuario = obtenerUsuario().id;
     console.log('NO me gusta', id, idUsuario);
 
-    const respuesta = await fetch(`${URL_USUARIOS}/no-me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`);
-    console.log(respuesta);
-
-    mensajes();
+    $.getJSON(`${URL_USUARIOS}/no-me-gusta?mensajeId=${id}&usuarioId=${idUsuario}`).done(function(respuesta) {
+        console.log(respuesta);
+        mensajes();
+    });
 }
 
-async function respuestas(id) {
+function respuestas(id) {
     console.log('RESPUESTAS', id);
-
-    const respuestas = await pedirRespuestas(id);
-
     const usuario = obtenerUsuario();
 
-    if (!respuestas.length && !usuario) {
-        return;
-    }
+    pedirRespuestas(id).done(function(respuestas) {
+        if (!respuestas.length && !usuario) {
+            return;
+        }
 
-    if (borrarBloqueRespuestas(id)) {
-        return;
-    }
+        if (borrarBloqueRespuestas(id)) {
+            return;
+        }
 
-    await cargarBloqueRespuestas(id);
+        cargarBloqueRespuestas(id);
+    });
 }
 
 function borrarBloqueRespuestas(id) {
-    const mensajePadre = document.getElementById('m' + id);
-    const contenedorHijos = mensajePadre.querySelector('ul');
+    var contenedorHijos = $(`#m${id} ul`);
 
-    if (contenedorHijos) {
-        mensajePadre.querySelector('form')?.remove();
-        mensajePadre.removeChild(contenedorHijos);
+    if (contenedorHijos.length) {
+        $('#m' + id + ' form').remove();
+        contenedorHijos.remove();
         return true;
     }
 
     return false;
 }
 
-async function pedirRespuestas(id) {
-    const usuario = obtenerUsuario();
+function pedirRespuestas(id) {
+    var usuario = obtenerUsuario();
 
-    let resto = '';
+    var resto = '';
 
     if (usuario) {
         resto = '?idUsuario=' + usuario.id;
     }
 
-    const respuesta = await fetch(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
-    const respuestas = await respuesta.json();
-
-    return respuestas;
+    return $.getJSON(`${URL_MENSAJES}/breves/respuestas/${id}${resto}`);
 }
 
-async function cargarBloqueRespuestas(id) {
+function cargarBloqueRespuestas(id) {
     if (obtenerUsuario()) {
         crearFormulario(id);
     }
@@ -244,57 +197,40 @@ async function cargarBloqueRespuestas(id) {
     cargarRespuestas(id);
 }
 
-async function cargarRespuestas(id) {
-    const mensajePadre = document.getElementById('m' + id);
+function cargarRespuestas(id) {
 
-    const respuestas = await pedirRespuestas(id);
+    pedirRespuestas(id).done(function(respuestas) {
+        $('#m' + id + ' .numero-respuestas').html(respuestas.length);
+        $('#m' + id + ' ul').remove();
 
-    mensajePadre.querySelector('.numero-respuestas').innerText = respuestas.length;
+        var ul = $('<ul class="list-group list-group my-4">').appendTo('#m' + id);
 
-    mensajePadre.querySelector('ul')?.remove();
-
-    const ul = document.createElement('ul');
-
-    ul.className = 'list-group list-group my-4';
-
-    for (const mensaje of respuestas) {
-        const li = crearMensaje(mensaje);
-
-        ul.appendChild(li);
-    }
-
-    mensajePadre.appendChild(ul);
+        $(respuestas).each(function() {
+            ul.append(crearMensaje(this));
+        });
+    	
+		$('#m' + id).append(ul);
+    });
 }
 
 function crearFormulario(id) {
-    const mensajePadre = document.getElementById('m' + id);
-    const formulario = document.querySelector('#mensajes form').cloneNode(true);
-
-    const input = document.createElement('input');
-
-    input.type = 'hidden';
-    input.name = 'id';
-    input.value = id;
-
-    formulario.appendChild(input);
-
-    formulario.addEventListener('submit', enviarRespuesta);
-
-    mensajePadre.appendChild(formulario);
+    $('#mensajes>form').clone().append(
+        $('<input type="hidden" name="id" value="' + id + '">')
+    ).on('submit', enviarRespuesta).appendTo($('#m' + id));
 }
 
-async function enviarRespuesta(e) {
+function enviarRespuesta(e) {
     e.preventDefault();
 
-    const form = e.target;
-
-    const texto = form.texto.value;
-    const id = form['id'].value;
+	var form = e.target;
+	
+    var id = +$(form).find('[name=id]').val();
+    var texto = $(form).find('[name=texto]').val();
 
     console.log(texto);
     console.log(id);
 
-    const mensaje = {
+    var mensaje = {
         texto,
         usuario: {
             id: obtenerUsuario().id
@@ -304,19 +240,17 @@ async function enviarRespuesta(e) {
         }
     }
 
-    form.reset();
+    e.target.reset();
 
     console.log(mensaje);
 
-    const respuesta = await fetch(URL_MENSAJES, {
+    $.ajax(URL_MENSAJES, {
         method: 'POST',
-        body: JSON.stringify(mensaje),
-        headers: {
-            'Content-type': 'application/json'
-        }
+        data: JSON.stringify(mensaje),
+        contentType: 'application/json'
+    }).done(function(respuesta) {
+        console.log(respuesta);
+
+        cargarRespuestas(id);
     });
-
-    console.log(respuesta);
-
-    cargarRespuestas(id);
 }
