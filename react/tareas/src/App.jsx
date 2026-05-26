@@ -1,9 +1,10 @@
 import './App.css'
+import { Titulo } from './Titulo'
 
 function App() {
   return (
     <>
-      <h1>Tareas</h1>
+      <Titulo texto="Tareas" />
     </>
   )
 }
