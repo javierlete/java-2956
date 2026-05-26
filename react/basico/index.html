@@ -18,15 +18,19 @@
 
     <script type="text/babel">
         function App() {
+            const [titulo, setTitulo] = React.useState('NO SE HA DETECTADO NADA');
+
             function pulsacionBoton() {
                 console.log('App ha detectado que Boton se ha pulsado');
+
+                setTitulo('BOTÓN PULSADO');
             }
 
             return <>
                 <Titulo texto="Primero" />
                 <Titulo texto="Segundo" />
                 <Titulo texto="Tercero" />
-                <Titulo texto="Cuarto" />
+                <Titulo texto={titulo} />
                 <Boton pulsacion={pulsacionBoton} />
             </>;
         }
