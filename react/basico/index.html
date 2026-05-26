@@ -18,6 +18,8 @@
 
     <script type="text/babel">
         function App() {
+            console.log('App');
+
             const [titulo, setTitulo] = React.useState('NO SE HA DETECTADO NADA');
 
             function pulsacionBoton() {
@@ -36,10 +38,12 @@
         }
 
         function Titulo({ texto }) {
+            console.log('Titulo');
             return <h1>{texto}</h1>;
         }
 
         function Boton({pulsacion}) {
+            console.log('Boton');
             function botonPulsado() {
                 console.log('Botón pulsado');
 
