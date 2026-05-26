@@ -18,12 +18,16 @@
 
     <script type="text/babel">
         function App() {
+            function pulsacionBoton() {
+                console.log('App ha detectado que Boton se ha pulsado');
+            }
+
             return <>
                 <Titulo texto="Primero" />
                 <Titulo texto="Segundo" />
                 <Titulo texto="Tercero" />
                 <Titulo texto="Cuarto" />
-                <Boton />
+                <Boton pulsacion={pulsacionBoton} />
             </>;
         }
 
@@ -31,8 +35,14 @@
             return <h1>{texto}</h1>;
         }
 
-        function Boton() {
-            return <button onClick={() => alert('Prueba')}>Púlsame</button>;
+        function Boton({pulsacion}) {
+            function botonPulsado() {
+                console.log('Botón pulsado');
+
+                pulsacion();
+            }
+
+            return <button onClick={botonPulsado}>Púlsame</button>;
         }
 
         const root = ReactDOM.createRoot(document.getElementById("root"));
