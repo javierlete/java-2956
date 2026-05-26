@@ -23,11 +23,16 @@
                 <Titulo texto="Segundo" />
                 <Titulo texto="Tercero" />
                 <Titulo texto="Cuarto" />
+                <Boton />
             </>;
         }
 
-        function Titulo({texto}) {
+        function Titulo({ texto }) {
             return <h1>{texto}</h1>;
+        }
+
+        function Boton() {
+            return <button onClick={() => alert('Prueba')}>Púlsame</button>;
         }
 
         const root = ReactDOM.createRoot(document.getElementById("root"));
