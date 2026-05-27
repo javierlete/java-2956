@@ -1,0 +1,15 @@
+.tareaNueva {
+    input {
+        width: 100%;
+
+        border: 1px solid lightgray;
+        border-radius: .25rem;
+
+        padding: .25rem;
+
+        &:focus {
+            border: 1px solid gray;
+            outline-color: gray;
+        }
+    }
+}
