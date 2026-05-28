@@ -1,0 +1,4 @@
+.tarea:has(:checked) {
+    text-decoration: line-through;
+    color: gray;
+}

@@ -1,8 +1,11 @@
+import styles from './ListadoTareas.module.css';
+import Tarea from './Tarea';
+
 export default function ListadoTareas({tareas}) {
-    return <ul>
+    return <ul className={styles.listadoTareas}>
         {
             tareas && tareas.length 
-                ? tareas.map(tarea => <li key={tarea}>{tarea}</li> )
+                ? tareas.map((tarea, indice) => <li key={indice}><Tarea texto={tarea}/></li> )
                 : <li>No hay tareas</li>
         }
     </ul>;

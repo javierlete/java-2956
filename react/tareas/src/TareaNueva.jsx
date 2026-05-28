@@ -9,7 +9,7 @@ export function TareaNueva({tareas, setTareas}) {
 
         console.log('Agregar Tarea', texto);
 
-        setTareas([...tareas, texto]);
+        setTareas([texto, ...tareas]);
 
         setTexto('');
     }
