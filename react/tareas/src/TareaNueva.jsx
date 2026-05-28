@@ -1,13 +1,23 @@
 import { useState } from 'react';
 import styles from './TareaNueva.module.css';
 
+import { URL_TAREAS } from './constantes';
+
 export function TareaNueva({tareas, setTareas}) {
     const [texto, setTexto] = useState('');
 
-    function agregarTarea(e) {
+    async function agregarTarea(e) {
         e.preventDefault();
 
         console.log('Agregar Tarea', texto);
+
+        const respuesta = await fetch(URL_TAREAS, {
+            method: 'POST',
+            body: JSON.stringify({texto}),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        });
 
         setTareas([texto, ...tareas]);
 
