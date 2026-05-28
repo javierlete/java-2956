@@ -1,0 +1,20 @@
+{
+    "tareas": [
+        {
+            "id": 1,
+            "texto": "Primera"
+        },
+        {
+            "id": 2,
+            "texto": "Segunda"
+        },
+        {
+            "id": 3,
+            "texto": "Tercera"
+        },
+        {
+            "id": 4,
+            "texto": "Cuarta"
+        }
+    ]
+}
