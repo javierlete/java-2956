@@ -5,7 +5,7 @@ export default function ListadoTareas({tareas}) {
     return <ul className={styles.listadoTareas}>
         {
             tareas && tareas.length 
-                ? tareas.map((tarea, indice) => <li key={indice}><Tarea tarea={tarea}/></li> )
+                ? tareas.map(tarea => <li key={tarea.id}><Tarea tarea={tarea}/></li> )
                 : <li>No hay tareas</li>
         }
     </ul>;

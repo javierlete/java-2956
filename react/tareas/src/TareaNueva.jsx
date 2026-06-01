@@ -2,29 +2,28 @@ import { useState } from 'react';
 import styles from './TareaNueva.module.css';
 
 import { URL_TAREAS } from './constantes';
+import axios from 'axios';
 
-export function TareaNueva({tareas, setTareas}) {
-    const [texto, setTexto] = useState('');
+const TAREA_VACIA = { texto: '', terminada: false };
+
+export function TareaNueva({ tareas, setTareas }) {
+    const [tarea, setTarea] = useState(TAREA_VACIA);
 
     async function agregarTarea(e) {
         e.preventDefault();
 
-        console.log('Agregar Tarea', texto);
+        console.log('Agregar Tarea', tarea);
 
-        const respuesta = await fetch(URL_TAREAS, {
-            method: 'POST',
-            body: JSON.stringify({texto}),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
+        const respuesta = await axios.post(URL_TAREAS, tarea);
 
-        setTareas([texto, ...tareas]);
+        console.log(respuesta);
 
-        setTexto('');
+        setTareas([respuesta.data, ...tareas]);
+
+        setTarea(TAREA_VACIA);
     }
-    
+
     return <form onSubmit={agregarTarea} className={styles.tareaNueva}>
-        <input placeholder="El texto de la tarea" onChange={e => setTexto(e.target.value)} value={texto} />
+        <input placeholder="El texto de la tarea" onChange={e => setTarea({ ...tarea, texto: e.target.value })} value={tarea.texto} />
     </form>;
 }

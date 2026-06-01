@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import styles from './Tarea.module.css';
 import { URL_TAREAS } from "./constantes";
+import axios from "axios";
 
 export default function Tarea({ tarea }) {
     const [estaTarea, setEstaTarea] = useState(tarea);
@@ -9,17 +10,11 @@ export default function Tarea({ tarea }) {
     async function cambioEstado(e) {
         console.log(e.target);
 
-        const respuesta = await fetch(URL_TAREAS + estaTarea.id, {
-            method: 'PATCH',
-            body: JSON.stringify({ terminada: !estaTarea.terminada}),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        });
+        const respuesta = await axios.patch(URL_TAREAS + estaTarea.id, { terminada: !estaTarea.terminada });
 
         console.log(respuesta);
 
-        const tareaRecibida = await respuesta.json();
+        const tareaRecibida = respuesta.data;
 
         console.log(tareaRecibida);
 

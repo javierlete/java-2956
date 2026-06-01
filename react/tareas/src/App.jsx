@@ -4,19 +4,19 @@ import ListadoTareas from './ListadoTareas'
 import { TareaNueva } from './TareaNueva'
 import { Titulo } from './Titulo'
 import { URL_TAREAS } from './constantes'
+import axios from 'axios'
 
 function App() {
   const [tareas, setTareas] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
-      // You can await here
-      const respuesta = await fetch(URL_TAREAS);
-      const listado = await respuesta.json()
+      const respuesta = await axios.get(URL_TAREAS);
+      const listado = respuesta.data;
       setTareas(listado.reverse());
     }
     fetchData();
-  }, []); // Or [] if effect doesn't need props 
+  }, []);
 
   return (
     <>
