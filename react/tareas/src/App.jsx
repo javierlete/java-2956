@@ -13,7 +13,7 @@ function App() {
       // You can await here
       const respuesta = await fetch(URL_TAREAS);
       const listado = await respuesta.json()
-      setTareas(listado.map(tarea => tarea.texto).reverse());
+      setTareas(listado.reverse());
     }
     fetchData();
   }, []); // Or [] if effect doesn't need props 

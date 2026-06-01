@@ -1,20 +1,24 @@
 {
-    "tareas": [
-        {
-            "id": 1,
-            "texto": "Primera"
-        },
-        {
-            "id": 2,
-            "texto": "Segunda"
-        },
-        {
-            "id": 3,
-            "texto": "Tercera"
-        },
-        {
-            "id": 4,
-            "texto": "Cuarta"
-        }
-    ]
+  "tareas": [
+    {
+      "id": 1,
+      "texto": "Primera",
+      "terminada": true
+    },
+    {
+      "id": 2,
+      "texto": "Segunda",
+      "terminada": false
+    },
+    {
+      "id": 3,
+      "texto": "Tercera",
+      "terminada": true
+    },
+    {
+      "id": 4,
+      "texto": "Cuarta",
+      "terminada": false
+    }
+  ]
 }
