@@ -1,7 +1,7 @@
-export default function ProductCategoryRow() {
+export default function ProductCategoryRow({ category }) {
     return <>
         <tr>
-            <th colspan="2">CATEGORIA</th>
+            <th colspan="2">{category}</th>
         </tr>
     </>
 }

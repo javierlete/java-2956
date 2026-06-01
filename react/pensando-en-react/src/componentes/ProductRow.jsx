@@ -1,8 +1,8 @@
-export default function ProductRow() {
+export default function ProductRow({ product }) {
     return <>
         <tr>
-            <td>Fruits</td>
-            <td>$1</td>
+            <td style={{color: product.stocked ? 'black' : 'red'}}>{product.name}</td>
+            <td>{product.price}</td>
         </tr>
     </>
 }

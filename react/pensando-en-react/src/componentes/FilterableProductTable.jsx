@@ -1,9 +1,9 @@
 import ProductTable from "./ProductTable";
 import SearchBar from "./SearchBar";
 
-export function FilterableProductTable() {
+export function FilterableProductTable({ products }) {
     return <>
         <SearchBar />
-        <ProductTable />
+        <ProductTable products={products}/>
     </>;
 }
