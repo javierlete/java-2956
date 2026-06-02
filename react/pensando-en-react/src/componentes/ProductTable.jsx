@@ -1,7 +1,8 @@
+import { Fragment } from "react";
 import ProductCategoryRow from "./ProductCategoryRow";
 import ProductRow from "./ProductRow";
 
-export default function ProductTable({ products }) {
+export default function ProductTable({ products, filterText, inStockOnly }) {
     let lastCategory;
 
     return <>
@@ -14,15 +15,15 @@ export default function ProductTable({ products }) {
             </thead>
             <tbody>
                 {
-                    products.map(product => 
-                    <>
-                    {
-                        lastCategory !== product.category ? 
-                        <ProductCategoryRow category={lastCategory = product.category} /> : 
-                        <></>
-                    }
-                    <ProductRow product={product} />
-                    </>)
+                    products.filter(product => product.name.includes(filterText) && (inStockOnly ? product.stocked === inStockOnly : true)).map(product =>
+                        <Fragment key={product.category + product.name}>
+                            {
+                                lastCategory !== product.category ?
+                                    <ProductCategoryRow category={lastCategory = product.category} /> :
+                                    <></>
+                            }
+                            <ProductRow product={product} />
+                        </Fragment>)
                 }
             </tbody>
         </table>
