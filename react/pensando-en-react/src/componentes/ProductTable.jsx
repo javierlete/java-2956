@@ -15,7 +15,7 @@ export default function ProductTable({ products, filterText, inStockOnly }) {
             </thead>
             <tbody>
                 {
-                    products.filter(product => product.name.includes(filterText) && (inStockOnly ? product.stocked === inStockOnly : true)).map(product =>
+                    products.filter(product => product.name.toLowerCase().includes(filterText.toLowerCase()) && (inStockOnly ? product.stocked === inStockOnly : true)).map(product =>
                         <Fragment key={product.category + product.name}>
                             {
                                 lastCategory !== product.category ?
