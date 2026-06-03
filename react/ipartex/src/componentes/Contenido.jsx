@@ -1,9 +1,7 @@
-import ListaMensajes from "./ListaMensajes";
-import Login from "./Login";
+import { Outlet } from "react-router";
 
 export default function Contenido() {
-    return <main class="container">
-            <Login/>
-            <ListaMensajes/>
+    return <main className="container">
+            <Outlet />
         </main>;
 }
