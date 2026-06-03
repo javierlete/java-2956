@@ -1,16 +1,16 @@
 import Fecha from "./Fecha";
 
-export default function Mensaje() {
+export default function Mensaje({ mensaje }) {
     return <div className="d-flex flex-column">
         <div className="d-flex justify-content-between align-items-baseline">
-            <div className="fw-bold">USUARIO</div>
-            <span className="badge text-bg-primary rounded-pill"><Fecha iso="2026-01-02T03:04" /></span>
+            <div className="fw-bold">{mensaje.usuario}</div>
+            <span className="badge text-bg-primary rounded-pill"><Fecha iso={mensaje.momento} /></span>
         </div>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste sunt dolor repudiandae quibusdam, nihil non ratione, sint temporibus veniam maiores magnam deserunt ipsam voluptates itaque ullam magni rerum quod autem.</p>
+        <p>{mensaje.texto}</p>
         <div>
-            <span className="numero-me-gusta">5</span> <a href="#"><i className="text-danger bi bi-heart"></i></a>
-            
-            <span className="numero-respuestas ms-2">2</span> <a href="#"><i className="bi bi-chat"></i></a>
+            <span className="numero-me-gusta">{mensaje.numeroMeGusta}</span> <a href="#"><i className={'text-danger bi bi-heart' + (mensaje.rellenado ? '-fill': '') }></i></a>
+
+            <span className="numero-respuestas ms-2">{mensaje.numeroRespuestas}</span> <a href="#"><i className="bi bi-chat"></i></a>
         </div>
     </div>;
 }
