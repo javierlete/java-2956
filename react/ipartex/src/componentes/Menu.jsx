@@ -1,7 +1,7 @@
 export default function Menu() {
     return <nav class="navbar navbar-expand-sm bg-dark mb-5" data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="javascript:mensajes()"><i class="bi bi-chat"></i>
+			<a class="navbar-brand" href="javascript:mensajes()"><i class="bi bi-chat me-2"></i>
 				IparteX</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
