@@ -12,7 +12,7 @@ import com.ipartek.formacion.ejemplos.ipartexpring.repositorios.MensajeRepositor
 import com.ipartek.formacion.ejemplos.ipartexpring.repositorios.UsuarioRepository;
 
 @Component
-public class UsuarioCommandLineRunner implements CommandLineRunner {
+public class PruebasCommandLineRunner implements CommandLineRunner {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
