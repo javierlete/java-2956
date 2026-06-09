@@ -3,11 +3,14 @@ package com.ipartek.formacion.ejemplos.ipartexpring.repositorios;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto;
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
 
+@RepositoryRestResource(path = "mensajes", collectionResourceRel = "mensajes")
 public interface MensajeRepository extends CrudRepository<Mensaje, Long> {
 	@Query("from Mensaje m outer join fetch m.meGusta order by m.momento desc")
 	Iterable<Mensaje> findAll();
@@ -29,6 +32,7 @@ public interface MensajeRepository extends CrudRepository<Mensaje, Long> {
 			""")
 	Iterable<MensajeListadoDto> obtenerTodosParaListado();
 
+	@RestResource(path = "obtenerTodosParaListadoParaUsuario")
 	@Query("""
 			select distinct new com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto(
 			    m.id,
@@ -61,6 +65,7 @@ public interface MensajeRepository extends CrudRepository<Mensaje, Long> {
 			""")
 	Iterable<MensajeListadoDto> obtenerRaicesParaListado();
 
+	@RestResource(path = "respuestasPorMensaje")
 	@Query("""
 			select new com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto(
 			    m.id,
@@ -77,6 +82,7 @@ public interface MensajeRepository extends CrudRepository<Mensaje, Long> {
 			""")
 	Iterable<MensajeListadoDto> obtenerRespuestas(Long idMensaje);
 
+	@RestResource(path = "respuestasPorMensajeYUsuario")
 	@Query("""
 			select new com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto(
 			    m.id,
