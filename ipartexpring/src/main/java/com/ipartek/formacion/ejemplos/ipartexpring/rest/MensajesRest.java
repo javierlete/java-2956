@@ -1,54 +1,54 @@
 package com.ipartek.formacion.ejemplos.ipartexpring.rest;
 
-import com.ipartek.formacion.ejemplos.ipartex.dtos.MensajeListadoDto;
-import com.ipartek.formacion.ejemplos.ipartex.entidades.Mensaje;
-import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.AnonimoNegocio;
-import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.UsuarioNegocio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import bibliotecas.fabrica.Fabrica;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto;
+import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.AnonimoService;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.UsuarioService;
 
-@Path("/mensajes")
+@RestController
+@RequestMapping("/api/v2/mensajes")
 public class MensajesRest {
-	private final AnonimoNegocio anonimoNegocio = (AnonimoNegocio) Fabrica.getObjeto("negocio.anonimo");
-	private final UsuarioNegocio usuarioNegocio = (UsuarioNegocio) Fabrica.getObjeto("negocio.usuario");
+	@Autowired
+	private AnonimoService anonimoService;
 
-	@GET
+	@Autowired
+	private UsuarioService usuarioService;
+
+	@GetMapping
 	public Iterable<Mensaje> get() {
-		return anonimoNegocio.listarMensajes();
+		return anonimoService.listarMensajes();
 	}
 
-	@GET
-	@Path("breves")
+	@GetMapping("breves")
 	public Iterable<MensajeListadoDto> getBreves() {
-		return anonimoNegocio.listarMensajesRaizListado();
+		return anonimoService.listarMensajesRaizListado();
 	}
 
-	@GET
-	@Path("breves/{id}")
-	public Iterable<MensajeListadoDto> getBreves(@PathParam("id") Long id) {
-		return anonimoNegocio.listarMensajesListado(id);
+	@GetMapping("breves/{id}")
+	public Iterable<MensajeListadoDto> getBreves(@PathVariable Long id) {
+		return anonimoService.listarMensajesListado(id);
 	}
 
-	@GET
-	@Path("breves/respuestas/{id}")
-	public Iterable<MensajeListadoDto> getRespuestas(@PathParam("id") Long id,
-			@QueryParam("idUsuario") Long idUsuario) {
+	@GetMapping("breves/respuestas/{id}")
+	public Iterable<MensajeListadoDto> getRespuestas(@PathVariable Long id, Long idUsuario) {
 		if (idUsuario == null) {
-			return anonimoNegocio.listarRespuestas(id);
+			return anonimoService.listarRespuestas(id);
 		}
 
-		return anonimoNegocio.listarRespuestas(id, idUsuario);
+		return anonimoService.listarRespuestas(id, idUsuario);
 	}
 
-	@POST
+	@PostMapping
 	public Mensaje post(Mensaje mensaje) {
 		System.out.println(mensaje);
 
-		return usuarioNegocio.enviarMensaje(mensaje);
+		return usuarioService.enviarMensaje(mensaje);
 	}
 }
