@@ -1,7 +1,9 @@
 package com.ipartek.formacion.ejemplos.ipartexpring.repositorios;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeListadoDto;
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
@@ -91,9 +93,13 @@ public interface MensajeRepository extends CrudRepository<Mensaje, Long> {
 			""")
 	Iterable<MensajeListadoDto> obtenerRespuestas(Long idMensaje, Long idUsuario);
 
-	@Query(nativeQuery = true, value = "INSERT INTO me_gustas (me_gusta_id, mensaje_id) VALUES (:usuario, :mensaje)")
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "INSERT INTO me_gustas (me_gusta_id, mensaje_id) VALUES (:idUsuario, :idMensaje)")
 	void insertarMeGusta(long idUsuario, long idMensaje);
 
-	@Query(nativeQuery = true, value = "DELETE FROM me_gustas WHERE mensaje_id = :mensaje AND me_gusta_id = :usuario")
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "DELETE FROM me_gustas WHERE mensaje_id = :idMensaje AND me_gusta_id = :idUsuario")
 	void borrarMeGusta(long idUsuario, long idMensaje);
 }
