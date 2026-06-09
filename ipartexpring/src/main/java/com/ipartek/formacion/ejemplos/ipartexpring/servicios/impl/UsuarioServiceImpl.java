@@ -1,33 +1,37 @@
 package com.ipartek.formacion.ejemplos.ipartexpring.servicios.impl;
 
-import com.ipartek.formacion.ejemplos.ipartex.accesodatos.DaoMensaje;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
+import com.ipartek.formacion.ejemplos.ipartexpring.repositorios.MensajeRepository;
 import com.ipartek.formacion.ejemplos.ipartexpring.servicios.UsuarioService;
 
-import bibliotecas.fabrica.Fabrica;
 import lombok.extern.java.Log;
 
+@Service
 @Log
 public class UsuarioServiceImpl implements UsuarioService {
-	private final DaoMensaje daoMensaje = (DaoMensaje) Fabrica.getObjeto("dao.mensaje");
+	@Autowired
+	private MensajeRepository mensajeRepository;
 	
 	@Override
 	public Mensaje enviarMensaje(Mensaje mensaje) {
 		log.info("Se va a enviar el siguiente mensaje: " + mensaje);
 		
-		return daoMensaje.insertar(mensaje);
+		return mensajeRepository.save(mensaje);
 	}
 
 	@Override
 	public void meGusta(long idUsuario, long idMensaje) {
 		log.info("ME GUSTA " + idUsuario + "<3" + idMensaje);
-		daoMensaje.insertarMeGusta(idUsuario, idMensaje);
+		mensajeRepository.insertarMeGusta(idUsuario, idMensaje);
 	}
 
 	@Override
 	public void noMeGusta(long idUsuario, long idMensaje) {
 		log.info("NO ME GUSTA " + idUsuario + "<3" + idMensaje);
-		daoMensaje.borrarMeGusta(idUsuario, idMensaje);
+		mensajeRepository.borrarMeGusta(idUsuario, idMensaje);
 	}
 
 }

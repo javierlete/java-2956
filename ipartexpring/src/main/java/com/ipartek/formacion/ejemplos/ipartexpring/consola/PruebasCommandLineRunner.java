@@ -10,6 +10,8 @@ import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Usuario;
 import com.ipartek.formacion.ejemplos.ipartexpring.repositorios.MensajeRepository;
 import com.ipartek.formacion.ejemplos.ipartexpring.repositorios.UsuarioRepository;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.AnonimoService;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.UsuarioService;
 
 @Component
 public class PruebasCommandLineRunner implements CommandLineRunner {
@@ -50,11 +52,52 @@ public class PruebasCommandLineRunner implements CommandLineRunner {
 		for (var mensajeDto : mensajeRepository.obtenerTodosParaListado(3L)) {
 			System.out.println(mensajeDto);
 		}
-		
-		for(var mensajeDto: mensajeRepository.obtenerRespuestas(1L,	1L)) {
+
+		for (var mensajeDto : mensajeRepository.obtenerRespuestas(1L, 1L)) {
 			System.out.println(mensajeDto);
 		}
 
+		servicios();
+	}
+
+	@Autowired
+	private AnonimoService anonimoService;
+
+	@Autowired
+	private UsuarioService usuarioService;
+
+	private void servicios() {
+		System.out.println("SERVICIOS");
+
+		for (var mensaje : anonimoService.listarMensajesRaizListado()) {
+			System.out.println(mensaje);
+		}
+
+		for (var mensaje : anonimoService.listarRespuestas(1L)) {
+			System.out.println(mensaje);
+		}
+
+		var usuarioErroneo = anonimoService
+				.autenticar(Usuario.builder().email("asdf@asdf").password("alsdfajs").build());
+
+		System.out.println(usuarioErroneo);
+
+		var usuario = anonimoService.autenticar(Usuario.builder().email("juan@email.net").password("juan").build());
+
+		System.out.println(usuario);
+
+		usuarioService.enviarMensaje(Mensaje.builder().texto("Mensajeando").usuario(usuario.get()).build());
+		
+		usuarioService.enviarMensaje(Mensaje.builder().respuestaA(Mensaje.builder().id(1L).build()).texto("Ok")
+				.usuario(usuario.get()).build());
+
+		for (var mensaje : anonimoService.listarMensajesListado(usuario.get().getId())) {
+			System.out.println(mensaje);
+		}
+
+		for (var mensaje : anonimoService.listarRespuestas(1L, usuario.get().getId())) {
+			System.out.println(mensaje);
+		}
 	}
 
 }
