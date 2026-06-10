@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html th:fragment="plantilla (titulo, contenido)" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title th:replace="${titulo}">IparteXpring</title>
+</head>
+<body>
+	<h1>IparteXpring</h1>
+	
+	<main th:replace="${contenido}"></main>
+
+	<footer>&copy;2026 Javier Lete</footer>
+</body>
+</html>

@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>IparteXpring</title>
-</head>
-<body>
-
-	<h1>IparteXpring</h1>
-
+<main>
 	<ul th:each="m: ${mensajes}">
 		<li><span th:text="${m.texto}">Texto del mensaje</span>
 			<p>
-				<span th:if=${m.rellenado}>ME GUSTA A MÍ</span>
-				Me gusta: <span th:text="${m.numeroMeGusta}">5</span> Respuestas: <span
+				<span th:if=${m.rellenado}>ME GUSTA A MÍ</span> Me gusta: <span
+					th:text="${m.numeroMeGusta}">5</span> Respuestas: <span
 					th:text="${m.numeroRespuestas}">6</span> <a href="#"
 					th:href="@{/me-gusta(idMensaje=${m.id})}">Me gusta</a> <a href="#"
 					th:href="@{/no-me-gusta(idMensaje=${m.id})}">No me gusta</a>
@@ -23,5 +18,4 @@
 		<textarea name="texto"></textarea>
 		<button>Enviar</button>
 	</form>
-</body>
-</html>
+</main>

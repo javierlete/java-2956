@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>IparteXpring</title>
-</head>
-<body>
-
-	<h1>IparteXpring: LOGIN</h1>
-
+<main>
 	<form action="index.html" th:action="@{/login}" th:method="post">
-		<input name="email">
-		<input name="password">
+		<input name="email"> <input name="password">
 		<button>Iniciar sesión</button>
 	</form>
-</body>
-</html>
+</main>
