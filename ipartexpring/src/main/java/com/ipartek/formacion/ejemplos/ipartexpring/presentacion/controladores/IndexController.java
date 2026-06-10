@@ -1,55 +1,61 @@
 package com.ipartek.formacion.ejemplos.ipartexpring.presentacion.controladores;
 
-import com.ipartek.formacion.ejemplos.ipartex.entidades.Mensaje;
-import com.ipartek.formacion.ejemplos.ipartex.entidades.Usuario;
-import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.AnonimoNegocio;
-import com.ipartek.formacion.ejemplos.ipartex.logicanegocio.UsuarioNegocio;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import bibliotecas.controladorfrontal.ControladorFrontalServlet.Datos;
-import bibliotecas.controladorfrontal.Ruta;
-import bibliotecas.fabrica.Fabrica;
+import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
+import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Usuario;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.AnonimoService;
+import com.ipartek.formacion.ejemplos.ipartexpring.servicios.UsuarioService;
 
+// TODO: Cambiar por sesión cuando la tengamos disponible
+
+@Controller
 public class IndexController {
-	private static final AnonimoNegocio anonimoNegocio = (AnonimoNegocio) Fabrica.getObjeto("negocio.anonimo");
-	private static final UsuarioNegocio usuarioNegocio = (UsuarioNegocio) Fabrica.getObjeto("negocio.usuario");
+	private static final Usuario USUARIO_PRUEBAS = Usuario.builder().id(1L).email("javier@email.net").nombre("Javier")
+			.password("javier").build();
 
-	@Ruta("/mensajes")
-	public static String mensajes(Datos datos) {
-		var mensajes = anonimoNegocio.listarMensajes();
+	@Autowired
+	private AnonimoService anonimoService;
 
-		datos.salida().put("mensajes", mensajes);
+	@Autowired
+	private UsuarioService usuarioService;
+
+	@GetMapping("mensajes")
+	public String mensajes(Model modelo) {
+		var mensajes = anonimoService.listarMensajesListado(USUARIO_PRUEBAS.getId());
+
+		modelo.addAttribute("mensajes", mensajes);
 
 		return "index";
 	}
 
-	@Ruta("/enviar")
-	public static String enviar(Datos datos) {
-		var texto = datos.entrada().get("texto")[0];
-
-		var usuario = (Usuario) datos.sesion().get("usuario");
+	@PostMapping("enviar")
+	public String enviar(String texto) {
+//		 var usuario = (Usuario) datos.sesion().get("usuario");
+		var usuario = USUARIO_PRUEBAS;
 
 		var mensaje = Mensaje.builder().texto(texto).usuario(usuario).build();
 
-		usuarioNegocio.enviarMensaje(mensaje);
+		usuarioService.enviarMensaje(mensaje);
 
 		return "redirect:/mensajes";
 	}
 
-	@Ruta("/login")
-	public static String login(Datos datos) {
-		if ("GET".equals(datos.metodo())) {
-			return "login";
-		}
+	@GetMapping("login")
+	public String login() {
+		return "login";
+	}
 
-		var email = datos.entrada().get("email")[0];
-		var password = datos.entrada().get("password")[0];
-
-		var usuario = Usuario.builder().email(email).password(password).build();
-
-		var usuarioLogin = anonimoNegocio.autenticar(usuario);
+	@PostMapping("login")
+	public String loginPost(Usuario usuario) {
+		var usuarioLogin = anonimoService.autenticar(usuario);
 
 		if (usuarioLogin.isPresent()) {
-			datos.sesion().put("usuario", usuarioLogin.get());
+//			datos.sesion().put("usuario", usuarioLogin.get());
 
 			return "redirect:/mensajes";
 		} else {
@@ -57,42 +63,39 @@ public class IndexController {
 		}
 	}
 
-	@Ruta("/logout")
-	public static String logout(Datos datos) {
-		datos.cerrarSesion().set(true);
+	@GetMapping("logout")
+	public String logout() {
+//		datos.cerrarSesion().set(true);
 
 		return "redirect:/login";
 	}
 
-	@Ruta("/me-gusta")
-	public static String meGusta(Datos datos) {
-		return procesarMeGusta(datos, true);
+	@GetMapping("me-gusta")
+	public String meGusta(Long idMensaje) {
+		return procesarMeGusta(idMensaje, true);
 	}
 
-	@Ruta("/no-me-gusta")
-	public static String noMeGusta(Datos datos) {
-		return procesarMeGusta(datos, false);
+	@GetMapping("no-me-gusta")
+	public String noMeGusta(Long idMensaje) {
+		return procesarMeGusta(idMensaje, false);
 	}
 
-	private static String procesarMeGusta(Datos datos, boolean meGusta) {
-		var sIdMensaje = datos.entrada().get("id")[0];
-
-		var idMensaje = Long.parseLong(sIdMensaje);
-
-		var usuario = (Usuario) datos.sesion().get("usuario");
-
-		var idUsuario = usuario.getId();
+	private String procesarMeGusta(Long idMensaje, boolean meGusta) {
+//		var usuario = (Usuario) datos.sesion().get("usuario");
+		var usuario = USUARIO_PRUEBAS;
 		
+		var idUsuario = usuario.getId();
+
 		System.out.printf("Usuario: %s, Mensaje: %s\n", idUsuario, idMensaje);
 
 		if (meGusta) {
 			System.out.println("ME GUSTA");
-			
-			usuarioNegocio.meGusta(idUsuario, idMensaje);
+
+			usuarioService.meGusta(idUsuario, idMensaje);
 		} else {
 			System.out.println("NO ME GUSTA");
 
-			usuarioNegocio.noMeGusta(idUsuario, idMensaje);
+			usuarioService.noMeGusta(idUsuario, idMensaje);
 		}
 
 		return "redirect:/mensajes";
