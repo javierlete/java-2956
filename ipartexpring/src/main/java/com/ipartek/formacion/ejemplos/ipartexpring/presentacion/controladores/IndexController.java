@@ -3,13 +3,17 @@ package com.ipartek.formacion.ejemplos.ipartexpring.presentacion.controladores;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.ipartek.formacion.ejemplos.ipartexpring.dtos.MensajeFormDto;
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Mensaje;
 import com.ipartek.formacion.ejemplos.ipartexpring.entidades.Usuario;
 import com.ipartek.formacion.ejemplos.ipartexpring.servicios.AnonimoService;
 import com.ipartek.formacion.ejemplos.ipartexpring.servicios.UsuarioService;
+
+import jakarta.validation.Valid;
 
 // TODO: Cambiar por sesión cuando la tengamos disponible
 
@@ -29,16 +33,21 @@ public class IndexController {
 		var mensajes = anonimoService.listarMensajesListado(USUARIO_PRUEBAS.getId());
 
 		modelo.addAttribute("mensajes", mensajes);
+		modelo.addAttribute("mensajeFormDto", new MensajeFormDto(""));
 
 		return "index";
 	}
 
 	@PostMapping("enviar")
-	public String enviar(String texto) {
+	public String enviar(@Valid MensajeFormDto mensajeFormDto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "index";
+		}
+		
 //		 var usuario = (Usuario) datos.sesion().get("usuario");
 		var usuario = USUARIO_PRUEBAS;
 
-		var mensaje = Mensaje.builder().texto(texto).usuario(usuario).build();
+		var mensaje = Mensaje.builder().texto(mensajeFormDto.texto()).usuario(usuario).build();
 
 		usuarioService.enviarMensaje(mensaje);
 

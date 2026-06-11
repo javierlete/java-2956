@@ -4,8 +4,8 @@
 <title>IparteXpring</title>
 <main class="container">
 	<form action="index.html" th:action="@{/login}" th:method="post">
-		<div th:replace="~{_fragmentos :: labelInput('Correo electrónico', 'email', 'email', '')}"></div>
-		<div th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', '')}"></div>
-		<div th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '')}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Correo electrónico', 'email', 'email', '', '')}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', '', '')}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '', '')}"></div>
 	</form>
 </main>

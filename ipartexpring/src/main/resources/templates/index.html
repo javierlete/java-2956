@@ -3,9 +3,9 @@
 	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>IparteXpring</title>
 <main class="container">
-	<form action="index.html" th:action="@{/enviar}" th:method="post">
-		<div th:replace="~{_fragmentos :: labelInput('Javier', 'textarea', 'texto', '')}"></div>
-		<div th:replace="~{_fragmentos :: labelInput('Enviar', 'submit', '', '')}"></div>
+	<form action="index.html" th:action="@{/enviar}" th:method="post" th:object="${mensajeFormDto}">
+		<div th:replace="~{_fragmentos :: labelInput('Javier', 'textarea', 'texto', *{texto}, ${#fields.hasErrors('texto') ? #fields.errors('texto')[0] : null})}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Enviar', 'submit', '', '', '')}"></div>
 	</form>
 
 	<ul class="list-group list-group mb-4">

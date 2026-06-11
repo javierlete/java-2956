@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="labelInput(etiqueta, tipo, id, valor)"
+<div th:fragment="labelInput(etiqueta, tipo, id, valor, error)"
 	class="row mb-3">
 	<div th:if="${tipo == 'submit'}" class="offset-sm-2 col-sm">
 		<button type="submit" class="btn btn-primary" th:text="${etiqueta}">ETIQUETA</button>
@@ -10,12 +10,14 @@
 		th:text="${etiqueta}">ETIQUETA</label>
 	<div class="col-sm">
 		<textarea th:if="${tipo == 'textarea'}" class="form-control"
-			th:id="${id}" th:name="${id}" rows="5" th:value="${valor}"></textarea>
+			th:classappend="${error} ? 'is-invalid'"
+			th:id="${id}" th:name="${id}" rows="5" th:text="${valor}"></textarea>
 		<input th:if="${tipo != 'textarea' && tipo != 'submit'}"
 			th:type="${tipo == null ? 'text' : tipo}" class="form-control"
 			th:id="${id}" th:name="${id}" th:value="${valor}"
 			th:step="${decimales != null ? (1.0 / (Math.pow(10, decimales))) : ''}"
 			th:accept="${tiposFichero != null ? tiposFichero: ''}">
+		<div class="invalid-feedback" th:text="${error}">Error genérico</div>
 	</div>
 </div>
 
