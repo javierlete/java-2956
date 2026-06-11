@@ -2,9 +2,10 @@
 <html xmlns:th="https://www.thymeleaf.org"
 	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>IparteXpring</title>
-<main>
+<main class="container">
 	<form action="index.html" th:action="@{/login}" th:method="post">
-		<input name="email"> <input name="password">
-		<button>Iniciar sesión</button>
+		<div th:replace="~{_fragmentos :: labelInput('Correo electrónico', 'email', 'email', '')}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', '')}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '')}"></div>
 	</form>
 </main>

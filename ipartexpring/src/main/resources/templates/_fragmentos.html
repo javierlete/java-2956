@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="labelInput(etiqueta, valor, id, tipo)" class="row mb-3">
+<div th:fragment="labelInput(etiqueta, tipo, id, valor)"
+	class="row mb-3">
 	<div th:if="${tipo == 'submit'}" class="offset-sm-2 col-sm">
 		<button type="submit" class="btn btn-primary" th:text="${etiqueta}">ETIQUETA</button>
 	</div>
-	<label th:for="${id}" class="col-sm-2 col-form-label" th:text="${etiqueta}">ETIQUETA</label>
+	<label th:if="${tipo != 'submit'}" th:for="${id}" class="col-sm-2 col-form-label"
+		th:text="${etiqueta}">ETIQUETA</label>
 	<div class="col-sm">
-		<textarea th:if="${tipo == 'textarea'}" class="form-control" th:id="${id}" th:name="${id}" rows="5" th:value="${valor}"></textarea>
-		<input th:if="${tipo != 'textarea' && tipo != 'submit'}" th:type="${tipo == null ? 'text' : tipo}" class="form-control"
+		<textarea th:if="${tipo == 'textarea'}" class="form-control"
+			th:id="${id}" th:name="${id}" rows="5" th:value="${valor}"></textarea>
+		<input th:if="${tipo != 'textarea' && tipo != 'submit'}"
+			th:type="${tipo == null ? 'text' : tipo}" class="form-control"
 			th:id="${id}" th:name="${id}" th:value="${valor}"
 			th:step="${decimales != null ? (1.0 / (Math.pow(10, decimales))) : ''}"
 			th:accept="${tiposFichero != null ? tiposFichero: ''}">
