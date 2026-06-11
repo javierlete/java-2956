@@ -29,19 +29,18 @@ public class IndexController {
 	private UsuarioService usuarioService;
 
 	@GetMapping("mensajes")
-	public String mensajes(Model modelo) {
+	public String mensajes(Model modelo, MensajeFormDto mensajeFormDto) {
 		var mensajes = anonimoService.listarMensajesListado(USUARIO_PRUEBAS.getId());
 
 		modelo.addAttribute("mensajes", mensajes);
-		modelo.addAttribute("mensajeFormDto", new MensajeFormDto(""));
 
 		return "index";
 	}
 
 	@PostMapping("enviar")
-	public String enviar(@Valid MensajeFormDto mensajeFormDto, BindingResult bindingResult) {
+	public String enviar(@Valid MensajeFormDto mensajeFormDto, BindingResult bindingResult, Model modelo) {
 		if(bindingResult.hasErrors()) {
-			return "index";
+			return mensajes(modelo, mensajeFormDto);
 		}
 		
 //		 var usuario = (Usuario) datos.sesion().get("usuario");
