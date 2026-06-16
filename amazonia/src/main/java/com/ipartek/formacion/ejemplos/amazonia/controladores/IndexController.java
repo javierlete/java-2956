@@ -28,4 +28,11 @@ public class IndexController {
 		
 		return "producto";
 	}
+
+	@GetMapping({"buscar"})
+	public String producto(String texto, Model modelo) {
+		modelo.addAttribute("productos", anonimoService.buscarProductos(texto));
+		
+		return "productos";
+	}
 }

@@ -32,11 +32,17 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
-					<li class="nav-item"><a class="nav-link" href="#" th:href="@{/}">Principal</a></li>
+					<li class="nav-item"><a class="nav-link" href="#"
+						th:href="@{/}">Principal</a></li>
 				</ul>
-				<ul class="navbar-nav mb-2 mb-sm-0">
+				<form th:action="@{/buscar}" class="d-flex" role="search">
+					<input name="texto" class="form-control me-2" type="search" placeholder="Texto a buscar"
+						aria-label="Search" />
+					<button class="btn btn-outline-light" type="submit">Buscar</button>
+				</form>
+				<ul class="navbar-nav mb-2 mb-sm-0 ms-auto">
 					<li class="navbar-text"><i class="bi bi-person"></i>
-						${sessionScope.usuario.nombre}</li>
+						NOMBRE</li>
 					<li class="nav-item"><a class="nav-link" href="logout"><i
 							class="bi bi-box-arrow-right"></i></a></li>
 					<li class="nav-item"><a class="nav-link" href="login"><i

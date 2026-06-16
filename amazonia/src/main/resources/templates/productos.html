@@ -3,6 +3,7 @@
 	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>Amazonia: Productos</title>
 <main class="container my-5">
+	<p th:if="${productos.size() == 0}" class="lead fs-1">No se ha encontrado ningún producto</p>
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		<div th:each="producto: ${productos}" th:object="${producto}"
 			class="col">
