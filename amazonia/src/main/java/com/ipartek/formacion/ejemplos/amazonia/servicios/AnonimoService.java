@@ -7,4 +7,5 @@ import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 public interface AnonimoService {
 	Iterable<Producto> listarProductos();
 	Optional<Producto> obtenerProductoPorId(Long id);
+	Iterable<Producto> buscarProductos(String texto);
 }

@@ -30,4 +30,10 @@ public class AnonimoServiceImpl implements AnonimoService {
 		return productoRepository.findById(id);
 	}
 
+	@Override
+	public Iterable<Producto> buscarProductos(String texto) {
+		log.info("Buscar producto por texto: " + texto);
+		return productoRepository.findByNombreContains(texto);
+	}
+
 }
