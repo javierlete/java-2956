@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia: Productos</title>
+<main class="container my-5">
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		<div th:each="producto: ${productos}" th:object="${producto}"
+			class="col">
+			<div class="card h-100">
+				<img
+					th:src="${'https://picsum.photos/id/' + producto.id + '/400/300'}"
+					class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 th:text="*{nombre}" class="card-title">Card title</h5>
+					<p th:text="*{descripcion}" class="card-text">This is a wider
+						card with supporting text below as a natural lead-in to additional
+						content. This content is a little bit longer.</p>
+					<p class="card-text">
+						<a th:href="@{productos/{id}(id=*{id})}"
+							class="btn btn-primary stretched-link">Ver en detalle</a>
+					</p>
+				</div>
+				<div class="card-footer">
+					<small th:text="${#numbers.formatCurrency(producto.precio)}"
+						class="text-body-secondary">Last updated 3 mins ago</small>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
