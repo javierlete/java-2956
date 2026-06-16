@@ -37,4 +37,9 @@ public class ProductoRest {
 
 		return producto.get();
 	}
+	
+	@GetMapping("buscar/porTexto")
+	public Iterable<Producto> buscar(String texto) {
+		return anonimoService.buscarProductos(texto);
+	}
 }
