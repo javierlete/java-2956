@@ -19,7 +19,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body class="h-100 d-flex flex-column">
-	<nav class="navbar navbar-expand-sm bg-dark mb-5 sticky-top"
+	<nav class="navbar navbar-expand-md bg-dark mb-5 sticky-top"
 		data-bs-theme="dark">
 		<div class="container-fluid">
 			<a class="navbar-brand" href="mensajes"><i class="bi bi-cart"></i>
@@ -34,15 +34,24 @@
 				<ul class="navbar-nav me-auto mb-2 mb-sm-0">
 					<li class="nav-item"><a class="nav-link" href="#"
 						th:href="@{/}">Principal</a></li>
+
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false"> Categorías </a>
+						<ul class="dropdown-menu">
+
+							<li th:each="categoria: ${categorias}" th:object="${categoria}"><a
+								class="dropdown-item" href="#" th:href="@{/}"
+								th:text="*{nombre}">Principal</a></li>
+						</ul></li>
 				</ul>
 				<form th:action="@{/buscar}" class="d-flex" role="search">
-					<input name="texto" class="form-control me-2" type="search" placeholder="Texto a buscar"
-						aria-label="Search" />
+					<input name="texto" class="form-control me-2" type="search"
+						placeholder="Texto a buscar" aria-label="Search" />
 					<button class="btn btn-outline-light" type="submit">Buscar</button>
 				</form>
 				<ul class="navbar-nav mb-2 mb-sm-0 ms-auto">
-					<li class="navbar-text"><i class="bi bi-person"></i>
-						NOMBRE</li>
+					<li class="navbar-text"><i class="bi bi-person"></i> NOMBRE</li>
 					<li class="nav-item"><a class="nav-link" href="logout"><i
 							class="bi bi-box-arrow-right"></i></a></li>
 					<li class="nav-item"><a class="nav-link" href="login"><i

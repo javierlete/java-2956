@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
+import com.ipartek.formacion.ejemplos.amazonia.repositorios.CategoriaRepository;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.ProductoRepository;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
@@ -17,6 +19,9 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	@Autowired
 	private ProductoRepository productoRepository;
+
+	@Autowired
+	private CategoriaRepository categoriaRepository;
 	
 	@Override
 	public Iterable<Producto> listarProductos() {
@@ -34,6 +39,12 @@ public class AnonimoServiceImpl implements AnonimoService {
 	public Iterable<Producto> buscarProductos(String texto) {
 		log.info("Buscar producto por texto: " + texto);
 		return productoRepository.findByNombreContains(texto);
+	}
+
+	@Override
+	public Iterable<Categoria> listarCategorias() {
+		log.info("Listar categorías");
+		return categoriaRepository.findAll();
 	}
 
 }
