@@ -1,6 +1,5 @@
 package com.ipartek.formacion.ejemplos.amazonia.rest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +12,14 @@ import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 
 @RestController
 @RequestMapping("/api/v2/productos")
 public class ProductoRest {
-	@Autowired
-	private AnonimoService anonimoService;
+	private final AnonimoService anonimoService;
 
 	@GetMapping
 	public Iterable<Producto> get() {
