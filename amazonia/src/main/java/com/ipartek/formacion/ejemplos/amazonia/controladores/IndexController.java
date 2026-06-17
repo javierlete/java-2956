@@ -22,16 +22,23 @@ public class IndexController {
 		return "productos";
 	}
 
-	@GetMapping({"productos/{id}"})
+	@GetMapping("productos/{id}")
 	public String producto(@PathVariable Long id, Model modelo) {
 		modelo.addAttribute("producto", anonimoService.obtenerProductoPorId(id).get());
 		
 		return "producto";
 	}
 
-	@GetMapping({"buscar"})
+	@GetMapping("buscar")
 	public String producto(String texto, Model modelo) {
 		modelo.addAttribute("productos", anonimoService.buscarProductos(texto));
+		
+		return "productos";
+	}
+	
+	@GetMapping("categoria/{id}")
+	public String categoria(@PathVariable Long id, Model modelo) {
+		modelo.addAttribute("productos", anonimoService.obtenerProductosPorCategoriaId(id));
 		
 		return "productos";
 	}

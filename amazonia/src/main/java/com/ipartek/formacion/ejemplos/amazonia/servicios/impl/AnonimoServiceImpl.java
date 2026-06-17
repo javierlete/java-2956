@@ -47,4 +47,10 @@ public class AnonimoServiceImpl implements AnonimoService {
 		return categoriaRepository.findAll();
 	}
 
+	@Override
+	public Iterable<Producto> obtenerProductosPorCategoriaId(Long id) {
+		log.info("Productos por id de categoría: " + id);
+		return productoRepository.findByCategoriaId(id);
+	}
+
 }

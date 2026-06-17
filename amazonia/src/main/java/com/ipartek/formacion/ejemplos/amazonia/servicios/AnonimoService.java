@@ -11,4 +11,5 @@ public interface AnonimoService {
 	Iterable<Producto> buscarProductos(String texto);
 	
 	Iterable<Categoria> listarCategorias();
+	Iterable<Producto> obtenerProductosPorCategoriaId(Long id);
 }

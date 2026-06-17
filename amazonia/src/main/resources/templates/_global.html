@@ -41,7 +41,7 @@
 						<ul class="dropdown-menu">
 
 							<li th:each="categoria: ${categorias}" th:object="${categoria}"><a
-								class="dropdown-item" href="#" th:href="@{/}"
+								class="dropdown-item" href="#" th:href="@{/categoria/{id}(id=*{id})}"
 								th:text="*{nombre}">Principal</a></li>
 						</ul></li>
 				</ul>

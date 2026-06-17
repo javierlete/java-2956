@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,5 +40,9 @@ public class Producto {
 	
 	@NotNull
 	@PositiveOrZero
-	private BigDecimal precio;	
+	private BigDecimal precio;
+	
+	@NotNull
+	@ManyToOne
+	private Categoria categoria;
 }

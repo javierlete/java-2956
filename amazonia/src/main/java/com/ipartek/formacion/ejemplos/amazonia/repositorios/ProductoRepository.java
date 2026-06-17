@@ -9,5 +9,6 @@ import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 public interface ProductoRepository extends CrudRepository<Producto, Long> {
 
 	Iterable<Producto> findByNombreContains(String texto);
-
+	
+	Iterable<Producto> findByCategoriaId(Long id);
 }
