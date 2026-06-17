@@ -20,6 +20,7 @@ public class IndexController {
 	@GetMapping({"/", "productos"})
 	public String productos(Model modelo) {
 		modelo.addAttribute("productos", anonimoService.listarProductos());
+		modelo.addAttribute("mostrarCategoria", true);
 		
 		return "productos";
 	}
@@ -27,6 +28,7 @@ public class IndexController {
 	@GetMapping("productos/{id}")
 	public String producto(@PathVariable Long id, Model modelo) {
 		modelo.addAttribute("producto", anonimoService.obtenerProductoPorId(id).get());
+		modelo.addAttribute("mostrarCategoria", true);
 		
 		return "producto";
 	}
@@ -34,6 +36,7 @@ public class IndexController {
 	@GetMapping("buscar")
 	public String producto(String texto, Model modelo) {
 		modelo.addAttribute("productos", anonimoService.buscarProductos(texto));
+		modelo.addAttribute("mostrarCategoria", true);
 		
 		return "productos";
 	}
@@ -41,6 +44,7 @@ public class IndexController {
 	@GetMapping("categoria/{id}")
 	public String categoria(@PathVariable Long id, Model modelo) {
 		modelo.addAttribute("productos", anonimoService.obtenerProductosPorCategoriaId(id));
+		modelo.addAttribute("mostrarCategoria", false);
 		
 		return "productos";
 	}

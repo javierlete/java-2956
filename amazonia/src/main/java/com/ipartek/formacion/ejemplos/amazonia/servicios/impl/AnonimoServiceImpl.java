@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.CategoriaRepository;
@@ -47,7 +48,7 @@ public class AnonimoServiceImpl implements AnonimoService {
 	}
 
 	@Override
-	public Iterable<Producto> obtenerProductosPorCategoriaId(Long id) {
+	public Iterable<ProductoDto> obtenerProductosPorCategoriaId(Long id) {
 		log.info("Productos por id de categoría: " + id);
 		return productoRepository.findByCategoriaId(id);
 	}

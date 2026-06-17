@@ -20,7 +20,7 @@
 						<a th:href="@{productos/{id}(id=*{id})}"
 							class="btn btn-primary stretched-link">Ver en detalle</a>
 					</p>
-					<p class="card-text lead" th:text="*{categoria.nombre}">CATEGORIA</p>
+					<p th:if="${mostrarCategoria}" class="card-text lead" th:text="*{categoria.nombre}">CATEGORIA</p>
 				</div>
 				<div class="card-footer">
 					<small th:text="${#numbers.formatCurrency(producto.precio)}"

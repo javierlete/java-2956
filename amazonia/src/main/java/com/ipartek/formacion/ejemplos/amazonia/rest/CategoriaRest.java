@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
-import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class CategoriaRest {
 	}
 	
 	@GetMapping("{id}/productos")
-	public Iterable<Producto> getProductosPorCategoriaId(@PathVariable Long id) {
+	public Iterable<ProductoDto> getProductosPorCategoriaId(@PathVariable Long id) {
 		return anonimoService.obtenerProductosPorCategoriaId(id);
 	}
 }

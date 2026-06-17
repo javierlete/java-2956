@@ -2,6 +2,7 @@ package com.ipartek.formacion.ejemplos.amazonia.servicios;
 
 import java.util.Optional;
 
+import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 
@@ -11,5 +12,5 @@ public interface AnonimoService {
 	Iterable<Producto> buscarProductos(String texto);
 	
 	Iterable<Categoria> listarCategorias();
-	Iterable<Producto> obtenerProductosPorCategoriaId(Long id);
+	Iterable<ProductoDto> obtenerProductosPorCategoriaId(Long id);
 }
