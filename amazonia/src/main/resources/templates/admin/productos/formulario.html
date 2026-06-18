@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia: ADMIN</title>
+<main class="container">
+
+	<p th:text="${producto}"></p>
+
+	<form th:action="@{/admin/productos/guardar}" th:method="post" th:object="${producto}">
+		<input type="hidden" name="id" th:value="*{id}">
+		<div th:replace="~{_fragmentos :: labelInput('Nombre', 'text', 'nombre', *{nombre}, null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Precio', 'number', 'precio', *{precio}, null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Categoría', 'number', 'categoria.id', *{categoria?.id}, null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Descripción', 'textarea', 'descripcion', *{descripcion}, null)}"></div>
+		
+		<div th:replace="~{_fragmentos :: labelInput('Guardar', 'submit', '', '', null)}"></div>
+	</form>
+
+</main>

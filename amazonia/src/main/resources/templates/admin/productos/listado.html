@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia: ADMIN</title>
+<main class="container">
+
+	<table class="table table-hover table-striped table-bordered">
+		<caption>Productos</caption>
+		
+		<thead class="table-secondary">
+			<tr>
+				<th class="text-end">Id</th>
+				<th>Nombre</th>
+				<th class="text-end">Precio</th>
+				<th>Categoría</th>
+				<th>OPCIONES</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="producto: ${productos}" th:object="${producto}">
+				<th class="text-end" th:text="*{id}">1</th>
+				<td th:text="*{nombre}">PRODUCTO</td>
+				<td class="text-end" th:text="${#numbers.formatCurrency(producto.precio)}">432.10 €</td>
+				<td th:text="*{categoria.nombre}">CATEGORIA</td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="#" th:href="@{/admin/productos/formulario/{id}(id=*{id})}"><i class="bi bi-pencil-fill"></i></a>
+					<a class="btn btn-sm btn-danger" href="#" th:href="@{/admin/productos/borrar/{id}(id=*{id})}"><i class="bi bi-trash-fill"></i></a>
+				</td>
+			</tr>
+		</tbody>
+		
+		<tfoot class="table-secondary">
+			<tr>
+				<td colspan="4"></td>
+				<td>
+					<a class="btn btn-sm btn-primary" href="#" th:href="@{/admin/productos/formulario}"><i class="bi bi-plus-lg"></i></a>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+
+</main>
