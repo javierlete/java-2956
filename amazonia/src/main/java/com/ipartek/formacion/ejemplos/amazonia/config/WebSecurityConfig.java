@@ -18,7 +18,17 @@ class WebSecurityConfig {
 	// AUTENTICACIÓN: demuestra quien eres
 	@Bean
 	UserDetailsService userDetailsService(DataSource dataSource) {
-		return new JdbcUserDetailsManager(dataSource);
+		var jdbc = new JdbcUserDetailsManager(dataSource);
+		
+		jdbc.setUsersByUsernameQuery("SELECT email, password, 1 FROM usuarios WHERE email=?");
+		jdbc.setAuthoritiesByUsernameQuery("""
+				SELECT u.email, CONCAT('ROLE_', r.nombre)
+				FROM usuarios u 
+				JOIN roles r ON r.id = u.rol_id 
+				WHERE u.email=?
+				""");
+		
+		return jdbc; // new JdbcUserDetailsManager(dataSource);
 	}
 
 	// AUTORIZACIÓN: entonces te permito hacer esto
