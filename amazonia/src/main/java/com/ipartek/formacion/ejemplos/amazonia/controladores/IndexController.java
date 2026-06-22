@@ -48,4 +48,9 @@ public class IndexController {
 		
 		return "productos";
 	}
+	
+	@GetMapping("login")
+	public String login() {
+		return "login";
+	}
 }

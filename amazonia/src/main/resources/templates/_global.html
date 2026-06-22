@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="h-100" lang="es"
 	th:fragment="plantilla (titulo, contenido)"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
 <head>
 <meta charset="UTF-8">
 <title th:replace="${titulo}">Amazonia</title>
@@ -41,8 +41,8 @@
 						<ul class="dropdown-menu">
 
 							<li th:each="categoria: ${categorias}" th:object="${categoria}"><a
-								class="dropdown-item" href="#" th:href="@{/categoria/{id}(id=*{id})}"
-								th:text="*{nombre}">Principal</a></li>
+								class="dropdown-item" href="#"
+								th:href="@{/categoria/{id}(id=*{id})}" th:text="*{nombre}">Principal</a></li>
 						</ul></li>
 				</ul>
 				<form th:action="@{/buscar}" class="d-flex" role="search">
@@ -51,12 +51,23 @@
 					<button class="btn btn-outline-light" type="submit">Buscar</button>
 				</form>
 				<ul class="navbar-nav mb-2 mb-sm-0 ms-auto">
-					<li class="navbar-text"><i class="bi bi-person"></i> NOMBRE</li>
-					<li class="nav-item"><a class="nav-link" href="logout"><i
-							class="bi bi-box-arrow-right"></i></a></li>
-					<li class="nav-item"><a class="nav-link" href="login"><i
+					<li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="nav-item"><a
+						class="nav-link" href="#" th:href="@{/admin/productos/listado}">Administración</a></li>
+					<li sec:authorize="isAuthenticated()" class="navbar-text"><i
+						class="bi bi-person"></i> <span sec:authentication="name">NOMBRE</span></li>
+					<li class="navbar-text">
+					<li sec:authorize="!isAuthenticated()" class="nav-item"><a
+						class="nav-link" href="login"><i
 							class="bi bi-box-arrow-in-right"></i></a></li>
+					<li sec:authorize="isAuthenticated()" class="nav-item">
+						<form th:action="@{/logout}" th:method="post" class="d-flex">
+							<button class="nav-link">
+								<i class="bi bi-box-arrow-right"></i>
+							</button>
+						</form>
+					</li>
 				</ul>
+
 			</div>
 		</div>
 	</nav>
