@@ -2,13 +2,17 @@ package com.ipartek.formacion.ejemplos.amazonia.servicios.impl;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ipartek.formacion.ejemplos.amazonia.dtos.CredencialesDto;
 import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
+import com.ipartek.formacion.ejemplos.amazonia.entidades.Usuario;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.CategoriaRepository;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.ProductoRepository;
+import com.ipartek.formacion.ejemplos.amazonia.repositorios.UsuarioRepository;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +26,10 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	private final ProductoRepository productoRepository;
 	private final CategoriaRepository categoriaRepository;
-		
+	private final UsuarioRepository usuarioRepository;
+
+	private final PasswordEncoder passwordEncoder;
+
 	@Override
 	public Iterable<Producto> listarProductos() {
 		log.info("Listado de productos");
@@ -51,6 +58,17 @@ public class AnonimoServiceImpl implements AnonimoService {
 	public Iterable<ProductoDto> obtenerProductosPorCategoriaId(Long id) {
 		log.info("Productos por id de categoría: " + id);
 		return productoRepository.findByCategoriaId(id);
+	}
+
+	@Override
+	public Optional<Usuario> autenticar(CredencialesDto credenciales) {
+		var usuario = usuarioRepository.findByEmail(credenciales.email());
+
+		if (usuario.isEmpty() || !passwordEncoder.matches(credenciales.password(), usuario.get().getPassword())) {
+			return Optional.empty();
+		}
+
+		return usuario;
 	}
 
 }

@@ -8,6 +8,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -19,16 +21,21 @@ class WebSecurityConfig {
 	@Bean
 	UserDetailsService userDetailsService(DataSource dataSource) {
 		var jdbc = new JdbcUserDetailsManager(dataSource);
-		
+
 		jdbc.setUsersByUsernameQuery("SELECT email, password, 1 FROM usuarios WHERE email=?");
 		jdbc.setAuthoritiesByUsernameQuery("""
 				SELECT u.email, CONCAT('ROLE_', r.nombre)
-				FROM usuarios u 
-				JOIN roles r ON r.id = u.rol_id 
+				FROM usuarios u
+				JOIN roles r ON r.id = u.rol_id
 				WHERE u.email=?
 				""");
-		
+
 		return jdbc; // new JdbcUserDetailsManager(dataSource);
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
 	// AUTORIZACIÓN: entonces te permito hacer esto
@@ -36,6 +43,7 @@ class WebSecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		// @formatter:off
 		http
+	        .csrf(csrf -> csrf.ignoringRequestMatchers("/api/**"))
 			.authorizeHttpRequests((requests) -> requests
 				.requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
 				.anyRequest().permitAll()
