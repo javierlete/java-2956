@@ -54,7 +54,7 @@
 					<li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="nav-item"><a
 						class="nav-link" href="#" th:href="@{/admin/productos/listado}">Administración</a></li>
 					<li sec:authorize="isAuthenticated()" class="navbar-text"><i
-						class="bi bi-person"></i> <span sec:authentication="name">NOMBRE</span></li>
+						class="bi bi-person"></i> <span th:text="${#authentication.principal?.nombre}">NOMBRE</span> [<span th:text="${#authentication.principal?.rol.nombre}">ROL</span>]</li>
 					<li class="navbar-text">
 					<li sec:authorize="!isAuthenticated()" class="nav-item"><a
 						class="nav-link" href="login"><i

@@ -8,29 +8,43 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.ipartek.formacion.ejemplos.amazonia.repositorios.UsuarioRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 
 @Configuration
 @EnableWebSecurity
 class WebSecurityConfig {
+	private final UsuarioRepository usuarioRepository;
 
 	// AUTENTICACIÓN: demuestra quien eres
 	@Bean
 	UserDetailsService userDetailsService(DataSource dataSource) {
-		var jdbc = new JdbcUserDetailsManager(dataSource);
+		return email -> {
+			var usuario = usuarioRepository.findByEmail(email);
 
-		jdbc.setUsersByUsernameQuery("SELECT email, password, 1 FROM usuarios WHERE email=?");
-		jdbc.setAuthoritiesByUsernameQuery("""
-				SELECT u.email, CONCAT('ROLE_', r.nombre)
-				FROM usuarios u
-				JOIN roles r ON r.id = u.rol_id
-				WHERE u.email=?
-				""");
+			if (usuario.isEmpty()) {
+				throw new UsernameNotFoundException("No se ha encontrado el usuario o la contraseña");
+			}
 
-		return jdbc; // new JdbcUserDetailsManager(dataSource);
+			var usuarioAutenticado = usuario.get();
+
+			// @formatter:off
+			return UsuarioAutenticado.builder()
+					.nombre(usuarioAutenticado.getNombre())
+					.email(usuarioAutenticado.getEmail())
+					.password(usuarioAutenticado.getPassword())
+					.rol(usuarioAutenticado.getRol())
+				.build();
+			// @formatter:on
+		};
 	}
 
 	@Bean
