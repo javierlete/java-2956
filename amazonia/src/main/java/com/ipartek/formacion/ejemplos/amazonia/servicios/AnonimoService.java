@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import com.ipartek.formacion.ejemplos.amazonia.dtos.CredencialesDto;
 import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
+import com.ipartek.formacion.ejemplos.amazonia.dtos.UsuarioDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
-import com.ipartek.formacion.ejemplos.amazonia.entidades.Usuario;
 
 public interface AnonimoService {
 	Iterable<Producto> listarProductos();
@@ -15,5 +15,5 @@ public interface AnonimoService {
 	
 	Iterable<Categoria> listarCategorias();
 	Iterable<ProductoDto> obtenerProductosPorCategoriaId(Long id);
-	Optional<Usuario> autenticar(CredencialesDto credenciales);
+	Optional<UsuarioDto> autenticar(CredencialesDto credenciales);
 }

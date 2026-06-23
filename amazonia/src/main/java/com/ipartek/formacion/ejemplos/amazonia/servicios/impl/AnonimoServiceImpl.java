@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.ejemplos.amazonia.dtos.CredencialesDto;
 import com.ipartek.formacion.ejemplos.amazonia.dtos.ProductoDto;
+import com.ipartek.formacion.ejemplos.amazonia.dtos.UsuarioDto;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
-import com.ipartek.formacion.ejemplos.amazonia.entidades.Usuario;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.CategoriaRepository;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.ProductoRepository;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.UsuarioRepository;
@@ -61,14 +61,16 @@ public class AnonimoServiceImpl implements AnonimoService {
 	}
 
 	@Override
-	public Optional<Usuario> autenticar(CredencialesDto credenciales) {
+	public Optional<UsuarioDto> autenticar(CredencialesDto credenciales) {
 		var usuario = usuarioRepository.findByEmail(credenciales.email());
 
 		if (usuario.isEmpty() || !passwordEncoder.matches(credenciales.password(), usuario.get().getPassword())) {
 			return Optional.empty();
 		}
 
-		return usuario;
+		var autenticado = usuario.get();
+		
+		return Optional.of(new UsuarioDto(autenticado.getNombre(), autenticado.getEmail(), autenticado.getRol().getNombre()));
 	}
 
 }
