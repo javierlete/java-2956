@@ -62,6 +62,10 @@ public class AnonimoServiceImpl implements AnonimoService {
 
 	@Override
 	public Optional<UsuarioDto> autenticar(CredencialesDto credenciales) {
+		if(credenciales == null) {
+			return Optional.empty();
+		}
+		
 		var usuario = usuarioRepository.findByEmail(credenciales.email());
 
 		if (usuario.isEmpty() || !passwordEncoder.matches(credenciales.password(), usuario.get().getPassword())) {
