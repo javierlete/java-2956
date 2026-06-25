@@ -3,11 +3,14 @@ package com.ipartek.formacion.ejemplos.amazonia.servicios.impl;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.ProductoRepository;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AdministradorService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -15,6 +18,7 @@ import lombok.extern.java.Log;
 
 @Log
 @Service
+@Validated
 public class AdministradorServiceImpl implements AdministradorService {
 	private final ProductoRepository productoRepository;
 
@@ -31,7 +35,7 @@ public class AdministradorServiceImpl implements AdministradorService {
 	}
 
 	@Override
-	public Producto guardarProducto(Producto producto) {
+	public Producto guardarProducto(@NotNull @Valid Producto producto) {
 		log.info("GUARDAR " + producto);
 		return productoRepository.save(producto);
 	}
