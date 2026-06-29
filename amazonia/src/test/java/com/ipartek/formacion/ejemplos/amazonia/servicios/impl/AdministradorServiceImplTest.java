@@ -1,6 +1,5 @@
 package com.ipartek.formacion.ejemplos.amazonia.servicios.impl;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
@@ -72,7 +71,7 @@ class AdministradorServiceImplTest {
 		assertEquals("PRODUCTO", producto.getNombre());
 		assertEquals(new BigDecimal("1234"), producto.getPrecio());
 
-		assertThat(() -> producto.getId() > 0L);
+		assertTrue(producto.getId() > 0L);
 	}
 
 }
