@@ -5,15 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ExtendedModelMap;
 
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
@@ -21,9 +16,7 @@ import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.repositorios.ProductoRepository;
 
 @SpringBootTest
-
-@Sql(value = "productos_insert.sql", executionPhase = ExecutionPhase.BEFORE_TEST_CLASS)
-@Sql(value = "productos_delete.sql", executionPhase = ExecutionPhase.AFTER_TEST_CLASS)
+@Transactional
 class AdminControllerTest {
 
 	private static final long ACCESORIOS_ID = 2L;
@@ -42,9 +35,6 @@ class AdminControllerTest {
 
 	private static final Producto TECLADO = Producto.builder().nombre("Teclado").precio(new BigDecimal("21"))
 			.categoria(Categoria.builder().id(ACCESORIOS_ID).build()).build();
-
-	private static final Producto TECLADO_INSERTADO = Producto.builder().id(4L).nombre("Teclado").precio(new BigDecimal("21"))
-			.categoria(ACCESORIOS).build();
 	
 	private static final List<Producto> PRODUCTOS = List.of(PORTATIL, MONITOR, RATON);
 
@@ -53,22 +43,6 @@ class AdminControllerTest {
 
 	@Autowired
 	private ProductoRepository productoRepository;
-	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 
 	@Test
 	void testListado() {
@@ -106,7 +80,6 @@ class AdminControllerTest {
 	}
 
 	@Test
-	@Sql(value = "productos_insert.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	void testBorrar() {
 		var productoAntes = productoRepository.findById(MONITOR_ID);
 		
@@ -122,7 +95,6 @@ class AdminControllerTest {
 	}
 
 	@Test
-	@Sql(value = "productos_insert.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 	void testGuardar() {
 		var numeroProductosAntes = productoRepository.count();
 		
@@ -134,7 +106,11 @@ class AdminControllerTest {
 		
 		var productoInsertado = productoRepository.findByNombreContains("Teclado").iterator().next();
 		
-		assertEquals(TECLADO_INSERTADO, productoInsertado);
+		assertNotNull(productoInsertado.getId());
+		
+		productoInsertado.setId(null);
+		
+		assertEquals(TECLADO, productoInsertado);
 		
 		assertEquals("redirect:/admin/productos/listado", vista);
 	}

@@ -12,4 +12,9 @@ INSERT INTO "categorias" (id, nombre) VALUES
 	(1, 'Informática'),
 	(2, 'Accesorios');
 
+INSERT INTO productos (id, nombre, precio, categoria_id) VALUES 
+	(1, 'Portátil', 1234, 1),
+	(2, 'Monitor', 123, 2),
+	(3, 'Ratón', 12, 2);
+	
 COMMIT;

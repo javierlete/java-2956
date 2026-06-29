@@ -4,13 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
@@ -19,26 +16,11 @@ import com.ipartek.formacion.ejemplos.amazonia.servicios.AdministradorService;
 import jakarta.validation.ConstraintViolationException;
 
 @SpringBootTest
+@Transactional
 class AdministradorServiceImplTest {
 
 	@Autowired
 	private AdministradorService administradorService;
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 
 	@Test
 	void testGuardarProducto() {
