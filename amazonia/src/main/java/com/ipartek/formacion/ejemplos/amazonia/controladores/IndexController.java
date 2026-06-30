@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	private final AnonimoService anonimoService;
 	
-	@GetMapping({"/", "productos"})
+	@GetMapping({"", "productos"})
 	public String productos(Model modelo) {
 		modelo.addAttribute("productos", anonimoService.listarProductos());
 		modelo.addAttribute("mostrarCategoria", true);
