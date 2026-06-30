@@ -98,7 +98,7 @@ class AdminControllerTest {
 	void testGuardar() {
 		var numeroProductosAntes = productoRepository.count();
 		
-		var vista = adminController.guardar(TECLADO);
+		var vista = adminController.guardar(TECLADO, null);
 		
 		var numeroProductosDespues = productoRepository.count();
 		

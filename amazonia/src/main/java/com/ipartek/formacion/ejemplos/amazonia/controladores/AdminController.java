@@ -2,6 +2,7 @@ package com.ipartek.formacion.ejemplos.amazonia.controladores;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AdministradorService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -46,7 +48,11 @@ public class AdminController {
 	}
 
 	@PostMapping("guardar")
-	public String guardar(Producto producto) {
+	public String guardar(@Valid Producto producto, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "admin/productos/formulario";
+		}
+		
 		administradorService.guardarProducto(producto);
 
 		return "redirect:/admin/productos/listado";

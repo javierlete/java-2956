@@ -17,14 +17,14 @@
 			aria-label="Close"></button>
 	</div>
 
-	<form th:action="@{/login}" th:method="post">
+	<form th:action="@{/login}" th:method="post" th:object="${usuarioLogin}">
 		<div
-			th:replace="~{_fragmentos :: labelInput('Usuario', 'text', 'username', null, null)}"></div>
+			th:replace="~{_fragmentos :: labelInput('Usuario', 'text', 'username', *{username})}"></div>
 		<div
-			th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', null, null)}"></div>
+			th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', '')}"></div>
 
 		<div
-			th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '', null)}"></div>
+			th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '')}"></div>
 	</form>
 
 </main>

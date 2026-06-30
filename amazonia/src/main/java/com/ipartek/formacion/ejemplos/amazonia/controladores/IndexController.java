@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ipartek.formacion.ejemplos.amazonia.dtos.LoginDto;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,8 @@ public class IndexController {
 	}
 	
 	@GetMapping("login")
-	public String login() {
+	public String login(Model modelo) {
+		modelo.addAttribute("usuarioLogin", new LoginDto("", ""));
 		return "login";
 	}
 }
