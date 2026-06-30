@@ -6,7 +6,7 @@
 
 	<table class="table table-hover table-striped table-bordered">
 		<caption>Productos</caption>
-		
+
 		<thead class="table-secondary">
 			<tr>
 				<th class="text-end">Id</th>
@@ -16,28 +16,72 @@
 				<th>OPCIONES</th>
 			</tr>
 		</thead>
-		
+
 		<tbody>
 			<tr th:each="producto: ${productos}" th:object="${producto}">
 				<th class="text-end" th:text="*{id}">1</th>
 				<td th:text="*{nombre}">PRODUCTO</td>
-				<td class="text-end" th:text="${#numbers.formatCurrency(producto.precio)}">432.10 €</td>
+				<td class="text-end"
+					th:text="${#numbers.formatCurrency(producto.precio)}">432.10 €</td>
 				<td th:text="*{categoria.nombre}">CATEGORIA</td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="#" th:href="@{/admin/productos/formulario/{id}(id=*{id})}"><i class="bi bi-pencil-fill"></i></a>
-					<a onclick="javascript:return confirm('¿Estás seguro?')" class="btn btn-sm btn-danger" href="#" th:href="@{/admin/productos/borrar/{id}(id=*{id})}"><i class="bi bi-trash-fill"></i></a>
-				</td>
+				<td><a class="btn btn-sm btn-primary" href="#"
+					th:href="@{/admin/productos/formulario/{id}(id=*{id})}"><i
+						class="bi bi-pencil-fill"></i></a> <a class="btn btn-sm btn-danger"
+					href="#" th:data-id="*{id}" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i
+						class="bi bi-trash-fill"></i></a></td>
 			</tr>
 		</tbody>
-		
+
 		<tfoot class="table-secondary">
 			<tr>
 				<td colspan="4"></td>
-				<td>
-					<a class="btn btn-sm btn-primary" href="#" th:href="@{/admin/productos/formulario}"><i class="bi bi-plus-lg"></i></a>
-				</td>
+				<td><a class="btn btn-sm btn-primary" href="#"
+					th:href="@{/admin/productos/formulario}"><i
+						class="bi bi-plus-lg"></i></a></td>
 			</tr>
 		</tfoot>
 	</table>
 
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Vas a
+						borrar un producto</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">No</button>
+					<a id="si-borrar" href="#" class="btn btn-danger"
+						th:href="@{/admin/productos/borrar/}">Sí</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const exampleModal = document.getElementById('staticBackdrop');
+		
+		const ruta = exampleModal.querySelector('#si-borrar').href;
+		
+		if (exampleModal) {
+			exampleModal.addEventListener('show.bs.modal', event => {
+		    const a = event.relatedTarget;
+		    
+		    const id = a.dataset.id;
+	
+		    const modalBody = exampleModal.querySelector('.modal-body');
+		    
+		    modalBody.textContent = `¿Estás seguro de borrar el producto ${id}?`;
+		    
+		    exampleModal.querySelector('#si-borrar').href = `${ruta}${id}`;
+		  });
+		}
+	</script>
 </main>
