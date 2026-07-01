@@ -9,6 +9,7 @@
 		<div th:replace="~{_fragmentos :: labelInput('Nombre', 'text', 'nombre', null)}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Precio', 'number', 'precio', null)}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Categoría', 'select', 'categoria', ${categorias})}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Foto', 'file', 'foto', null)}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Descripción', 'textarea', 'descripcion', null)}"></div>
 		
 		<div th:replace="~{_fragmentos :: labelInput('Guardar', 'submit', null, null)}"></div>

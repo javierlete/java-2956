@@ -25,15 +25,17 @@
 			th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
 			rows="5" th:field="*{__${id}__}"></textarea>
 
-		<input th:case="*" th:type="${tipo == null ? 'text' : tipo}"
+		<input th:case="'file'" type="file" class="form-control" name="fichero"> 
+		
+		<input
+			th:case="*" th:type="${tipo == null ? 'text' : tipo}"
 			class="form-control"
 			th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
-			th:field="*{__${id}__}"
-			th:step="${decimales != null ? (1 / (10 ^ decimales)) : ''}"
-			th:accept="${tiposFichero != null ? tiposFichero : ''}">
+			th:field="*{__${id}__}">
 
-		<div class="invalid-feedback" th:each="error: ${#fields.errors(id)}"
-			th:text="${error}">Error</div>
+		<div th:if="${tipo != 'file'}" class="invalid-feedback">
+			<p th:each="error: ${#fields.errors(id)}" th:text="${error}">ERROR</p>
+		</div>
 
 	</div>
 </div>
