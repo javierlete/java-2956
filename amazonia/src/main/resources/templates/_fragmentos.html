@@ -10,7 +10,7 @@
     <label th:if="${tipo != 'submit'}" th:for="${id}" class="col-sm-2 col-form-label"
            th:text="${etiqueta}">ETIQUETA</label>
 
-    <div th:if="${tipo != 'submit' || tipo != 'select'}" class="col-sm">
+    <div th:if="${tipo != 'submit' && tipo != 'select'}" class="col-sm">
         <textarea th:if="${tipo == 'textarea'}" class="form-control"
                   th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
                   th:id="${id}" th:name="${id}" rows="5"
