@@ -19,12 +19,12 @@
 
 	<form th:action="@{/login}" th:method="post" th:object="${usuarioLogin}">
 		<div
-			th:replace="~{_fragmentos :: labelInput('Usuario', 'text', 'username', *{username})}"></div>
+			th:replace="~{_fragmentos :: labelInput('Usuario', 'text', 'username', null)}"></div>
 		<div
-			th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', '')}"></div>
+			th:replace="~{_fragmentos :: labelInput('Contraseña', 'password', 'password', null)}"></div>
 
 		<div
-			th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', '', '')}"></div>
+			th:replace="~{_fragmentos :: labelInput('Iniciar sesión', 'submit', null, null)}"></div>
 	</form>
 
 </main>

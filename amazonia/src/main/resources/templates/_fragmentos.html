@@ -1,31 +1,41 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<div th:fragment="labelInput(etiqueta, tipo, id, valor)" class="row mb-3">
+<div th:fragment="labelInput(etiqueta, tipo, id, opciones)"
+	class="row mb-3">
 
-    <div th:if="${tipo == 'submit'}" class="offset-sm-2 col-sm">
-        <button type="submit" class="btn btn-primary" th:text="${etiqueta}">ETIQUETA</button>
-    </div>
+	<div th:if="${tipo == 'submit'}" class="offset-sm-2 col-sm">
+		<button type="submit" class="btn btn-primary" th:text="${etiqueta}">ETIQUETA</button>
+	</div>
 
-    <label th:if="${tipo != 'submit'}" th:for="${id}" class="col-sm-2 col-form-label"
-           th:text="${etiqueta}">ETIQUETA</label>
+	<label th:if="${tipo != 'submit'}" th:for="${id}"
+		class="col-sm-2 col-form-label" th:text="${etiqueta}">ETIQUETA</label>
 
-    <div th:if="${tipo != 'submit' && tipo != 'select'}" class="col-sm">
-        <textarea th:if="${tipo == 'textarea'}" class="form-control"
-                  th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
-                  th:id="${id}" th:name="${id}" rows="5"
-                  th:text="${valor}"></textarea>
+	<div th:if="${tipo != 'submit'}" th:switch="${tipo}" class="col-sm">
 
-        <input th:if="${tipo != 'textarea' && tipo != 'select'}"
-               th:type="${tipo == null ? 'text' : tipo}" class="form-control"
-               th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
-               th:id="${id}" th:name="${id}" th:value="${valor}"
-               th:step="${decimales != null ? (1 / (10 ^ decimales)) : ''}"
-               th:accept="${tiposFichero != null ? tiposFichero : ''}">
+		<select th:case="'select'" class="form-select"
+			th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
+			th:field="*{__${id}__}">
+			<option value="">Opciones</option>
+			<option th:each="opcion: ${opciones}" th:text="${opcion.nombre}"
+				th:value="${opcion.id}">OPCION</option>
+		</select>
 
-        <div class="invalid-feedback" th:each="error: ${#fields.errors(id)}" th:text="${error}">Error</div>
+		<textarea th:case="'textarea'" class="form-control"
+			th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
+			rows="5" th:field="*{__${id}__}"></textarea>
 
-    </div>
+		<input th:case="*" th:type="${tipo == null ? 'text' : tipo}"
+			class="form-control"
+			th:classappend="${#fields.hasErrors(id)} ? 'is-invalid' : ''"
+			th:field="*{__${id}__}"
+			th:step="${decimales != null ? (1 / (10 ^ decimales)) : ''}"
+			th:accept="${tiposFichero != null ? tiposFichero : ''}">
+
+		<div class="invalid-feedback" th:each="error: ${#fields.errors(id)}"
+			th:text="${error}">Error</div>
+
+	</div>
 </div>
 
 </html>
