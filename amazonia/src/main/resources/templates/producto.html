@@ -6,9 +6,8 @@
 	<div class="card mb-3">
 		<div class="row g-0" th:object="${producto}">
 			<div class="col-md-4">
-				<img
-					th:src="${'https://picsum.photos/id/' + producto.id + '/400/300'}"
-					src="..." class="img-fluid rounded-start" alt="...">
+				<img th:src="@{/fotos/{id}.jpg(id=*{id})}" src="..."
+					class="img-fluid rounded-start" alt="...">
 			</div>
 			<div class="col-md-8">
 				<div class="card-body">

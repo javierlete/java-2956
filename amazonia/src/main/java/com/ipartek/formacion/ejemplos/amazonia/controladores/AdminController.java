@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AdministradorService;
@@ -48,12 +49,14 @@ public class AdminController {
 	}
 
 	@PostMapping("guardar")
-	public String guardar(@Valid Producto producto, BindingResult bindingResult) {
+	public String guardar(@Valid Producto producto, BindingResult bindingResult, MultipartFile fichero) {
 		if(bindingResult.hasErrors()) {
 			return "admin/productos/formulario";
 		}
 		
-		administradorService.guardarProducto(producto);
+		Producto productoNuevo = administradorService.guardarProducto(producto);
+		
+		administradorService.subirFoto(productoNuevo.getId(), fichero);
 
 		return "redirect:/admin/productos/listado";
 	}

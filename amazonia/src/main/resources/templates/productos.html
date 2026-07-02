@@ -3,14 +3,14 @@
 	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
 <title>Amazonia: Productos</title>
 <main class="container my-5">
-	<p th:if="${productos.size() == 0}" class="lead fs-1">No se ha encontrado ningún producto</p>
+	<p th:if="${productos.size() == 0}" class="lead fs-1">No se ha
+		encontrado ningún producto</p>
 	<div class="row row-cols-1 row-cols-md-3 g-4">
 		<div th:each="producto: ${productos}" th:object="${producto}"
 			class="col">
 			<div class="card h-100">
-				<img
-					th:src="${'https://picsum.photos/id/' + producto.id + '/400/300'}"
-					class="card-img-top" alt="...">
+				<img th:src="@{/fotos/{id}.jpg(id=*{id})}" height="300" width="400"
+					class="card-img-top" alt="..." style="object-fit: cover">
 				<div class="card-body">
 					<h5 th:text="*{nombre}" class="card-title">Card title</h5>
 					<p th:text="*{descripcion}" class="card-text">This is a wider
@@ -20,7 +20,8 @@
 						<a th:href="@{productos/{id}(id=*{id})}"
 							class="btn btn-primary stretched-link">Ver en detalle</a>
 					</p>
-					<p th:if="${mostrarCategoria}" class="card-text lead" th:text="*{categoria.nombre}">CATEGORIA</p>
+					<p th:if="${mostrarCategoria}" class="card-text lead"
+						th:text="*{categoria.nombre}">CATEGORIA</p>
 				</div>
 				<div class="card-footer">
 					<small th:text="${#numbers.formatCurrency(producto.precio)}"

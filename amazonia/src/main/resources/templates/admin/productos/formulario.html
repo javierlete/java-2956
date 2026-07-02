@@ -4,7 +4,7 @@
 <title>Amazonia: ADMIN</title>
 <main class="container">
 
-	<form th:action="@{/admin/productos/guardar}" th:method="post" th:object="${producto}">
+	<form th:action="@{/admin/productos/guardar}" th:method="post" th:object="${producto}" enctype="multipart/form-data">
 		<input type="hidden" name="id" th:value="*{id}">
 		<div th:replace="~{_fragmentos :: labelInput('Nombre', 'text', 'nombre', null)}"></div>
 		<div th:replace="~{_fragmentos :: labelInput('Precio', 'number', 'precio', null)}"></div>

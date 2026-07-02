@@ -98,7 +98,8 @@ class AdminControllerTest {
 	void testGuardar() {
 		var numeroProductosAntes = productoRepository.count();
 		
-		var vista = adminController.guardar(TECLADO, null);
+		// TODO Crear comprobaciones de BindingResult y foto
+		var vista = adminController.guardar(TECLADO, null, null);
 		
 		var numeroProductosDespues = productoRepository.count();
 		
