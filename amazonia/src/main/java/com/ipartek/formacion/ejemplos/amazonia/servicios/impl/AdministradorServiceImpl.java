@@ -22,6 +22,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 
 @RequiredArgsConstructor
 
@@ -32,7 +34,7 @@ public class AdministradorServiceImpl implements AdministradorService {
 	private final ProductoRepository productoRepository;
 
 	@Value("${app.ruta.fotos}")
-    private String rutaFotos;
+	private String rutaFotos;
 
 	@Override
 	public Iterable<Producto> listarProductos() {
@@ -69,7 +71,7 @@ public class AdministradorServiceImpl implements AdministradorService {
 //					.toAbsolutePath();
 
 			Path raizFotos = Path.of(rutaFotos);
-			
+
 			Path fichero = raizFotos.resolve(Paths.get(id + ".jpg")).normalize().toAbsolutePath();
 
 			if (!fichero.getParent().equals(raizFotos.toAbsolutePath())) {
@@ -79,6 +81,9 @@ public class AdministradorServiceImpl implements AdministradorService {
 
 			try (InputStream inputStream = foto.getInputStream()) {
 				Files.copy(inputStream, fichero, StandardCopyOption.REPLACE_EXISTING);
+
+				Thumbnails.of(fichero.toString()).crop(Positions.CENTER).size(400, 300).outputQuality(0.95).toFile(
+						raizFotos.resolve(Paths.get(id + "_400x300.jpg")).normalize().toAbsolutePath().toString());
 			}
 		} catch (IOException e) {
 			throw new ServicioException("Failed to store file.", e);
