@@ -4,4 +4,5 @@ import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 
 public interface CarritoService {
 	Producto agregarProducto(Long id);
+	void borrarProducto(Long id);
 }

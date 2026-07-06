@@ -26,4 +26,12 @@ public class CarritoServiceImpl implements CarritoService {
 		return producto;
 	}
 
+	@Override
+	public void borrarProducto(Long id) {
+		var producto = anonimoService.obtenerProductoPorId(id)
+				.orElseThrow(() -> new ServicioException("No se ha encontrado el producto"));
+		
+		carrito.getProductos().remove(producto);
+	}
+
 }

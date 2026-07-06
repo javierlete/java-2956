@@ -27,4 +27,11 @@ public class CarritoController {
 		return "redirect:/carrito";
 	}
 	
+	@GetMapping("borrar")
+	public String borrar(Long id) {
+		carritoService.borrarProducto(id);
+		
+		return "redirect:/carrito";
+	}
+	
 }
