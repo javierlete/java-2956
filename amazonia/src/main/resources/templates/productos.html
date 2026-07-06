@@ -9,7 +9,7 @@
 		<div th:each="producto: ${productos}" th:object="${producto}"
 			class="col">
 			<div class="card h-100">
-				<img th:src="@{/fotos/{id}.jpg(id=*{id})}" height="300" width="400"
+				<img th:src="@{/fotos/{id}_400x300.jpg(id=*{id})}" height="300" width="400"
 					class="card-img-top" alt="..." style="object-fit: cover">
 				<div class="card-body">
 					<h5 th:text="*{nombre}" class="card-title">Card title</h5>
