@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia: ADMIN</title>
+<main class="container">
+
+	<h2>Carrito</h2>
+
+	<table class="table">
+		<caption>Productos</caption>
+
+		<thead>
+			<tr>
+				<th>Nombre</th>
+				<th class="text-end">Precio</th>
+				<th>Categoría</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr th:each="producto: ${carrito.productos}" th:object="${producto}">
+				<td th:text="*{nombre}">PRODUCTO</td>
+				<td class="text-end"
+					th:text="${#numbers.formatCurrency(producto.precio)}">432.10 €</td>
+				<td th:text="*{categoria.nombre}">CATEGORIA</td>
+			</tr>
+		</tbody>
+
+	</table>
+
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="staticBackdropLabel">Vas a
+						borrar un producto</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">No</button>
+					<a id="si-borrar" href="#" class="btn btn-danger"
+						th:href="@{/admin/productos/borrar/}">Sí</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const exampleModal = document.getElementById('staticBackdrop');
+		
+		const ruta = exampleModal.querySelector('#si-borrar').href;
+		
+		if (exampleModal) {
+			exampleModal.addEventListener('show.bs.modal', event => {
+		    const a = event.relatedTarget;
+		    
+		    const id = a.dataset.id;
+	
+		    const modalBody = exampleModal.querySelector('.modal-body');
+		    
+		    modalBody.textContent = `¿Estás seguro de borrar el producto ${id}?`;
+		    
+		    exampleModal.querySelector('#si-borrar').href = `${ruta}${id}`;
+		  });
+		}
+	</script>
+</main>
