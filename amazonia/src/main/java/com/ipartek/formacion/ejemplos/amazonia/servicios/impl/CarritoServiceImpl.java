@@ -3,6 +3,7 @@ package com.ipartek.formacion.ejemplos.amazonia.servicios.impl;
 import org.springframework.stereotype.Service;
 
 import com.ipartek.formacion.ejemplos.amazonia.Carrito;
+import com.ipartek.formacion.ejemplos.amazonia.Carrito.Linea;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.CarritoService;
@@ -21,17 +22,17 @@ public class CarritoServiceImpl implements CarritoService {
 	public Producto agregarProducto(Long id) {
 		var producto = anonimoService.obtenerProductoPorId(id)
 				.orElseThrow(() -> new ServicioException("No se ha encontrado el producto"));
-		carrito.getProductos().add(producto);
+		carrito.getLineas().add(Linea.builder().producto(producto).cantidad(1).build());
 
 		return producto;
 	}
 
 	@Override
 	public void borrarProducto(Long id) {
-		var producto = anonimoService.obtenerProductoPorId(id)
-				.orElseThrow(() -> new ServicioException("No se ha encontrado el producto"));
-		
-		carrito.getProductos().remove(producto);
+		var linea = carrito.getLineas().stream().filter(l -> l.getProducto().getId() == id)
+				.findFirst().orElseThrow(() -> new ServicioException("No se ha encontrado el producto"));
+
+		carrito.getLineas().remove(linea);
 	}
 
 }

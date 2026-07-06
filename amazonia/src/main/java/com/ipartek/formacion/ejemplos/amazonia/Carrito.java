@@ -8,6 +8,8 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -16,5 +18,12 @@ import lombok.ToString;
 @ToString
 public class Carrito {
 	@Getter
-	private final List<Producto> productos = new ArrayList<>();
+	private final List<Linea> lineas = new ArrayList<>();
+	
+	@Data
+	@Builder
+	public static class Linea {
+		private Producto producto;
+		private Integer cantidad;
+	}
 }
