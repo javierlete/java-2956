@@ -1,7 +1,7 @@
 package com.ipartek.formacion.ejemplos.amazonia;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
@@ -16,5 +16,5 @@ import lombok.ToString;
 @ToString
 public class Carrito {
 	@Getter
-	private final Set<Producto> productos = new HashSet<>();
+	private final List<Producto> productos = new ArrayList<>();
 }

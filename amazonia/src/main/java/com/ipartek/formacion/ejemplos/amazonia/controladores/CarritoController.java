@@ -4,8 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ipartek.formacion.ejemplos.amazonia.Carrito;
-import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
+import com.ipartek.formacion.ejemplos.amazonia.servicios.CarritoService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,14 +13,18 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("carrito")
 public class CarritoController {
-	private final Carrito carrito;
-	private final AnonimoService anonimoService;
+	private final CarritoService carritoService;
+	
+	@GetMapping
+	public String carrito() {
+		return "carrito";
+	}
 	
 	@GetMapping("producto")
 	public String producto(Long id) {
-		carrito.getProductos().add(anonimoService.obtenerProductoPorId(id).get());
+		carritoService.agregarProducto(id);
 		
-		return "carrito";
+		return "redirect:/carrito";
 	}
 	
 }
