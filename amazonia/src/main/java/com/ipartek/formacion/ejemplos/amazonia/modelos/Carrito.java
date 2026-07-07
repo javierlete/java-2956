@@ -1,4 +1,4 @@
-package com.ipartek.formacion.ejemplos.amazonia;
+package com.ipartek.formacion.ejemplos.amazonia.modelos;
 
 import java.util.ArrayList;
 import java.util.List;

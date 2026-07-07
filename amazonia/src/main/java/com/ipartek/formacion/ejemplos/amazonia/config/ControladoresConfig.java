@@ -3,8 +3,8 @@ package com.ipartek.formacion.ejemplos.amazonia.config;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.ipartek.formacion.ejemplos.amazonia.Carrito;
 import com.ipartek.formacion.ejemplos.amazonia.entidades.Categoria;
+import com.ipartek.formacion.ejemplos.amazonia.modelos.Carrito;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 
 import lombok.RequiredArgsConstructor;
