@@ -6,40 +6,64 @@
 
 	<h2>Carrito</h2>
 
-	<table class="table">
-		<caption>Productos</caption>
+	<div class="table-responsive">
+		<table class="table">
+			<caption>Productos</caption>
 
-		<thead>
-			<tr>
-				<th>Nombre</th>
-				<th class="text-end">Precio</th>
-				<th class="text-center">Cantidad</th>
-				<th>Categoría</th>
-				<th>OPCIONES</th>
-			</tr>
-		</thead>
+			<thead class="table-secondary">
+				<tr>
+					<th></th>
+					<th>Nombre</th>
+					<th class="text-end">Precio</th>
+					<th class="text-center">Cantidad</th>
+					<th class="text-end">IVA</th>
+					<th class="text-end">Total</th>
+				</tr>
+			</thead>
 
-		<tbody>
-			<tr class="align-baseline" th:each="linea: ${carrito.lineas}" th:object="${linea}">
-				<td th:text="*{producto.nombre}">PRODUCTO</td>
-				<td class="text-end"
-					th:text="${#numbers.formatCurrency(linea.producto.precio)}">432.10
-					€</td>
-				<td>
-					<div class="input-group mb-3">
-						<a class="btn btn-outline-secondary" th:href="@{/carrito/producto(id=*{producto.id},cantidad=-1)}"><i class="bi bi-dash-lg"></i></a>
-						<input class="form-control text-center" th:value="*{cantidad}">
-						<a class="btn btn-outline-secondary" th:href="@{/carrito/producto(id=*{producto.id},cantidad=1)}"><i class="bi bi-plus-lg"></i></a>
-					</div>
-				</td>
-				<td th:text="*{producto.categoria.nombre}">CATEGORIA</td>
-				<td><a href="#" th:href="@{/carrito/borrar(id=*{producto.id})}"
-					class="text-danger"><i class="bi bi-trash-fill"></i></a>
-			</tr>
-		</tbody>
-
-	</table>
-
+			<tbody>
+				<tr class="align-baseline" th:each="linea: ${carrito.lineas}"
+					th:object="${linea}">
+					<td><a href="#"
+						th:href="@{/carrito/borrar(id=*{producto.id})}"
+						class="text-danger"><i class="bi bi-trash-fill"></i></a>
+					<td th:text="*{producto.nombre}">PRODUCTO</td>
+					<td class="text-end"
+						th:text="${#numbers.formatCurrency(linea.producto.precio)}">432.10
+						€</td>
+					<td>
+						<div class="input-group mb-3">
+							<a class="btn btn-outline-secondary"
+								th:href="@{/carrito/producto(id=*{producto.id},cantidad=-1)}"><i
+								class="bi bi-dash-lg"></i></a> <input style="width: 2rem"
+								class="form-control text-center" th:value="*{cantidad}">
+							<a class="btn btn-outline-secondary"
+								th:href="@{/carrito/producto(id=*{producto.id},cantidad=1)}"><i
+								class="bi bi-plus-lg"></i></a>
+						</div>
+					</td>
+					<td class="text-end" th:text="${#numbers.formatCurrency(linea.iva)}">1.234,56&nbsp;€</td>
+					<td class="fw-bold text-end" th:text="${#numbers.formatCurrency(linea.total)}">1.234,56&nbsp;€</td>
+				</tr>
+			</tbody>
+			
+			<tfoot class="table-secondary">
+				<tr>
+					<td class="text-end" colspan="5">IVA</td>
+					<td class="text-end" th:text="${#numbers.formatCurrency(carrito.iva)}">
+						1.234,56&nbsp;€
+					</td>
+				</tr>
+				<tr class="fw-bold">
+					<td class="text-end" colspan="5">Total (IVA incluído)</td>
+					<td class="text-end" th:text="${#numbers.formatCurrency(carrito.total)}">
+						1.234,56&nbsp;€
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
 	<!-- Modal -->
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
 		data-bs-keyboard="false" tabindex="-1"
