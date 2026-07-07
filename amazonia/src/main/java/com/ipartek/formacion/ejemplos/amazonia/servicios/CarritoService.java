@@ -1,8 +1,7 @@
 package com.ipartek.formacion.ejemplos.amazonia.servicios;
 
-import com.ipartek.formacion.ejemplos.amazonia.entidades.Producto;
-
 public interface CarritoService {
-	Producto agregarProducto(Long id);
+	void agregarProducto(Long id);
+	void agregarProducto(Long id, Integer cantidad);
 	void borrarProducto(Long id);
 }

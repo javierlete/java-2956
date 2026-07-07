@@ -19,7 +19,19 @@
 						class="card-text">
 						<small class="text-body-secondary">Last updated 3 mins ago</small>
 					</p>
-					<a class="btn btn-primary" href="#" th:href="@{/carrito/producto(id=*{id})}">Añadir al carrito</a>
+					<form class="d-flex" th:action="@{/carrito/producto}">
+						<input type="hidden" name="id" th:value="*{id}">
+						<div class="input-group mb-3">
+							<button class="btn btn-primary">Añadir al carrito</button>
+							<select name="cantidad" class="form-select">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+							</select>
+						</div>
+
+
+					</form>
 				</div>
 			</div>
 		</div>

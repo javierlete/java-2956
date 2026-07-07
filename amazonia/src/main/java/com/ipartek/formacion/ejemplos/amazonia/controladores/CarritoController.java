@@ -21,8 +21,8 @@ public class CarritoController {
 	}
 	
 	@GetMapping("producto")
-	public String producto(Long id) {
-		carritoService.agregarProducto(id);
+	public String producto(Long id, Integer cantidad) {
+		carritoService.agregarProducto(id, cantidad);
 		
 		return "redirect:/carrito";
 	}
