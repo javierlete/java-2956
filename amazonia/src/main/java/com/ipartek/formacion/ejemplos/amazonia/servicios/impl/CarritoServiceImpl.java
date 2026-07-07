@@ -2,8 +2,8 @@ package com.ipartek.formacion.ejemplos.amazonia.servicios.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.ipartek.formacion.ejemplos.amazonia.Carrito;
-import com.ipartek.formacion.ejemplos.amazonia.Carrito.Linea;
+import com.ipartek.formacion.ejemplos.amazonia.modelos.Carrito;
+import com.ipartek.formacion.ejemplos.amazonia.modelos.Carrito.Linea;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.AnonimoService;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.CarritoService;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.ServicioException;
@@ -30,9 +30,18 @@ public class CarritoServiceImpl implements CarritoService {
 		var linea = carrito.getLineas().stream().filter(l -> l.getProducto().getId() == id).findFirst();
 
 		if (linea.isPresent()) {
-			linea.get().setCantidad(linea.get().getCantidad() + cantidad);
+			var cantidadExistente = linea.get().getCantidad();
+			var total = cantidadExistente + cantidad;
+
+			if (total >= 1) {
+				linea.get().setCantidad(total);
+			} else {
+				borrarProducto(linea.get().getProducto().getId());
+			}
 		} else {
-			carrito.getLineas().add(Linea.builder().producto(producto).cantidad(cantidad).build());
+			if (cantidad >= 1) {
+				carrito.getLineas().add(Linea.builder().producto(producto).cantidad(cantidad).build());
+			}
 		}
 	}
 

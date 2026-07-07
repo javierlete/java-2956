@@ -13,20 +13,28 @@
 			<tr>
 				<th>Nombre</th>
 				<th class="text-end">Precio</th>
-				<th class="text-end">Cantidad</th>
+				<th class="text-center">Cantidad</th>
 				<th>Categoría</th>
 				<th>OPCIONES</th>
 			</tr>
 		</thead>
 
 		<tbody>
-			<tr th:each="linea: ${carrito.lineas}" th:object="${linea}">
+			<tr class="align-baseline" th:each="linea: ${carrito.lineas}" th:object="${linea}">
 				<td th:text="*{producto.nombre}">PRODUCTO</td>
 				<td class="text-end"
-					th:text="${#numbers.formatCurrency(linea.producto.precio)}">432.10 €</td>
-				<td class="text-end" th:text="*{cantidad}">5</td>
+					th:text="${#numbers.formatCurrency(linea.producto.precio)}">432.10
+					€</td>
+				<td>
+					<div class="input-group mb-3">
+						<a class="btn btn-outline-secondary" th:href="@{/carrito/producto(id=*{producto.id},cantidad=-1)}"><i class="bi bi-dash-lg"></i></a>
+						<input class="form-control text-center" th:value="*{cantidad}">
+						<a class="btn btn-outline-secondary" th:href="@{/carrito/producto(id=*{producto.id},cantidad=1)}"><i class="bi bi-plus-lg"></i></a>
+					</div>
+				</td>
 				<td th:text="*{producto.categoria.nombre}">CATEGORIA</td>
-				<td><a href="#" th:href="@{/carrito/borrar(id=*{producto.id})}" class="text-danger"><i class="bi bi-trash-fill"></i></a>
+				<td><a href="#" th:href="@{/carrito/borrar(id=*{producto.id})}"
+					class="text-danger"><i class="bi bi-trash-fill"></i></a>
 			</tr>
 		</tbody>
 
