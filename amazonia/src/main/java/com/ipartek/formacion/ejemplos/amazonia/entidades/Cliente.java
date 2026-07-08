@@ -1,17 +1,12 @@
 package com.ipartek.formacion.ejemplos.amazonia.entidades;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,31 +19,25 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 
 @Entity
-@Table(name = "usuarios")
-public class Usuario {
+@Table(name = "clientes")
+public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Size(max = 50)
+	private String razonSocial;
+	
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 50)
 	private String nombre;
 	
 	@NotBlank
-	@Email
-	@Size(max = 255)
-	private String email;
-	
-	@JsonProperty(access = Access.WRITE_ONLY)
+	@Size(max = 100)
+	private String apellidos;
 	
 	@NotBlank
-	@Size(max = 100)
-	private String password;
-	
-	@NotNull
-	@ManyToOne
-	private Rol rol;
-
-	@ManyToOne
-	private Cliente cliente;
+	@Size(min = 9, max = 9)
+	@Pattern(regexp = "^[XYZABC\\d]\\d{7}[A-Z\\d]$")
+	private String nif;
 }
