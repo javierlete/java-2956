@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia</title>
+<main class="container">
+
+	<form th:action="@{/usuario/registrar-cliente}" th:method="post" th:object="${cliente}">
+		<input type="hidden" name="id" th:value="*{id}">
+		<div th:replace="~{_fragmentos :: labelInput('Razón social', 'text', 'razonSocial', null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Nombre', 'text', 'nombre', null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Apellidos', 'text', 'apellidos', null)}"></div>
+		<div th:replace="~{_fragmentos :: labelInput('Nif', 'text', 'nif', null)}"></div>
+		
+		<div th:replace="~{_fragmentos :: labelInput('Guardar', 'submit', null, null)}"></div>
+	</form>
+
+</main>
