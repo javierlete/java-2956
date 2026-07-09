@@ -22,8 +22,8 @@
 	<nav class="navbar navbar-expand-md bg-dark mb-5 sticky-top"
 		data-bs-theme="dark">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#" th:href="@{/}"><i class="bi bi-cart"></i>
-				Amazonia</a>
+			<a class="navbar-brand" href="#" th:href="@{/}"><i
+				class="bi bi-cart"></i> Amazonia</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -53,10 +53,21 @@
 				<ul class="navbar-nav mb-2 mb-sm-0 ms-auto">
 					<li sec:authorize="hasRole('ROLE_ADMINISTRADOR')" class="nav-item"><a
 						class="nav-link" href="#" th:href="@{/admin/productos/listado}">Administración</a></li>
+					<li sec:authorize="isAuthenticated()"
+						th:if="${#authentication.principal?.cliente == null}"
+						class="nav-item"><a class="nav-link"
+						th:href="@{/usuario/registrar-cliente}">Registrar datos de
+							cliente</a></li>
+					<li sec:authorize="isAuthenticated()"
+						th:if="${#authentication.principal?.cliente != null}"
+						class="navbar-text" th:text="${#authentication.principal?.cliente?.nombre}"></li>
+
 					<li sec:authorize="isAuthenticated()" class="navbar-text"><i
-						class="bi bi-person"></i> <span th:text="${#authentication.principal?.nombre}">NOMBRE</span> [<span th:text="${#authentication.principal?.rol.nombre}">ROL</span>]</li>
-					<li class="nav-item"><a
-						class="nav-link" href="#" th:href="@{/carrito}"><i class="bi bi-cart"></i></a></li>
+						class="bi bi-person"></i> <span
+						th:text="${#authentication.principal?.nombre}">NOMBRE</span> [<span
+						th:text="${#authentication.principal?.rol.nombre}">ROL</span>]</li>
+					<li class="nav-item"><a class="nav-link" href="#"
+						th:href="@{/carrito}"><i class="bi bi-cart"></i></a></li>
 					<li sec:authorize="!isAuthenticated()" class="nav-item"><a
 						class="nav-link" href="login"><i
 							class="bi bi-box-arrow-in-right"></i></a></li>

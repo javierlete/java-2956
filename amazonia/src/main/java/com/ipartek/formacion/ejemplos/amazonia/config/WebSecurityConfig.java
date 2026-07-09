@@ -38,10 +38,12 @@ class WebSecurityConfig {
 
 			// @formatter:off
 			return UsuarioAutenticado.builder()
+					.id(usuarioAutenticado.getId())
 					.nombre(usuarioAutenticado.getNombre())
 					.email(usuarioAutenticado.getEmail())
 					.password(usuarioAutenticado.getPassword())
 					.rol(usuarioAutenticado.getRol())
+					.cliente(usuarioAutenticado.getCliente())
 				.build();
 			// @formatter:on
 		};
