@@ -1,5 +1,6 @@
 package com.ipartek.formacion.ejemplos.amazonia.controladores;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,27 +18,28 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("cliente")
 public class ClienteController {
-	
+
 	private final ClienteService clienteService;
-	
+
 	@GetMapping("pedido/{id}")
 	public String pedido(@PathVariable Long id, Model modelo) {
 		modelo.addAttribute("pedido", clienteService.verPedido(id).get());
-		
+
 		return "pedido";
 	}
-	
+
 	@GetMapping("tramitar-pedido")
-	public String tramitarPedido(Carrito carrito, UsuarioAutenticado usuarioAutenticado, Model modelo) {
+	public String tramitarPedido(Carrito carrito, @AuthenticationPrincipal UsuarioAutenticado usuarioAutenticado,
+			Model modelo) {
 		var pedido = clienteService.tramitarPedido(usuarioAutenticado.getCliente(), carrito);
-		
+
 		return "redirect:/cliente/pedido/" + pedido.getId();
 	}
-	
+
 	@GetMapping("/listar-pedidos")
 	public String pedidos(Model modelo, UsuarioAutenticado usuarioAutenticado) {
 		modelo.addAttribute("pedidos", clienteService.listarPedidos(null));
-		
+
 		return "pedidos";
 	}
 }

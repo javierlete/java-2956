@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,7 +36,7 @@ public class Pedido {
 	
 	private static final BigDecimal IVA = new BigDecimal("0.21");
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@Builder.Default
 	private List<Linea> lineas = new ArrayList<>();
 	
@@ -47,8 +48,11 @@ public class Pedido {
 		return getTotal().multiply(IVA);
 	}
 	
+	@AllArgsConstructor
+	@NoArgsConstructor
 	@Data
 	@Builder
+	
 	@Entity
 	@Table(name = "pedido-lineas")
 	public static class Linea {

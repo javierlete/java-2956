@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org"
+	th:replace="~{_global :: plantilla(~{::title}, ~{::main})}">
+<title>Amazonia: ADMIN</title>
+<main class="container" th:object="${pedido}">
+
+	<h2>
+		Pedido <span th:text="*{id}"></span>
+	</h2>
+
+	<div class="card mb-3" th:object="${pedido.cliente}">
+		<div class="card-body">
+			<h5 class="card-title" th:text="*{razonSocial}">Caption</h5>
+			<h6 class="card-subtitle mb-2 text-body-secondary" th:text="*{nif}">Card
+				subtitle</h6>
+			<p class="card-text" th:text="*{nombre} + ' ' + *{apellidos}">Some
+				quick example text to build on the card title and make up the bulk
+				of the card’s content.</p>
+		</div>
+	</div>
+
+	<div class="card">
+		<div class="card-body table-responsive">
+			<table class="table table-borderless">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th class="text-end">Precio</th>
+						<th class="text-center">Cantidad</th>
+						<th class="text-end">IVA</th>
+						<th class="text-end">Total</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr class="align-baseline" th:each="linea: *{lineas}"
+						th:object="${linea}">
+						
+						<td th:text="*{producto.nombre}">PRODUCTO</td>
+						<td class="text-end"
+							th:text="${#numbers.formatCurrency(linea.producto.precio)}">432.10
+							€</td>
+						<td class="text-center" th:text="*{cantidad}"></td>
+						<td class="text-end"
+							th:text="${#numbers.formatCurrency(linea.iva)}">1.234,56&nbsp;€</td>
+						<td class="fw-bold text-end"
+							th:text="${#numbers.formatCurrency(linea.total)}">1.234,56&nbsp;€</td>
+					</tr>
+				</tbody>
+
+				<tfoot class="table-borderless">
+					<tr>
+						<td class="text-end" colspan="4">IVA</td>
+						<td class="text-end"
+							th:text="${#numbers.formatCurrency(pedido.iva)}">
+							1.234,56&nbsp;€</td>
+					</tr>
+					<tr class="fw-bold">
+						<td class="text-end" colspan="4">Total (IVA incluído)</td>
+						<td class="text-end"
+							th:text="${#numbers.formatCurrency(pedido.total)}">
+							1.234,56&nbsp;€</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+
+</main>

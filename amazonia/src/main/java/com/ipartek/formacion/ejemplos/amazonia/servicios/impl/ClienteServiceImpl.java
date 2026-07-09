@@ -11,6 +11,9 @@ import com.ipartek.formacion.ejemplos.amazonia.repositorios.PedidoRepository;
 import com.ipartek.formacion.ejemplos.amazonia.servicios.ClienteService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 
 @RequiredArgsConstructor
 
@@ -20,6 +23,9 @@ public class ClienteServiceImpl implements ClienteService {
 	
 	@Override
 	public Pedido tramitarPedido(Cliente cliente, Carrito carrito) {
+		log.info(cliente.toString());
+		log.info(carrito.toString());
+		
 		var lineas = carrito.getLineas().stream()
 				.map(lc -> Pedido.Linea.builder().producto(lc.getProducto()).cantidad(lc.getCantidad()).build())
 				.toList();
