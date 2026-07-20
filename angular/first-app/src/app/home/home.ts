@@ -11,9 +11,22 @@ import { Housing } from '../housing';
 })
 export class Home {
   housingLocationList: HousingLocationInfo[] = [];
+  filteredLocationList: HousingLocationInfo[] = [];
   housing: Housing = inject(Housing);
 
   constructor() {
     this.housingLocationList = this.housing.getAllHousingLocations();
+    this.filteredLocationList = this.housingLocationList;
+  }
+
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredLocationList = this.housingLocationList;
+      return;
+    }
+    
+    this.filteredLocationList = this.housingLocationList.filter((housingLocation) =>
+      housingLocation?.city.toLowerCase().includes(text.toLowerCase()),
+    );
   }
 }
