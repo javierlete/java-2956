@@ -3,10 +3,12 @@ import { Producto } from './producto';
 
 @Service()
 export class ProductoService {
-    private readonly URL = 'http://localhost:3000/productos/';
+    private readonly URL = 'http://localhost:8080/api/v2/productos';
 
     async obtenerTodos(): Promise<Producto[]> {
         const respuesta = await fetch(this.URL);
-        return await respuesta.json();
+        const productos: any[] = await respuesta.json();
+
+        return Promise.resolve(productos.map(p => ({ ...p, categoria: p.categoria.nombre })));
     }
 }
