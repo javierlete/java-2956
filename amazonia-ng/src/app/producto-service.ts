@@ -1,10 +1,12 @@
 import { Service } from '@angular/core';
 import { Producto } from './producto';
-import { PRODUCTOS } from './mock-productos';
 
 @Service()
 export class ProductoService {
+    private readonly URL = 'http://localhost:3000/productos/';
+
     async obtenerTodos(): Promise<Producto[]> {
-        return Promise.resolve(PRODUCTOS);
+        const respuesta = await fetch(this.URL);
+        return await respuesta.json();
     }
 }
