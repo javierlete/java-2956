@@ -1,14 +1,22 @@
-import { Component } from '@angular/core';
-import { PRODUCTOS } from '../mock-productos';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Producto } from '../producto';
-import { JsonPipe } from '@angular/common';
+import { ProductoService } from '../producto-service';
 
 @Component({
   selector: 'app-fichas-productos',
-  imports: [JsonPipe],
   templateUrl: './fichas-productos.html',
   styleUrl: './fichas-productos.css',
 })
 export class FichasProductos {
-  productos: Producto[] = PRODUCTOS;
+  changeDetectorRef = inject(ChangeDetectorRef);
+  productoService = inject(ProductoService);
+
+  productos: Producto[] = [];
+
+  constructor() {
+    this.productoService.obtenerTodos().then(productos => {
+      this.productos = productos;
+      this.changeDetectorRef.markForCheck();
+    });
+  }
 }
