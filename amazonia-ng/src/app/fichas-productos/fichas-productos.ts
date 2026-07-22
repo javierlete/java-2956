@@ -2,10 +2,11 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Producto } from '../producto';
 import { ProductoService } from '../producto-service';
 import { CurrencyPipe } from '@angular/common';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-fichas-productos',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, RouterLink],
   templateUrl: './fichas-productos.html',
   styleUrl: './fichas-productos.css',
 })

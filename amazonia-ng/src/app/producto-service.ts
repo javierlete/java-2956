@@ -11,4 +11,13 @@ export class ProductoService {
 
         return Promise.resolve(productos.map(p => ({ ...p, categoria: p.categoria.nombre })));
     }
+
+    async obtenerPorId(id: number): Promise<Producto> {
+        const respuesta = await fetch(`${this.URL}/${id}`);
+        const productoRecibido: any = await respuesta.json();
+
+        const producto = { ...productoRecibido, categoria: productoRecibido.categoria.nombre };
+
+        return Promise.resolve(producto);
+    }
 }

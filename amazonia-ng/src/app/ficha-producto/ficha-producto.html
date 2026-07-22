@@ -1,1 +1,29 @@
-<p>ficha-producto works!</p>
+<main class="container my-5">
+    <div class="card mb-3">
+        <div class="row g-0" th:object="${producto}">
+            <div class="col-md-4">
+                <img src="http://localhost:8080/fotos/{{producto.id}}.jpg" src="..." class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{producto.nombre}}</h5>
+                    <p class="card-text">{{producto.descripcion}}</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">{{ producto.precio | currency : "EUR": "symbol": "1.2-2":
+                            "es"}}</small>
+                    </p>
+                    <form class="d-flex">
+                        <div class="input-group mb-3">
+                            <button class="btn btn-primary">Añadir al carrito</button>
+                            <select name="cantidad" class="form-select">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
