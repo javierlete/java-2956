@@ -6,7 +6,7 @@
         @for(p of productos; track p.id) {
         <div class="col">
             <div class="card h-100">
-                <img src="https://picsum.photos/400/300?{{p.id}}" height="300" width="400" class="card-img-top"
+                <img src="http://localhost:8080/fotos/{{p.id}}.jpg" height="300" width="400" class="card-img-top"
                     alt="..." style="object-fit: cover">
                 <div class="card-body">
                     <h5 class="card-title">{{p.nombre}}</h5>
