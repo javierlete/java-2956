@@ -1,27 +1,27 @@
 <main class="container my-5">
     @if (!productos) {
-        <p class="lead fs-1">No se ha encontrado ningún producto</p>
+    <p class="lead fs-1">No se ha encontrado ningún producto</p>
     }
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @for(p of productos; track p.id) {
-            <div class="col">
-                <div class="card h-100">
-                    <img src="https://picsum.photos/400/300?{{p.id}}" height="300" width="400" class="card-img-top" alt="..."
-                        style="object-fit: cover">
-                    <div class="card-body">
-                        <h5 class="card-title">{{p.nombre}}</h5>
-                        <p class="card-text">{{p.descripcion}}</p>
-                        <p class="card-text">
-                            <a class="btn btn-primary stretched-link">Ver en
-                                detalle</a>
-                        </p>
-                        <p class="card-text lead">{{p.categoria}}</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-body-secondary">{{p.precio}}</small>
-                    </div>
+        <div class="col">
+            <div class="card h-100">
+                <img src="https://picsum.photos/400/300?{{p.id}}" height="300" width="400" class="card-img-top"
+                    alt="..." style="object-fit: cover">
+                <div class="card-body">
+                    <h5 class="card-title">{{p.nombre}}</h5>
+                    <p class="card-text">{{p.descripcion}}</p>
+                    <p class="card-text">
+                        <a class="btn btn-primary stretched-link">Ver en
+                            detalle</a>
+                    </p>
+                    <p class="card-text lead">{{p.categoria}}</p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-body-secondary">{{p.precio | currency: 'EUR' : 'symbol' : '1.2-2' : 'es' }}</small>
                 </div>
             </div>
+        </div>
         }
     </div>
 </main>
