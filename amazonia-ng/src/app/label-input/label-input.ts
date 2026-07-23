@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-label-input',
@@ -6,4 +6,13 @@ import { Component } from '@angular/core';
   templateUrl: './label-input.html',
   styleUrl: './label-input.css',
 })
-export class LabelInput {}
+export class LabelInput {
+  etiqueta = input<string>();
+  tipo = input<string>('text');
+  opciones = input<Opcion[]>([]);
+}
+
+export interface Opcion {
+  id: string;
+  texto: string;
+}

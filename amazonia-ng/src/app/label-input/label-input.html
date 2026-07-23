@@ -1,1 +1,38 @@
-<p>label-input works!</p>
+<div class="row mb-3">
+    @if (tipo() === 'submit') {
+    <div class="offset-sm-2 col-sm">
+        <button type="submit" class="btn btn-primary">{{etiqueta()}}</button>
+    </div>
+    } @else {
+    <label class="col-sm-2 col-form-label">{{etiqueta()}}</label>
+
+    <div class="col-sm">
+        @switch (tipo()) {
+        @case ('select') {
+        <select class="form-select">
+            <option value="">Opciones</option>
+            @for(o of opciones(); track o.id) {
+            <option value="{{o.id}}">{{o.texto}}</option>
+            }
+        </select>
+        }
+
+        @case ('textarea') {
+        <textarea class="form-control" rows="5"></textarea>
+        }
+
+        @case('file') {
+        <input type="file" class="form-control" name="fichero">
+        }
+
+        @default {
+        <input class="form-control" type="{{tipo()}}">
+        }
+        }
+        <div class="invalid-feedback">
+            <p>ERROR</p>
+        </div>
+
+    </div>
+    }
+</div>
