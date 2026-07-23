@@ -10,6 +10,7 @@ export class LabelInput {
   etiqueta = input<string>();
   tipo = input<string>('text');
   opciones = input<Opcion[]>([]);
+  valor = input<string>();
 }
 
 export interface Opcion {

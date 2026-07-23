@@ -10,9 +10,9 @@
         @switch (tipo()) {
         @case ('select') {
         <select class="form-select">
-            <option value="">Opciones</option>
+            <option value="0">Opciones</option>
             @for(o of opciones(); track o.id) {
-            <option value="{{o.id}}">{{o.texto}}</option>
+            <option value="{{o.id}}" [attr.selected]="o.id === valor() ? true : null">{{o.texto}}</option>
             }
         </select>
         }
@@ -26,7 +26,7 @@
         }
 
         @default {
-        <input class="form-control" type="{{tipo()}}">
+        <input class="form-control" type="{{tipo()}}" value="{{valor()}}">
         }
         }
         <div class="invalid-feedback">
