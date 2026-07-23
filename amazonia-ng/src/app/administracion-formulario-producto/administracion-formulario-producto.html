@@ -1,1 +1,17 @@
-<p>administracion-formulario-producto works!</p>
+<main class="container">
+
+    <form th:action="@{/admin/productos/guardar}" th:method="post" th:object="${producto}"
+        enctype="multipart/form-data">
+        <input type="hidden" name="id">
+
+        <app-label-input etiqueta="Nombre" />
+        <app-label-input etiqueta="Precio" tipo="number" />
+        <app-label-input etiqueta="Categoría" tipo="select"
+            [opciones]="[{id: '1', texto: 'Uno'}, {id: '2', texto: 'Dos'}]" />
+        <app-label-input etiqueta="Foto" tipo="file" />
+        <app-label-input etiqueta="Descripción" tipo="textarea" />
+
+        <app-label-input etiqueta="Guardar" tipo="submit" />
+    </form>
+
+</main>
