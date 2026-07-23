@@ -4,12 +4,12 @@
         enctype="multipart/form-data">
         <input type="hidden" name="id">
 
-        <app-label-input etiqueta="Nombre" />
-        <app-label-input etiqueta="Precio" tipo="number" />
+        <app-label-input etiqueta="Nombre" valor="{{producto.nombre}}"/>
+        <app-label-input etiqueta="Precio" tipo="number" valor="{{producto.precio}}" />
         <app-label-input etiqueta="Categoría" tipo="select"
-            [opciones]="[{id: '1', texto: 'Uno'}, {id: '2', texto: 'Dos'}]" />
+            [opciones]="opciones" valor="1" />
         <app-label-input etiqueta="Foto" tipo="file" />
-        <app-label-input etiqueta="Descripción" tipo="textarea" />
+        <app-label-input etiqueta="Descripción" tipo="textarea" valor="{{producto.descripcion}}" />
 
         <app-label-input etiqueta="Guardar" tipo="submit" />
     </form>
