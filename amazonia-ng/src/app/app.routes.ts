@@ -9,5 +9,6 @@ export const routes: Routes = [
     { path: 'productos', component: FichasProductos },
     { path: 'productos/:id', component: FichaProducto },
     { path: 'admin/productos', component: AdministracionListadoProductos },
-    { path: 'admin/productos/:id', component: AdministracionFormularioProducto },
+    { path: 'admin/producto', component: AdministracionFormularioProducto },
+    { path: 'admin/producto/:id', component: AdministracionFormularioProducto },
 ];
